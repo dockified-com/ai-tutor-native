@@ -1,1 +1,7 @@
 claudecode.sh
+
+# Superpowers brainstorming session artifacts
+.superpowers/
+
+# Local video frame extraction (gitignored, not part of the project)
+.video-frames/
