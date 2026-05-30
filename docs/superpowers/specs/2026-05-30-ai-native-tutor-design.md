@@ -44,12 +44,15 @@ The Dockified Personalized Learning Module V1 is a standalone "AI Native Program
 
 **Creator** (single account in V1, the founder):
 - Sign in → dashboard → create course → preview → publish → share code
-- Auth: Supabase Auth, email + password
+- Auth: **Clerk** (email + password and/or social login)
 - Authorization: `users.role = 'creator'`, set via SQL on the founder's row
 
 **Student** (everyone else):
 - Sign up → enter course code (or click `/join/{code}`) → walk through lessons
+- Auth: **Clerk** (email + password and/or social login)
 - Default `users.role = 'student'`
+
+**User-row provisioning:** when a user signs in for the first time, FastAPI middleware checks for a `users` row by `clerk_user_id` and lazily creates one (synced from Clerk's user object) if missing. A Clerk webhook (`user.created` / `user.updated`) keeps email + display_name in sync going forward.
 
 ---
 
@@ -57,7 +60,7 @@ The Dockified Personalized Learning Module V1 is a standalone "AI Native Program
 
 ### Tech stack
 
-**Frontend** — Next.js 16 (App Router), TypeScript, Tailwind v4, shadcn/ui, Zustand, `@monaco-editor/react`, `react-mermaid`.
+**Frontend** — Next.js 16 (App Router), TypeScript, Tailwind v4, shadcn/ui, Zustand, `@monaco-editor/react`, `react-mermaid`, `@clerk/nextjs` (auth).
 
 **Backend** — FastAPI, Python 3.12, **vanilla SDKs** (no LangChain/LangGraph/LlamaIndex in V1). Key libraries:
 - `anthropic` — LLM + embeddings
@@ -72,25 +75,89 @@ The Dockified Personalized Learning Module V1 is a standalone "AI Native Program
 - **OpenAI TTS** — pre-generated audio at course creation
 - **Judge0 RapidAPI** — code execution sandbox (60+ languages)
 
-**Storage / DB** — **Supabase managed**. Postgres + pgvector + Storage + Auth in one client.
+**Auth** — **Clerk** (managed sign-in/sign-up, social login, JWT issuance). Frontend uses `@clerk/nextjs`; backend verifies Clerk JWTs and resolves the app-level `users` row by `clerk_user_id`. Free tier covers ~10K MAU; $25/mo after.
+
+**Storage / DB** — **Supabase managed**. Postgres + pgvector + Storage. (Auth is handled by Clerk, not Supabase Auth.)
 
 ### High-level system
 
 ```
 [ Next.js 16 frontend on Vercel ]
-        Tailwind v4 · shadcn/ui · Zustand · Monaco · Mermaid
+        Tailwind v4 · shadcn/ui · Zustand · Monaco · Mermaid · Clerk
         │
-        │ REST + SSE
+        │ REST + SSE  (Authorization: Bearer <Clerk JWT>)
         ▼
 [ FastAPI backend (Docker on VPS, behind Caddy) ]
+        │  validates Clerk JWT, resolves app user by clerk_user_id
         │
-        ├─→ Supabase  (Postgres + pgvector + Storage + Auth)
+        ├─→ Clerk      (token verification; user lookup webhook)
+        ├─→ Supabase   (Postgres + pgvector + Storage)
         ├─→ Anthropic Claude Sonnet
         ├─→ OpenAI TTS
         └─→ Judge0 RapidAPI
 ```
 
 Caddy reverse proxy in Docker on the VPS, auto-provisioning SSL certificates from Let's Encrypt.
+
+### Module structure & boundaries
+
+The codebase is organized into **features** with strict module boundaries. This pattern (similar to Feature-Sliced Design) prevents the cross-feature spaghetti that makes growing codebases brittle. It also makes it trivial to extract a feature later — for example, the parent Dockified LMS may eventually consume `features/tutor/` directly.
+
+**Frontend (Next.js):**
+
+```
+frontend/
+├── app/         Routes — thin pages composing features (no business logic)
+├── features/    Feature modules — auth, authoring, courses, enrollment, tutor, progress
+└── shared/      Cross-cutting utilities (api client, ui kit, types, layouts)
+```
+
+**Backend (FastAPI):** mirrors the same structure:
+
+```
+backend/app/
+├── features/    Feature modules — auth, authoring, courses, enrollment, tutor, progress
+├── shared/      Infrastructure (db, ai providers, RAG helpers, config, deps)
+└── main.py      App factory; includes feature routers
+```
+
+**Boundary rule (enforced by ESLint on frontend, by code review on backend):**
+
+- A file inside `features/X/` may import from `features/X/...` and `shared/...`
+- A file inside `features/X/` **must not** import from `features/Y/...` directly
+- Each feature exposes a single public API via `index.ts` (frontend) or `__init__.py` (backend)
+- Cross-feature behavior happens at the **page/route level** in `app/` — pages compose features; features don't compose each other
+- Code that turns out to be useful across features is **promoted** to `shared/`
+
+**ESLint enforcement** uses `eslint-plugin-boundaries`:
+
+```js
+// eslint.config.mjs (sketch)
+{
+  plugins: { boundaries },
+  settings: {
+    'boundaries/elements': [
+      { type: 'app',     pattern: 'app/**' },
+      { type: 'feature', pattern: 'features/*', mode: 'folder' },
+      { type: 'shared',  pattern: 'shared/**' }
+    ]
+  },
+  rules: {
+    'boundaries/element-types': ['error', {
+      default: 'disallow',
+      rules: [
+        { from: 'app',     allow: ['feature', 'shared'] },
+        { from: 'feature', allow: ['shared'] },   // strict: NO cross-feature
+        { from: 'shared',  allow: ['shared'] }
+      ]
+    }]
+  }
+}
+```
+
+**Server actions** (Next.js) live inside their feature: e.g. `features/authoring/actions/regenerate-lesson.ts`. They authenticate via Clerk's server helpers, then call FastAPI endpoints (or hit the DB directly for simple CRUD). Heavy/long-running work — generation pipeline, AI streaming, code execution — lives in FastAPI; server actions are thin orchestration layers.
+
+When V2 adds Engine B (Auto-Grader), it lives in `features/grading/` — fully isolated from V1 features. When V3 adds Engine C (Voice Interview), it lives in `features/interview/`. No V1 feature has to know about them.
 
 ### Architectural principle
 
@@ -113,9 +180,10 @@ Postgres via Supabase, pgvector enabled. All tables include `id uuid pk`, `creat
 
 ### Core tables
 
-**`users`** (mirrors Supabase `auth.users` with app fields)
-- `email` UNIQUE
-- `display_name`
+**`users`** (mirrors Clerk's user records with app-specific fields)
+- `clerk_user_id` TEXT UNIQUE — Clerk's user id (e.g. `user_2jK…`); source of truth for identity
+- `email` UNIQUE — synced from Clerk on first sign-in / via Clerk webhook
+- `display_name` — synced from Clerk; user can override
 - `role` ENUM(`creator` | `student`), default `student`
 
 **`courses`**
@@ -248,12 +316,12 @@ Adding a new block type (e.g. `confidence_meter` for the future Voice Interview 
 
 | Path | Component | Who |
 |---|---|---|
-| `/sign-in`, `/sign-up` | Supabase Auth (email + password) | Both |
+| `/sign-in/[[...rest]]`, `/sign-up/[[...rest]]` | Clerk sign-in / sign-up (catch-all routes for Clerk's components) | Both |
 | `/dashboard` | Courses list (creator: own + "Create"; student: enrolled + "Join with Code") | Both |
 | `/courses/new` | 3-step creation wizard | Creator |
 | `/courses/{id}` | Course detail with status, lessons, action bar | Both (different views) |
 | `/courses/{id}/preview` | Tutor view in preview mode (no progress saved) | Creator |
-| `/join/{code}` | Public auto-enroll URL (signs up if needed, redirects to course) | Both |
+| `/join/{code}` | Public auto-enroll URL (signs up via Clerk if needed, then enrolls + redirects) | Both |
 
 ### Three-step wizard (`/courses/new`)
 
@@ -674,7 +742,8 @@ LLM calls in tests are mocked or replayed (VCR.py). **Don't burn API budget in C
 | Backend | FastAPI in Docker on VPS (Hetzner CX22 or DO Basic) | $5–10/mo |
 | Reverse proxy + SSL | Caddy in Docker (auto Let's Encrypt) | $0 |
 | Container registry | GitHub Container Registry (GHCR) | $0 |
-| DB + Storage + Auth | Supabase (Free tier) | $0 |
+| **Auth** | **Clerk (Free tier, ~10K MAU)** | **$0** (then $25/mo) |
+| DB + Storage | Supabase (Free tier) | $0 |
 | CI/CD | GitHub Actions: build → push GHCR → SSH-pull on VPS | $0 |
 | Error tracking | Sentry (Developer tier) | $0 |
 | Anthropic API | Pay-as-you-go | $10–20/mo |
@@ -776,38 +845,125 @@ To be resolved during implementation:
 
 ## Appendix B — File Structure (Implementation Sketch)
 
+The codebase follows a **feature-based** layout with strict module boundaries (see §3 "Module structure & boundaries"). Each feature is a self-contained module: components, server actions, hooks, stores, helpers — all internal — with a single public API exposed via `index.ts` (frontend) or `__init__.py` (backend).
+
+### Frontend (Next.js 16)
+
 ```
-ai-tutor-native/
-├── frontend/                    Next.js 16 app
-│   ├── app/
-│   │   ├── (auth)/sign-in
-│   │   ├── (auth)/sign-up
-│   │   ├── dashboard/
-│   │   ├── courses/new/
-│   │   ├── courses/[id]/
-│   │   ├── courses/[id]/preview/
-│   │   ├── courses/[id]/lesson/[lesson_id]/
-│   │   └── join/[code]/
-│   ├── components/
-│   │   ├── tutor/                Block renderers, audio player, Ask footer
-│   │   ├── editor/               Monaco wrapper
-│   │   ├── diagram/              Mermaid wrapper
-│   │   └── ui/                   shadcn/ui imports
-│   ├── stores/                   Zustand stores
-│   └── lib/                      API client, SSE helpers
-└── backend/                     FastAPI app
-    ├── app/
-    │   ├── api/                  REST routes (auth, courses, lessons, blocks, enrollments)
-    │   ├── pipelines/            Course generation pipeline (extract, embed, outline, blocks, audio)
-    │   ├── ai/                   LLM/TTS/Judge0 client wrappers + prompt templates
-    │   ├── rag/                  Embed + retrieve helpers
-    │   ├── models/               Pydantic schemas + DB models
-    │   └── core/                 Config, auth middleware, error handlers
-    ├── tests/                    pytest
-    ├── Dockerfile
-    ├── docker-compose.prod.yml   For VPS
-    └── docker-compose.dev.yml    For local development
+frontend/
+├── app/                                   Routes — thin pages composing features
+│   ├── (auth)/
+│   │   ├── sign-in/[[...rest]]/page.tsx   Clerk sign-in catch-all
+│   │   └── sign-up/[[...rest]]/page.tsx   Clerk sign-up catch-all
+│   ├── dashboard/page.tsx
+│   ├── courses/
+│   │   ├── new/page.tsx
+│   │   └── [id]/
+│   │       ├── page.tsx
+│   │       ├── preview/page.tsx
+│   │       └── lesson/[lesson_id]/page.tsx
+│   ├── join/[code]/page.tsx
+│   └── layout.tsx                         Root layout with <ClerkProvider>
+├── middleware.ts                          Clerk auth middleware (protects /dashboard, /courses, …)
+├── features/
+│   ├── auth/                              Profile display, role checks
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   └── index.ts                       PUBLIC API (only these exports are importable elsewhere)
+│   ├── authoring/                         Course-creation wizard, regenerate, preview banner
+│   │   ├── components/
+│   │   ├── actions/                       Server actions (e.g. createCourse, regenerateLesson)
+│   │   ├── hooks/
+│   │   ├── stores/                        Zustand wizard state
+│   │   ├── lib/
+│   │   └── index.ts
+│   ├── courses/                           Course list, detail, dashboard cards
+│   ├── enrollment/                        Course-code input, /join handler logic
+│   ├── tutor/                             The moat — block renderers, layout, audio, Ask
+│   │   ├── components/
+│   │   │   ├── tutor-layout.tsx
+│   │   │   ├── lesson-feed.tsx
+│   │   │   ├── markdown-block.tsx
+│   │   │   ├── code-block.tsx
+│   │   │   ├── mermaid-block.tsx
+│   │   │   ├── concept-check-block.tsx
+│   │   │   ├── understanding-check-block.tsx
+│   │   │   ├── ask-footer.tsx
+│   │   │   └── audio-controls.tsx
+│   │   ├── actions/                       runCode, askQuestion, submitConceptCheck, …
+│   │   ├── hooks/
+│   │   ├── stores/                        tutor-store.ts (Zustand)
+│   │   ├── lib/                           derive-active-block, sse helpers
+│   │   └── index.ts
+│   └── progress/                          Course-progress slide-out, completion logic
+├── shared/                                Cross-cutting (importable from anywhere)
+│   ├── api/                               Backend API client + SSE wrapper
+│   ├── components/                        App layout, headers, error boundaries
+│   ├── lib/                               Generic utils (date, format)
+│   ├── types/                             Cross-cutting types (Block envelopes, ApiError)
+│   └── ui/                                shadcn/ui re-exports
+├── eslint.config.mjs                      Includes `eslint-plugin-boundaries` rules
+├── tailwind.config.js
+├── next.config.ts
+└── package.json
 ```
+
+### Backend (FastAPI)
+
+```
+backend/
+├── app/
+│   ├── features/
+│   │   ├── auth/                          Clerk JWT validation + lazy user-row provisioning
+│   │   │   ├── routes.py                  /api/me, /api/auth/clerk-webhook
+│   │   │   ├── service.py
+│   │   │   └── __init__.py
+│   │   ├── authoring/                     Generation pipeline, regenerate, publish
+│   │   │   ├── routes.py
+│   │   │   ├── service.py
+│   │   │   ├── pipeline.py                Async generation: extract → embed → outline → blocks → tts
+│   │   │   ├── schemas.py                 Pydantic structured-output schemas
+│   │   │   └── prompts.py                 Course-gen prompt templates
+│   │   ├── courses/                       Course CRUD, dashboard listing
+│   │   ├── enrollment/                    Enroll-by-code, /join logic
+│   │   ├── tutor/                         /run, /ask, /socratic-hint, /concept-check, /understanding-check
+│   │   │   ├── routes.py
+│   │   │   ├── service.py
+│   │   │   └── prompts.py                 Socratic + understanding-eval prompts
+│   │   └── progress/                      Block progress, lesson completion
+│   ├── shared/
+│   │   ├── db/                            SQL session, repositories, migrations
+│   │   ├── ai/                            Provider clients (anthropic, openai, judge0)
+│   │   ├── rag/                           Embed + retrieve helpers
+│   │   ├── deps.py                        FastAPI dependencies (current_user, db_session)
+│   │   ├── config.py                      Pydantic Settings
+│   │   └── errors.py                      Exception handlers
+│   └── main.py                            App factory, includes feature routers
+├── tests/
+│   ├── unit/
+│   └── integration/
+├── Dockerfile                             Multi-stage build → ~150 MB runtime image
+├── docker-compose.prod.yml                On VPS: caddy + backend (+ redis later)
+├── docker-compose.dev.yml                 Local: backend + Postgres + pgvector
+└── pyproject.toml                         deps + dev tools (ruff, mypy, pytest)
+```
+
+### Boundary contract
+
+**Allowed imports:**
+- `app/` → may import from `features/*` (via index.ts/__init__.py only) and `shared/`
+- `features/X/` → may import from `features/X/...` and `shared/`
+- `shared/` → may import from `shared/`
+
+**Forbidden imports:**
+- `features/X/` importing from `features/Y/` (cross-feature) — EVER
+- Anything importing internals of another feature, bypassing its public API
+
+When a feature truly needs another feature's behavior, the right move is one of:
+1. Promote the shared piece to `shared/` (most common)
+2. Coordinate at the page level in `app/` (if it's a UX composition concern)
+3. Re-evaluate whether they should be one feature (rare, but possible if mis-sliced initially)
 
 ---
 
