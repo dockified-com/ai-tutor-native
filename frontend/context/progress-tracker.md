@@ -77,7 +77,7 @@ Build the full design system (light theme, emerald accent, tri-font system, shad
 **Pages:**
 - [ ] `app/dashboard/page.tsx` — RSC: split by role, render CourseCard grid
 - [ ] `app/courses/new/page.tsx` — wizard page
-- [ ] `app/courses/[id]/page.tsx` — course detail (status, lessons, action bar)
+- [x] `app/courses/[id]/page.tsx` — course detail (status, lessons, action bar)
 
 ### Week 3 — Tutor Shell
 - [ ] `features/tutor/stores/tutor-store.ts` — TutorStore full interface (revealed blocks, active block, audio, hints, roasts, chatHistory, sidebar state)
