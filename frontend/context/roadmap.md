@@ -57,7 +57,7 @@
 
 ### Group B — Parallel: Course Detail Page
 
-- [ ] `app/courses/[id]/page.tsx` — show lesson list + "Preview" / "Publish" actions when `status = ready`
+- [x] `app/courses/[id]/page.tsx` — show lesson list + "Preview" / "Publish" actions when `status = ready`
 
 ---
 
