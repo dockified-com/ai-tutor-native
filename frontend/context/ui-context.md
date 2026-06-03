@@ -1,5 +1,8 @@
 # UI Context
 
+> **Prototype reference**: `context/feature-specs/2026-06-03-phase-2-generation-pipeline-status-ui/prototype-reference.jsx`
+> This file is the canonical design source. All class names and dimensions below are confirmed against it.
+
 ## Theme
 
 **Light mode only. No dark mode.**
@@ -173,12 +176,28 @@ This is the core layout. Every dimension is exact — do not approximate.
 └──────────────────────────────┴─────────────────────────┴────┴──────┘
 ```
 
-**Panel rules:**
-- Left pane: `flex flex-col`, `overflow-y-auto` on the feed, sticky footer with `shrink-0`
-- Right workspace: `flex-1 flex flex-col h-full bg-white border-l border-slate-200`
-- Slide-out drawer: `w-[320px]`, `animate-slide-left`, appears between workspace and nav rail
-- Nav rail: `w-14 bg-white border-l border-slate-100`, two icon groups (top and bottom)
-- Full layout: `h-screen w-full overflow-hidden flex flex-col`
+**Panel rules (confirmed from prototype):**
+- Root: `h-screen w-full bg-white flex flex-col font-sans text-slate-800 overflow-hidden selection:bg-emerald-100`
+- Left pane: `w-[450px] min-w-[400px] flex flex-col relative z-10 bg-white shadow-[1px_0_10px_rgba(0,0,0,0.02)]`
+- Feed scroll area: `flex-1 overflow-y-auto px-8 py-8 scroll-smooth pb-32`
+- Right workspace: `flex-1 bg-slate-50 flex flex-col relative z-0` (outer); inner workspace `flex-1 flex flex-col h-full bg-white border-l border-slate-200`
+- Slide-out drawer: `w-[320px] bg-white border-l border-slate-100 shadow-sm flex flex-col relative z-20 animate-slide-left`
+- Nav rail: `w-14 bg-white border-l border-slate-100 flex flex-col items-center py-4 justify-between shrink-0 z-30`
+
+---
+
+## Layout: Top Header (Tutor)
+
+```tsx
+// Confirmed from prototype
+<header className="h-14 border-b border-slate-100 flex items-center justify-between px-6 shrink-0 bg-white">
+  {/* Logo mark: w-6 h-6 bg-emerald-600 rounded, Layout icon size={14} text-white */}
+  {/* Breadcrumb: font-medium text-slate-500 tracking-tight text-sm, "/" separator text-slate-300 */}
+  {/* Active lesson: text-slate-800 */}
+  {/* Audio button: bg-emerald-50 text-emerald-600 px-2.5 py-1.5 rounded text-xs font-medium */}
+  {/*   contains: <AudioLines size={14} /> <ChevronDown size={14} /> */}
+</header>
+```
 
 ---
 
@@ -264,6 +283,19 @@ className="flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium
 
 The Continue button sits at the bottom of the revealed content, above the Ask footer.
 
+**Inline row with Continue (confirmed from prototype):**
+```tsx
+// The Continue button row — NOT just the button alone
+<div className="pt-2 flex items-center gap-4 fade-in-up">
+  <button ...>Continue <span>N</span></button>
+  <div className="flex gap-3 text-slate-400">
+    <Play size={16} className="cursor-pointer hover:text-emerald-600 transition-colors" />
+    <ThumbsDown size={16} className="cursor-pointer hover:text-red-500 transition-colors" />
+  </div>
+</div>
+```
+Play icon (re-play TTS) and ThumbsDown sit inline with Continue, `text-slate-400`, `gap-3`.
+
 ---
 
 ## Ask Anything Footer
@@ -300,6 +332,21 @@ Chat history renders **in the block feed** above the footer — not in a separat
 Left: [Code2 icon] "Example N"  |  [Flame badge: "N friends got stuck here"]
 Right: "Run CTRL + ↵"  (text-emerald-600, text-xs font-semibold uppercase)
 ```
+
+**Run button (confirmed from prototype):**
+```tsx
+<button className="text-xs font-semibold uppercase tracking-wider text-emerald-600 hover:text-emerald-700 transition-colors flex items-center gap-1.5">
+  Run <span className="bg-emerald-100 px-1.5 py-0.5 rounded text-emerald-700">CTRL + ↵</span>
+</button>
+```
+
+**Roast My Code button (confirmed — sits in terminal body, below output):**
+```tsx
+<button className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold transition-colors border border-slate-200 shadow-sm">
+  🎭 Roast My Code
+</button>
+```
+Loading state inside roast panel: `<span className="animate-pulse normal-case text-orange-600 font-normal">is typing...</span>`
 
 ### Editor area
 
@@ -355,10 +402,12 @@ Content:
 - Course title + progress percentage badge (`bg-emerald-50 text-emerald-600 rounded-full`)
 - `MODULE N` section labels (`text-xs font-bold text-slate-400 tracking-wider`)
 - Lesson rows with circular progress indicators:
-  - Active: `w-4 h-4 rounded-full border-4 border-emerald-500` with `bg-emerald-50/50` row bg
-  - Complete: filled circle `bg-emerald-500`
-  - Incomplete: `border-2 border-slate-300`
-- Sub-items (blocks) shown as bullet points under active lesson
+  - **Active**: `w-4 h-4 rounded-full border-4 border-emerald-500 mt-0.5 shrink-0` + row `flex items-start gap-3 py-2 text-emerald-600 bg-emerald-50/50 -mx-3 px-3 rounded-lg cursor-pointer`
+  - **Complete**: filled `bg-emerald-500` circle
+  - **Incomplete**: `w-4 h-4 rounded-full border-2 border-slate-300 shrink-0` + row `flex items-center gap-3 py-2 text-slate-500 cursor-pointer hover:text-slate-800`
+- Sub-items (blocks) shown as `w-1.5 h-1.5 rounded-full` bullet dots under active lesson:
+  - Complete block: `bg-emerald-500` filled dot
+  - Incomplete block: `border border-emerald-500` empty dot, `text-emerald-600/50`
 
 ## Notes Drawer (`w-[320px]`)
 
