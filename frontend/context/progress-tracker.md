@@ -28,6 +28,13 @@ Build the full design system (light theme, emerald accent, tri-font system, shad
 - [x] Roadmap updated with 3 new Superpower features (2026-06-03)
 - [x] Full PRD, product roadmap, frontend plan, backend plan, DB schema, API contracts, local setup written in `docs/`
 
+### Phase 2: Generation Pipeline & Status UI
+- [x] `features/authoring/components/generation-status.tsx` — animated phase display
+- [x] `features/authoring/components/creation-wizard/step-generate.tsx` — trigger + live phase display
+- [x] `features/authoring/actions/create-course.ts` — Server Action: POST /api/courses/generate
+- [x] `features/authoring/hooks/use-generation-status.ts` — SWR poll every 3s
+- [x] `app/courses/[id]/page.tsx` — course detail (status, lessons, action bar)
+
 ## In Progress
 
 - [ ] `app/globals.css` — light theme token system, tri-font setup, animation keyframes, custom scrollbars
@@ -69,15 +76,11 @@ Build the full design system (light theme, emerald accent, tri-font system, shad
 - [ ] `features/authoring/components/creation-wizard/wizard-shell.tsx` — step container + step indicator
 - [ ] `features/authoring/components/creation-wizard/step-upload.tsx` — PDF drag-drop + validation
 - [ ] `features/authoring/components/creation-wizard/step-configure.tsx` — title, desc, lang, custom prompt
-- [x] `features/authoring/components/creation-wizard/step-generate.tsx` — trigger + live phase display
-- [x] `features/authoring/actions/create-course.ts` — Server Action: POST /api/courses/generate
-- [x] `features/authoring/hooks/use-generation-status.ts` — SWR poll every 3s
 - [ ] `features/authoring/index.ts`
 
 **Pages:**
 - [ ] `app/dashboard/page.tsx` — RSC: split by role, render CourseCard grid
 - [ ] `app/courses/new/page.tsx` — wizard page
-- [x] `app/courses/[id]/page.tsx` — course detail (status, lessons, action bar)
 
 ### Week 3 — Tutor Shell
 - [ ] `features/tutor/stores/tutor-store.ts` — TutorStore full interface (revealed blocks, active block, audio, hints, roasts, chatHistory, sidebar state)
