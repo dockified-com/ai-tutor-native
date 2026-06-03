@@ -6,34 +6,35 @@
 ---
 
 ## Phase 1 — Design System & Auth Foundation
+> **Progress**: 5 / 22 tasks done — last synced from `git log` on 2026-06-03
 > **Week 1 | Status: 🟡 IN PROGRESS**
 > All tasks in Group A can start in parallel. Group B depends on Group A completing first.
 
 ### Group A — Parallel: Styling & Types & API Client
 
-- [ ] `app/globals.css` — full light theme token system, animation keyframes, custom scrollbars
+- [ ] `app/globals.css` — full light theme token system, animation keyframes, custom scrollbars *(file exists but is a basic placeholder — needs full token system)*
 - [ ] Install fonts: Merriweather (serif) via `next/font/google`; confirm Geist Mono is loaded
 - [ ] `npm install @fontsource/fira-code` (or use existing Geist Mono)
 - [ ] `npx shadcn@latest init` — add: Button, Card, Badge, Sheet, Dialog, Input, Textarea, Select, Progress, Skeleton, Separator, Tabs, Sonner
-- [ ] `shared/lib/cn.ts` — `clsx` + `tailwind-merge` helper
+- [ ] `shared/lib/cn.ts` — `clsx` + `tailwind-merge` helper *(packages installed, file not yet created)*
 - [ ] `shared/types/blocks.ts` — Block discriminated union (5 types, client-safe fields)
 - [ ] `shared/types/course.ts` — Course, Lesson, Enrollment, CourseStatus types
-- [ ] `shared/api/client.ts` — authenticated fetch wrapper (Clerk token injection, error parsing)
+- [x] `shared/api/client.ts` — authenticated fetch wrapper (Clerk token injection, error parsing)
 
 ### Group B — Parallel: Auth & Role System (needs Group A)
 
-- [ ] `features/auth/hooks/use-user-role.ts` — SWR fetch `/api/me`, returns `'creator' | 'student' | undefined`
+- [x] `features/auth/hooks/use-user-role.ts` — implemented as `use-app-user.ts`; fetches `/api/me`, returns full `AppUser` with `role: 'creator' | 'student'`
 - [ ] `features/auth/components/role-guard.tsx` — conditional render by role
 
 ### Group C — Parallel: Dashboard Components (needs Group A)
 
 - [ ] `features/courses/components/course-status-badge.tsx`
 - [ ] `features/courses/components/course-card.tsx` — status badge, progress bar
-- [ ] `app/dashboard/page.tsx` — creator sees course list + "Create"; student sees enrolled courses
+- [x] `app/dashboard/page.tsx` — empty state shell done; needs course list wired once course components exist
 
 ### Group D — Sequential: Course Creation Wizard (needs Group B + C)
 
-- [ ] `features/authoring/stores/wizard-store.ts` — Zustand store, persisted to localStorage
+- [ ] `features/authoring/stores/wizard-store.ts` — Zustand store, persisted to localStorage *(Zustand installed ✓)*
 - [ ] `features/authoring/components/creation-wizard/step-1.tsx` — PDF upload
 - [ ] `features/authoring/components/creation-wizard/step-2.tsx` — configure
 - [ ] `features/authoring/components/creation-wizard/step-3.tsx` — generate trigger
