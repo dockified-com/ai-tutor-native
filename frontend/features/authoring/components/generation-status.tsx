@@ -52,7 +52,7 @@ export function GenerationStatus({ currentPhase, totalLessons }: GenerationStatu
         <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-4" />
         <h2 className="text-xl font-semibold mb-2">Your course is ready!</h2>
         <p className="text-emerald-700 mb-6 text-center">
-          We've successfully generated all lessons and audio for your course.
+          We&apos;ve successfully generated all lessons and audio for your course.
         </p>
         <Link
           href={`/courses/${courseId || "unknown"}`}

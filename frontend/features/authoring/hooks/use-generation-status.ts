@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { apiClient } from "@/shared/api/client";
+import { apiFetch } from "@/shared/api/client";
 
 export interface GenerationStatusResponse {
   courseId: string;
@@ -11,7 +11,7 @@ export interface GenerationStatusResponse {
   error?: string;
 }
 
-const fetcher = (url: string) => apiClient<GenerationStatusResponse>(url);
+const fetcher = (url: string) => apiFetch<GenerationStatusResponse>(url);
 
 export function useGenerationStatus(courseId: string | null) {
   const { data, error, isLoading, mutate } = useSWR(

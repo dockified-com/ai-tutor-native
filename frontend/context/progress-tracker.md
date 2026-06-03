@@ -69,9 +69,9 @@ Build the full design system (light theme, emerald accent, tri-font system, shad
 - [ ] `features/authoring/components/creation-wizard/wizard-shell.tsx` — step container + step indicator
 - [ ] `features/authoring/components/creation-wizard/step-upload.tsx` — PDF drag-drop + validation
 - [ ] `features/authoring/components/creation-wizard/step-configure.tsx` — title, desc, lang, custom prompt
-- [ ] `features/authoring/components/creation-wizard/step-generate.tsx` — trigger + live phase display
-- [ ] `features/authoring/actions/create-course.ts` — Server Action: POST /api/courses/generate
-- [ ] `features/authoring/hooks/use-generation-status.ts` — SWR poll every 3s
+- [x] `features/authoring/components/creation-wizard/step-generate.tsx` — trigger + live phase display
+- [x] `features/authoring/actions/create-course.ts` — Server Action: POST /api/courses/generate
+- [x] `features/authoring/hooks/use-generation-status.ts` — SWR poll every 3s
 - [ ] `features/authoring/index.ts`
 
 **Pages:**
