@@ -51,9 +51,9 @@
 
 ### Group A — Parallel: Generation Status UI
 
-- [ ] `features/authoring/components/generation-status.tsx` — animated phase display
+- [x] `features/authoring/components/generation-status.tsx` — animated phase display
   - Phases: `extracting_pdf → embedding → generating_outline → generating_lesson_N → generating_audio → ready`
-- [ ] Update Wizard Step 3 to show live generation status after trigger
+- [x] Update Wizard Step 3 to show live generation status after trigger
 
 ### Group B — Parallel: Course Detail Page
 
