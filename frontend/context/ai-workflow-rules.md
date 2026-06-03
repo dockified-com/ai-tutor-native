@@ -100,6 +100,48 @@ Update the relevant context file whenever implementation changes involve:
 - A completed or newly in-progress task in `progress-tracker.md`
 - A new design decision not already captured
 
+## Git Commit Rules
+
+**Commit after every completed task — no matter how small.** A task = one checkbox in `roadmap.md`.
+
+### Commit Message Convention
+
+```
+<type>(<scope>): <short description>
+```
+
+| Type | When to use |
+|------|-------------|
+| `feat` | New file or feature added |
+| `fix` | Bug fix |
+| `chore` | Install, config, scaffolding |
+| `style` | CSS / design token changes |
+| `refactor` | Restructure without behavior change |
+| `docs` | Context files, markdown only |
+| `test` | Vitest / Playwright tests |
+
+**Scope** = the feature module or layer touched (e.g. `auth`, `tutor`, `shared`, `wizard`, `globals`).
+
+### Examples
+
+```bash
+git commit -m "feat(shared): add api/client.ts with Clerk token injection"
+git commit -m "chore(shared): create lib/cn.ts clsx+tailwind-merge helper"
+git commit -m "style(globals): add full light-theme token system + keyframes"
+git commit -m "feat(auth): add role-guard component"
+git commit -m "feat(wizard): add step-1 PDF upload form"
+git commit -m "docs(context): sync roadmap Phase 1 progress"
+```
+
+### Rules
+
+- **Never batch unrelated tasks into one commit** — one checkbox = one commit
+- **Always tick the checkbox in `roadmap.md`** and commit the roadmap update together with the implementation in the same commit
+- **Commit before switching to a different task group** — do not carry uncommitted work across groups
+- If a task is partially done, commit with `WIP:` prefix: `chore(tutor): WIP add tutor-store skeleton`
+
+---
+
 ## Before Moving to the Next Unit
 
 1. The current feature unit works end-to-end within its defined scope
@@ -108,3 +150,4 @@ Update the relevant context file whenever implementation changes involve:
 4. `npm run build` passes with no TypeScript errors
 5. `npm run lint` passes with no boundary violations
 6. The Socratic constraint test passes if you touched `features/tutor/` code blocks or hints
+7. **`git commit` has been made** — the completed task checkbox is ticked in `roadmap.md` and committed
