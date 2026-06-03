@@ -2,28 +2,15 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { apiFetch } from "@/shared/api/client";
-import { CourseStatusBadge, CourseStatus } from "@/features/courses/components/course-status-badge";
+import { CourseStatusBadge } from "@/features/courses/components/course-status-badge";
 import { GenerationStatus } from "@/features/authoring";
 import { RoleGuard } from "@/features/auth";
 import { AppShell } from "@/shared/components/app-shell";
 import { UserMenu } from "@/features/auth";
 import { Play } from "lucide-react";
+import { MOCK_COURSES } from "@/shared/lib/mock-data";
 
-interface Lesson {
-  id: string;
-  title: string;
-  block_count: number;
-}
-
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  status: CourseStatus;
-  current_phase?: string;
-  total_lessons?: number;
-  lessons?: Lesson[];
-}
+import { Course } from "@/shared/types/course";
 
 export default async function CourseDetailPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -38,16 +25,11 @@ export default async function CourseDetailPage(props: { params: Promise<{ id: st
     // course = await apiFetch<Course>(`/api/courses/${params.id}`, { token });
     
     // For V1 UI development without full backend, we will mock the response if the fetch fails
-    course = await apiFetch<Course>(`/api/courses/${params.id}`, { token }).catch(() => ({
-      id: params.id,
-      title: "Introduction to Rust",
-      description: "A comprehensive guide to Rust programming.",
-      status: "ready" as CourseStatus, // Change to "draft" or "generating" to test those states
-      lessons: [
-        { id: "l1", title: "Why Rust?", block_count: 5 },
-        { id: "l2", title: "Ownership and Borrowing", block_count: 12 },
-      ]
-    }));
+    // For V1 UI development without full backend, we will mock the response if the fetch fails
+    course = await apiFetch<Course>(`/api/courses/${params.id}`, { token }).catch(() => {
+      const mockCourse = MOCK_COURSES.find(c => c.id === params.id) || MOCK_COURSES[0];
+      return mockCourse;
+    });
   } catch {
     return (
       <AppShell header={<UserMenu />}>
