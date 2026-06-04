@@ -5,6 +5,7 @@ import { useTutorStore } from '@/features/tutor/stores/tutor-store';
 import { TutorLayout } from '@/features/tutor/components/tutor-layout';
 import { LessonFeed } from '@/features/tutor/components/lesson-feed';
 import { ContinueButton } from '@/features/tutor/components/continue-button';
+import { AskFooter } from '@/features/tutor/components/ask-footer';
 import { WorkspaceShell } from '@/features/tutor/components/workspace/workspace-shell';
 import { NavRail } from '@/features/tutor/components/nav-rail';
 import { CourseProgressSlideout } from '@/features/tutor/components/course-progress-slideout';
@@ -43,10 +44,7 @@ export function TutorPageClient({ blocks, startIndex, onMarkComplete, onUpdateBo
           <div className="shrink-0 border-t border-slate-100 bg-white">
             <ContinueButton onMarkComplete={onMarkComplete} onUpdateBookmark={onUpdateBookmark} />
           </div>
-          {/* AskFooter stub for Phase 5 */}
-          <div className="shrink-0 border-t border-slate-100 p-4 text-slate-400 italic text-sm bg-slate-50 text-center">
-            Ask Anything — coming in Phase 5
-          </div>
+          <AskFooter />
         </div>
       }
       rightSlot={<WorkspaceShell />}
