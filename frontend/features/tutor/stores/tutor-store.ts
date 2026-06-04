@@ -48,6 +48,11 @@ export interface TutorState {
   understandingPassed: Record<string, boolean>;
   understandingAttempts: Record<string, number>;
 
+  // Audio Actions
+  setAudioPlaying: (playing: boolean) => void;
+  setAudioSpeed: (speed: 0.5 | 0.75 | 1.0 | 1.25 | 1.5) => void;
+  toggleAutoContinue: () => void;
+
   // Actions
   revealNext: () => void;
   setActiveBlock: (id: string) => void;
@@ -100,6 +105,13 @@ export const useTutorStore = create<TutorState>()((set) => ({
   understandingFeedback: {},
   understandingPassed: {},
   understandingAttempts: {},
+
+  setAudioPlaying: (playing) =>
+    set((state) => ({ audio: { ...state.audio, playing } })),
+  setAudioSpeed: (speed) =>
+    set((state) => ({ audio: { ...state.audio, speed } })),
+  toggleAutoContinue: () =>
+    set((state) => ({ audio: { ...state.audio, autoContinue: !state.audio.autoContinue } })),
 
   revealNext: () =>
     set((state) => {

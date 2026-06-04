@@ -138,29 +138,29 @@
 ---
 
 ## Phase 5 — Ask Anything + Understanding Check + Lesson Gating
-> **Week 5 | Status: ⬜ NOT STARTED**
+> **Week 5 | Status: ✅ COMPLETE**
 > Groups A and B can start in parallel. Group C depends on both.
 
 ### Group A — Parallel: Ask Footer
 
-- [ ] `features/tutor/components/ask-footer.tsx`
+- [x] `features/tutor/components/ask-footer.tsx`
   - Styling: `bg-slate-50 rounded-xl border border-slate-200 focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-50`
   - Submit: `<ArrowUp size={18} strokeWidth={2.5} />`
   - Placeholder: "Ask or Comment ..."
-- [ ] `features/tutor/actions/ask-question.ts` — SSE: `POST /api/enrollments/{id}/ask`
-- [ ] Wire chat bubbles into `lesson-feed.tsx`: user bubble (`bg-slate-800 text-white rounded-br-sm`), AI bubble (`bg-emerald-50 border-emerald-100 rounded-bl-sm` + Sparkles icon)
+- [x] `features/tutor/actions/ask-question.ts` — SSE: `POST /api/enrollments/{id}/ask`
+- [x] Wire chat bubbles into `lesson-feed.tsx`: user bubble (`bg-slate-800 text-white rounded-br-sm`), AI bubble (`bg-emerald-50 border-emerald-100 rounded-bl-sm` + Sparkles icon)
 
 ### Group B — Parallel: Understanding Check
 
-- [ ] `features/tutor/components/blocks/understanding-check-block.tsx` — textarea + streaming Socratic feedback loop
-- [ ] `features/tutor/actions/submit-understanding-check.ts` — SSE
-- [ ] `features/tutor/actions/submit-concept-check.ts` — one-shot POST
+- [x] `features/tutor/components/blocks/understanding-check-block.tsx` — textarea + streaming Socratic feedback loop
+- [x] `features/tutor/actions/submit-understanding-check.ts` — SSE
+- [x] `features/tutor/actions/submit-concept-check.ts` — one-shot POST
 
 ### Group C — Sequential: Gating & Store (needs Group A + B)
 
-- [ ] `features/tutor/hooks/use-block-gating.ts` — derives Continue enabled per block type + state
-- [ ] TutorStore additions: `chatHistory`, `askInput`, `understandingFeedback`
-- [ ] Enforce lesson gating in UI: Continue / Next Lesson disabled until threshold met
+- [x] `features/tutor/hooks/use-block-gating.ts` — derives Continue enabled per block type + state
+- [x] TutorStore additions: `chatHistory`, `askInput`, `understandingFeedback`
+- [x] Enforce lesson gating in UI: Continue / Next Lesson disabled until threshold met
 
 ---
 

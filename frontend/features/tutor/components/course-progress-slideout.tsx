@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTutorStore } from '../stores/tutor-store';
-import { X } from 'lucide-react';
+import { X, Check } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { cn } from '@/shared/lib/cn';
 
 export function CourseProgressSlideout() {
   const setActiveSidebar = useTutorStore((state) => state.setActiveSidebar);
   const blocks = useTutorStore((state) => state.blocks);
   const revealedIndex = useTutorStore((state) => state.revealedIndex);
 
-  // Static placeholder value in Phase 3
-  const progressValue = blocks.length > 0 ? Math.round((revealedIndex / blocks.length) * 100) : 0;
+  const progressValue = blocks.length > 0 ? Math.round(((revealedIndex + 1) / blocks.length) * 100) : 0;
 
   return (
     <div className="flex flex-col h-full animate-slide-left">
@@ -32,18 +32,36 @@ export function CourseProgressSlideout() {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Curriculum</h3>
+        <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Lesson Blocks</h3>
         
         <div className="flex flex-col gap-3">
-          {/* Static curriculum tree placeholder for Phase 3 */}
-          <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold shrink-0">1</div>
-            <div className="text-sm font-medium text-slate-800">Current Lesson</div>
-          </div>
-          <div className="flex items-center gap-3 opacity-50">
-            <div className="w-6 h-6 rounded-full border border-slate-300 text-slate-400 flex items-center justify-center text-xs font-bold shrink-0">2</div>
-            <div className="text-sm font-medium text-slate-600">Next Lesson</div>
-          </div>
+          {blocks.map((block, idx) => {
+            const isCompleted = idx <= revealedIndex;
+            const isCurrent = idx === revealedIndex;
+            
+            return (
+              <div key={block.id} className={cn("flex items-center gap-3", !isCompleted && !isCurrent && "opacity-50")}>
+                <div className={cn(
+                  "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
+                  isCompleted && !isCurrent ? "bg-emerald-500 text-white" :
+                  isCurrent ? "bg-emerald-100 text-emerald-600" :
+                  "border border-slate-300 text-slate-400"
+                )}>
+                  {isCompleted && !isCurrent ? <Check size={12} strokeWidth={3} /> : idx + 1}
+                </div>
+                <div className={cn(
+                  "text-sm font-medium",
+                  isCurrent ? "text-emerald-700" :
+                  isCompleted ? "text-slate-800" : "text-slate-600"
+                )}>
+                  {block.type === 'code' ? 'Code Exercise' : 
+                   block.type === 'concept_check' ? 'Concept Check' : 
+                   block.type === 'understanding_check' ? 'Understanding Check' :
+                   block.type === 'mermaid' ? 'Diagram' : 'Explanation'}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
