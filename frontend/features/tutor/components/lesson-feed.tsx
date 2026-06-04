@@ -3,8 +3,8 @@ import { useTutorStore } from '../stores/tutor-store';
 import { MarkdownBlock } from './blocks/markdown-block';
 import { MermaidBlock } from './blocks/mermaid-block';
 import { ConceptCheckBlock } from './blocks/concept-check-block';
-// import { CodeBlock } from './blocks/code-block';
-import { MarkdownBlock as MarkdownBlockType, MermaidBlock as MermaidBlockType, ConceptCheckBlock as ConceptCheckBlockType } from '@/shared/types/blocks';
+import { CodeBlock } from './blocks/code-block';
+import { MarkdownBlock as MarkdownBlockType, MermaidBlock as MermaidBlockType, ConceptCheckBlock as ConceptCheckBlockType, CodeBlock as CodeBlockType } from '@/shared/types/blocks';
 
 export function LessonFeed() {
   const store = useTutorStore();
@@ -49,9 +49,7 @@ export function LessonFeed() {
             {block.type === 'markdown' && <MarkdownBlock block={block as MarkdownBlockType} index={index} />}
             {block.type === 'mermaid' && <MermaidBlock block={block as MermaidBlockType} index={index} />}
             {block.type === 'concept_check' && <ConceptCheckBlock block={block as ConceptCheckBlockType} index={index} />}
-            {block.type === 'code' && (
-              <div className="text-slate-400 italic py-4 border-l-2 border-transparent pl-4">Code editor block — coming in Phase 4</div>
-            )}
+            {block.type === 'code' && <CodeBlock block={block as CodeBlockType} index={index} />}
             {block.type === 'understanding_check' && (
               <div className="text-slate-400 italic py-4 border-l-2 border-transparent pl-4">Understanding check — coming in Phase 5</div>
             )}
