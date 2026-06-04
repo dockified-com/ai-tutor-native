@@ -36,6 +36,7 @@ export interface ConceptCheckBlock extends BaseBlock {
 export interface CodeBlock extends BaseBlock {
   type: 'code';
   content: {
+    instruction?: string;
     starter_code: string;
   };
 }

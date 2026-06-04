@@ -54,6 +54,13 @@ export interface TutorState {
   setActiveSidebar: (val: 'progress' | 'notes' | null) => void;
   resetLesson: (blocks: Block[], startIndex: number) => void;
   setConceptAnswer: (blockId: string, answer: string) => void;
+  
+  // Phase 4 Actions
+  setCodeValue: (blockId: string, value: string) => void;
+  setTerminalOutput: (blockId: string, output: TerminalOutput | null) => void;
+  incrementCodeAttempt: (blockId: string) => void;
+  setHint: (blockId: string, hint: string | null) => void;
+  setRoast: (blockId: string, roast: RoastState | null) => void;
 }
 
 export const useTutorStore = create<TutorState>()((set) => ({
@@ -130,5 +137,33 @@ export const useTutorStore = create<TutorState>()((set) => ({
         ...state.conceptAnswers,
         [blockId]: answer,
       },
+    })),
+
+  setCodeValue: (blockId, value) =>
+    set((state) => ({
+      codeValues: { ...state.codeValues, [blockId]: value },
+    })),
+    
+  setTerminalOutput: (blockId, output) =>
+    set((state) => ({
+      terminalOutputs: { ...state.terminalOutputs, [blockId]: output },
+    })),
+    
+  incrementCodeAttempt: (blockId) =>
+    set((state) => ({
+      codeAttempts: { 
+        ...state.codeAttempts, 
+        [blockId]: (state.codeAttempts[blockId] || 0) + 1 
+      },
+    })),
+    
+  setHint: (blockId, hint) =>
+    set((state) => ({
+      hints: { ...state.hints, [blockId]: hint },
+    })),
+    
+  setRoast: (blockId, roast) =>
+    set((state) => ({
+      roasts: { ...state.roasts, [blockId]: roast },
     })),
 }));

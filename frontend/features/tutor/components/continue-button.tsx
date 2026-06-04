@@ -2,16 +2,7 @@ import React from 'react';
 import { useTutorStore } from '../stores/tutor-store';
 import { Block } from '@/shared/types/blocks';
 
-function isContinueEnabled(activeBlock: Block, state: ReturnType<typeof useTutorStore.getState>): boolean {
-  switch (activeBlock.type) {
-    case 'markdown':       return true;
-    case 'mermaid':        return true;
-    case 'concept_check':  return !!state.conceptAnswers[activeBlock.id];
-    case 'code':           return false; // Phase 4
-    case 'understanding_check': return false; // Phase 5
-    default:               return false;
-  }
-}
+import { useBlockGating } from '../hooks/use-block-gating';
 
 interface ContinueButtonProps {
   onMarkComplete: (blockId: string) => Promise<void>;
@@ -34,7 +25,7 @@ export function ContinueButton({ onMarkComplete, onUpdateBookmark }: ContinueBut
   const activeBlock = blocks[revealedIndex];
   if (!activeBlock) return null;
 
-  const enabled = isContinueEnabled(activeBlock, store);
+  const enabled = useBlockGating(activeBlock);
   const isFinalBlock = revealedIndex === blocks.length - 1;
   const isUnderstandingCheck = activeBlock.type === 'understanding_check';
 
