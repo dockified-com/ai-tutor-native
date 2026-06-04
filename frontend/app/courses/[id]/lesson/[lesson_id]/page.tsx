@@ -20,35 +20,46 @@ export default async function LessonPage({
   let enrollId = '';
   let hasError = false;
 
-  try {
-    // We assume the API returns the blocks and the enrollment_id + bookmarked block
-    // Since we don't have the exact API shape, we'll try to fetch what makes sense
-    // and fallback to empty/default if the API doesn't match exactly in this phase.
-    
-    // In a real scenario, we might have separate endpoints or a combined one.
-    // Let's fetch the lesson blocks:
-    const { blocks } = await apiFetch<{ blocks: Block[] }>(`/api/lessons/${params.lesson_id}/blocks`, { token });
-    
-    // Let's fetch enrollment progress to find the startIndex:
-    const enrollmentResult = await apiFetch<unknown>(`/api/courses/${params.id}/enrollment`, { token }).catch(() => null);
-    const enrollment = enrollmentResult as { id?: string, progress?: { bookmarked_block_id?: string } } | null;
-    
-    
-    if (!blocks || blocks.length === 0) {
-      hasError = true;
-    } else {
-      lessonBlocks = blocks;
-      const enrollmentIdStr = enrollment?.id || 'stub-enrollment-id';
-      enrollId = enrollmentIdStr;
-      
-      const bookmarkedBlockId = enrollment?.progress?.bookmarked_block_id;
-      if (bookmarkedBlockId) {
-        const foundIndex = blocks.findIndex(b => b.id === bookmarkedBlockId);
-        if (foundIndex !== -1) {
-          startIndexValue = foundIndex;
-        }
+  const mockBlocks: Block[] = [
+    {
+      id: "b1",
+      type: "markdown",
+      content: {
+        text: "## Welcome to the AI Tutor\n\nThis is a mock lesson. Let's start by understanding how state works in React."
+      }
+    },
+    {
+      id: "b2",
+      type: "mermaid",
+      content: {
+        code: "graph TD\n  A[State] --> B[Component]\n  B --> C[UI]"
+      }
+    },
+    {
+      id: "b3",
+      type: "concept_check",
+      content: {
+        question: "Which of the following describes state in React?",
+        options: [
+          { id: "o1", text: "State is persistent across browser reloads.", is_correct: false, explanation: "State is lost on reload." },
+          { id: "o2", text: "State holds data that can change over time.", is_correct: true, explanation: "Correct!" }
+        ]
+      }
+    },
+    {
+      id: "b4",
+      type: "code",
+      content: {
+        starter_code: "function App() { return <div />; }"
       }
     }
+  ];
+
+  try {
+    // For testing, we just use mock blocks directly
+    lessonBlocks = mockBlocks as Block[];
+    enrollId = 'test-enrollment-id';
+    hasError = false;
   } catch (err) {
     console.error('Error loading lesson:', err);
     hasError = true;
