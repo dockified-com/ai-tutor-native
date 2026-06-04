@@ -46,7 +46,7 @@
 ---
 
 ## Phase 2 — Generation Pipeline & Status UI
-> **Week 2 | Status: ⬜ NOT STARTED**
+> **Week 2 | Status: ✅ COMPLETE**
 > Primarily backend week; frontend tasks are small and can run in parallel with any backend work.
 
 ### Group A — Parallel: Generation Status UI
