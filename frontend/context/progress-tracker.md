@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-**Week 4 — Monaco + Code Execution + Socratic Hints**
+**Week 6 — TTS Audio + Auto-Continue + Progress Polish**
 
 ## Current Goal
 
-Build the Monaco code execution workspace, integrate SSE for streaming Socratic hints and roasts.
+Implement TTS audio playback for blocks, wire up auto-continue, and finalize progress sidebar display.
 
 ## Completed
 
@@ -45,33 +45,31 @@ Build the Monaco code execution workspace, integrate SSE for streaming Socratic 
 - [x] `features/progress/actions` for bookmarking and block completion
 - [x] `app/courses/[id]/lesson/[lesson_id]/page.tsx` — Lesson RSC + Client shell
 
+### Phase 4: Monaco + Code Execution
+- [x] `@monaco-editor/react` installed + Monaco workspace created
+- [x] Server actions for `run-code`, `get-socratic-hint`, `get-code-roast`
+- [x] SSE integration for hints and roasts
+- [x] Struggle heatmap and roast components
+
+### Phase 5: Ask Anything + Understanding Check
+- [x] Ask footer + chat history feed
+- [x] Understanding Check block with streaming feedback
+- [x] Concept check submission action
+- [x] Pure-function lesson gating enforcement in UI
+
 ## In Progress
 
-- [ ] `@monaco-editor/react` installed
-- [ ] Monaco workspace with Struggle Heatmap badge
-- [ ] Roast My Code button + streaming display
+- [ ] TTS Audio hooks and components
+- [ ] Auto-continue wiring
 
 ## Next Up
 
-### Immediate (Week 4, remaining)
-- [ ] `npm install @monaco-editor/react`
-- [ ] `features/tutor/hooks/use-sse-stream.ts`
-- [ ] `features/tutor/components/blocks/code-block.tsx`
-- [ ] `features/tutor/components/workspace/monaco-workspace.tsx`
-- [ ] `features/tutor/actions/run-code.ts`
-- [ ] `features/tutor/actions/get-socratic-hint.ts`
-- [ ] `features/tutor/actions/get-code-roast.ts`
-- [ ] TutorStore additions and gating updates
+### Immediate (Week 6)
+- [ ] `features/tutor/hooks/use-tts-audio.ts`
+- [ ] `features/tutor/components/audio-controls.tsx`
+- [ ] Update `course-progress-slideout.tsx`
 
-
-
-### Week 5 — Ask Anything + Understanding Check + Hobby Context
-- [ ] Ask footer + chat history in feed (not separate panel)
-- [ ] Student onboarding: hobbies/interests input (post-signup profile step)
-- [ ] `PATCH /api/me/profile` with hobbies
-- [ ] Backend injects hobbies into RAG system prompt
-
-### Weeks 6–8 — Audio + Preview + Publish + Tests
+### Weeks 7–8 — Preview + Publish + Tests
 *(see roadmap.md for full task lists)*
 
 ## Open Questions
