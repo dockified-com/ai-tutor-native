@@ -62,44 +62,44 @@
 ---
 
 ## Phase 3 — Tutor UI Shell
-> **Week 3 | Status: ⬜ NOT STARTED**
+> **Week 3 | Status: ✅ COMPLETE**
 > Group A (store + layout) must be done first. Groups B, C, D, E can all run in parallel after that.
 
 ### Group A — Sequential: Core Store & Layout Shell
 
-- [ ] `npm install mermaid` (or `react-mermaid`)
-- [ ] `features/tutor/stores/tutor-store.ts` — TutorStore: revealed blocks, active block, audio, hints, ask answers, sidebar state
-- [ ] `features/tutor/components/tutor-layout.tsx` — 4-zone layout shell (`w-[450px]` left, `flex-1` right, `w-14` nav rail)
+- [x] `npm install mermaid` (or `react-mermaid`)
+- [x] `features/tutor/stores/tutor-store.ts` — TutorStore: revealed blocks, active block, audio, hints, ask answers, sidebar state
+- [x] `features/tutor/components/tutor-layout.tsx` — 4-zone layout shell (`w-[450px]` left, `flex-1` right, `w-14` nav rail)
 
 ### Group B — Parallel: Block Components (needs Group A store)
 
-- [ ] `features/tutor/components/blocks/markdown-block.tsx` — `font-serif leading-relaxed text-[15px]`
-- [ ] `features/tutor/components/blocks/mermaid-block.tsx`
-- [ ] `features/tutor/components/blocks/concept-check-block.tsx` — Yes/No buttons with color feedback
+- [x] `features/tutor/components/blocks/markdown-block.tsx` — `font-serif leading-relaxed text-[15px]`
+- [x] `features/tutor/components/blocks/mermaid-block.tsx`
+- [x] `features/tutor/components/blocks/concept-check-block.tsx` — Yes/No buttons with color feedback
 
 ### Group C — Parallel: Lesson Feed (needs Group A + B)
 
-- [ ] `features/tutor/components/lesson-feed.tsx` — scrollable feed, `fade-in-up` on new blocks
-- [ ] `features/tutor/components/continue-button.tsx` — `rounded-full`, block count badge
+- [x] `features/tutor/components/lesson-feed.tsx` — scrollable feed, `fade-in-up` on new blocks
+- [x] `features/tutor/components/continue-button.tsx` — `rounded-full`, block count badge
 
 ### Group D — Parallel: Workspace (needs Group A store)
 
-- [ ] `features/tutor/lib/derive-right-pane.ts` — `Block → 'monaco' | 'mermaid' | 'empty'`
-- [ ] `features/tutor/components/workspace/workspace-shell.tsx` — pure derivation from `active_block_id`
-- [ ] `features/tutor/components/workspace/mermaid-workspace.tsx`
-- [ ] `features/tutor/components/workspace/empty-workspace.tsx` — Hand icon + "Welcome to the Course!"
+- [x] `features/tutor/lib/derive-right-pane.ts` — `Block → 'monaco' | 'mermaid' | 'empty'`
+- [x] `features/tutor/components/workspace/workspace-shell.tsx` — pure derivation from `active_block_id`
+- [x] `features/tutor/components/workspace/mermaid-workspace.tsx`
+- [x] `features/tutor/components/workspace/empty-workspace.tsx` — Hand icon + "Welcome to the Course!"
 
 ### Group E — Parallel: Nav & Sidebars (needs Group A layout)
 
-- [ ] `features/tutor/components/nav-rail.tsx` — `w-14`, PieChart + FileText + Globe + Settings icons
-- [ ] `features/tutor/components/course-progress-slideout.tsx` — Sheet, `w-[320px]`, `animate-slide-left`, static curriculum tree
-- [ ] `features/tutor/components/notes-slideout.tsx` — Tabs: Instructor Notes / My Notes
+- [x] `features/tutor/components/nav-rail.tsx` — `w-14`, PieChart + FileText + Globe + Settings icons
+- [x] `features/tutor/components/course-progress-slideout.tsx` — Sheet, `w-[320px]`, `animate-slide-left`, static curriculum tree
+- [x] `features/tutor/components/notes-slideout.tsx` — Tabs: Instructor Notes / My Notes
 
 ### Group F — Sequential: Progress Actions & Route (needs Group C + D)
 
-- [ ] `features/progress/actions/mark-block-complete.ts`
-- [ ] `features/progress/actions/update-bookmark.ts`
-- [ ] `app/courses/[id]/lesson/[lesson_id]/page.tsx` — RSC: fetch blocks + progress, render TutorLayout
+- [x] `features/progress/actions/mark-block-complete.ts`
+- [x] `features/progress/actions/update-bookmark.ts`
+- [x] `app/courses/[id]/lesson/[lesson_id]/page.tsx` — RSC: fetch blocks + progress, render TutorLayout
 
 ---
 
