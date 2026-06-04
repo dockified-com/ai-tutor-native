@@ -53,6 +53,18 @@ export function ContinueButton({ onMarkComplete, onUpdateBookmark }: ContinueBut
     }
   };
 
+  const audio = useTutorStore(state => state.audio);
+  const prevPlayingRef = React.useRef(audio.playing);
+
+  React.useEffect(() => {
+    if (prevPlayingRef.current && !audio.playing) {
+      if (audio.autoContinue && enabled) {
+        handleContinue();
+      }
+    }
+    prevPlayingRef.current = audio.playing;
+  }, [audio.playing, audio.autoContinue, enabled]);
+
   return (
     <div className="py-8 flex justify-center">
       <button
