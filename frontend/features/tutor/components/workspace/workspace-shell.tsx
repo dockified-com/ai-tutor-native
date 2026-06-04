@@ -3,7 +3,8 @@ import { useTutorStore } from '../../stores/tutor-store';
 import { deriveRightPane } from '../../lib/derive-right-pane';
 import { EmptyWorkspace } from './empty-workspace';
 import { MermaidWorkspace } from './mermaid-workspace';
-import { Block, MermaidBlock } from '@/shared/types/blocks';
+import { MonacoWorkspace } from './monaco-workspace';
+import { Block, MermaidBlock, CodeBlock } from '@/shared/types/blocks';
 
 export function WorkspaceShell() {
   const activeBlockId = useTutorStore((state) => state.activeBlockId);
@@ -38,7 +39,7 @@ export function WorkspaceShell() {
   }
 
   if (paneType === 'monaco') {
-    return <EmptyWorkspace label="Code editor — coming in Phase 4" />;
+    return <MonacoWorkspace block={stickyBlock as CodeBlock} />;
   }
 
   return <EmptyWorkspace />;
