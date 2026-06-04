@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { Sparkles } from 'lucide-react';
 import { useTutorStore } from '../stores/tutor-store';
 import { MarkdownBlock } from './blocks/markdown-block';
 import { MermaidBlock } from './blocks/mermaid-block';
 import { ConceptCheckBlock } from './blocks/concept-check-block';
 import { CodeBlock } from './blocks/code-block';
-import { MarkdownBlock as MarkdownBlockType, MermaidBlock as MermaidBlockType, ConceptCheckBlock as ConceptCheckBlockType, CodeBlock as CodeBlockType } from '@/shared/types/blocks';
+import { UnderstandingCheckBlock } from './blocks/understanding-check-block';
+import { MarkdownBlock as MarkdownBlockType, MermaidBlock as MermaidBlockType, ConceptCheckBlock as ConceptCheckBlockType, CodeBlock as CodeBlockType, UnderstandingCheckBlock as UnderstandingCheckBlockType } from '@/shared/types/blocks';
 
 export function LessonFeed() {
   const store = useTutorStore();
@@ -50,12 +52,32 @@ export function LessonFeed() {
             {block.type === 'mermaid' && <MermaidBlock block={block as MermaidBlockType} index={index} />}
             {block.type === 'concept_check' && <ConceptCheckBlock block={block as ConceptCheckBlockType} index={index} />}
             {block.type === 'code' && <CodeBlock block={block as CodeBlockType} index={index} />}
-            {block.type === 'understanding_check' && (
-              <div className="text-slate-400 italic py-4 border-l-2 border-transparent pl-4">Understanding check — coming in Phase 5</div>
-            )}
+            {block.type === 'understanding_check' && <UnderstandingCheckBlock block={block as UnderstandingCheckBlockType} index={index} />}
           </div>
         );
       })}
+
+      {store.chatHistory.length > 0 && (
+        <div className="border-t border-slate-100 pt-6 mt-2 flex flex-col gap-4">
+          {store.chatHistory.map((chat, idx) => {
+            const isUser = chat.role === 'user';
+            return (
+              <div key={idx} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+                {isUser ? (
+                  <div className="max-w-[85%] p-3.5 rounded-2xl rounded-br-sm text-[14px] leading-relaxed bg-slate-800 text-white shadow-sm font-sans whitespace-pre-wrap">
+                    {chat.text}
+                  </div>
+                ) : (
+                  <div className="max-w-[85%] p-3.5 rounded-2xl rounded-bl-sm text-[14px] leading-relaxed bg-emerald-50 border border-emerald-100 text-emerald-900 shadow-sm flex gap-3 items-start font-serif whitespace-pre-wrap">
+                    <Sparkles size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                    <div>{chat.text || <span className="animate-pulse normal-case text-emerald-600 font-sans">thinking...</span>}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <div ref={bottomRef} className="h-4" />
     </div>
