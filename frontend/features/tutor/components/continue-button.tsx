@@ -33,7 +33,7 @@ export function ContinueButton({ onMarkComplete, onUpdateBookmark }: ContinueBut
     ? "Next Lesson" // or "Course Complete" 
     : "Continue";
 
-  const blocksRemaining = blocks.length - 1 - revealedIndex;
+  const blocksRemaining = Math.max(0, blocks.length - 1 - revealedIndex);
 
   const handleContinue = async () => {
     if (!enabled) return;
@@ -49,6 +49,7 @@ export function ContinueButton({ onMarkComplete, onUpdateBookmark }: ContinueBut
     } else {
       // Final block continue - mark it complete
       onMarkComplete(activeBlock.id).catch(err => console.error(err));
+      alert('Lesson Complete! (Next Lesson routing not implemented yet)');
     }
   };
 
@@ -56,9 +57,9 @@ export function ContinueButton({ onMarkComplete, onUpdateBookmark }: ContinueBut
     <div className="py-8 flex justify-center">
       <button
         onClick={handleContinue}
-        disabled={!enabled || isFinalBlock} // Actually if it's final block, what does it do? We can just disable for now if we don't have routing yet.
+        disabled={!enabled}
         className={`rounded-full px-8 py-3 font-medium transition-colors flex items-center gap-3 ${
-          enabled && !isFinalBlock 
+          enabled
             ? "bg-emerald-500 hover:bg-emerald-600 text-white" 
             : "bg-slate-200 text-slate-400 cursor-not-allowed"
         }`}

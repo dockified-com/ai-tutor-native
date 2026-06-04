@@ -52,6 +52,13 @@ export default async function LessonPage({
       content: {
         starter_code: "function App() { return <div />; }"
       }
+    },
+    {
+      id: "b5",
+      type: "understanding_check",
+      content: {
+        prompt: "In your own words, explain how state differs from props in React."
+      }
     }
   ];
 

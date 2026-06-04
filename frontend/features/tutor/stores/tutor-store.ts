@@ -61,6 +61,14 @@ export interface TutorState {
   incrementCodeAttempt: (blockId: string) => void;
   setHint: (blockId: string, hint: string | null) => void;
   setRoast: (blockId: string, roast: RoastState | null) => void;
+  // Phase 5 Actions
+  setAskInput: (input: string) => void;
+  appendChatHistory: (message: { role: 'user' | 'ai'; text: string }) => void;
+  updateLastChat: (text: string) => void;
+  setUnderstandingResponse: (blockId: string, response: string) => void;
+  setUnderstandingFeedback: (blockId: string, feedback: string) => void;
+  setUnderstandingPassed: (blockId: string, passed: boolean) => void;
+  incrementUnderstandingAttempt: (blockId: string) => void;
 }
 
 export const useTutorStore = create<TutorState>()((set) => ({
@@ -165,5 +173,42 @@ export const useTutorStore = create<TutorState>()((set) => ({
   setRoast: (blockId, roast) =>
     set((state) => ({
       roasts: { ...state.roasts, [blockId]: roast },
+    })),
+
+  setAskInput: (input) => set({ askInput: input }),
+
+  appendChatHistory: (message) =>
+    set((state) => ({ chatHistory: [...state.chatHistory, message] })),
+
+  updateLastChat: (text) =>
+    set((state) => {
+      const chatHistory = [...state.chatHistory];
+      if (chatHistory.length > 0) {
+        chatHistory[chatHistory.length - 1].text += text;
+      }
+      return { chatHistory };
+    }),
+
+  setUnderstandingResponse: (blockId, response) =>
+    set((state) => ({
+      understandingResponse: { ...state.understandingResponse, [blockId]: response },
+    })),
+
+  setUnderstandingFeedback: (blockId, feedback) =>
+    set((state) => ({
+      understandingFeedback: { ...state.understandingFeedback, [blockId]: feedback },
+    })),
+
+  setUnderstandingPassed: (blockId, passed) =>
+    set((state) => ({
+      understandingPassed: { ...state.understandingPassed, [blockId]: passed },
+    })),
+
+  incrementUnderstandingAttempt: (blockId) =>
+    set((state) => ({
+      understandingAttempts: {
+        ...state.understandingAttempts,
+        [blockId]: (state.understandingAttempts[blockId] || 0) + 1,
+      },
     })),
 }));
