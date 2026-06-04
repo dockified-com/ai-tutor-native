@@ -4,11 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-**Week 1 — Foundation: Auth + Dashboard + Wizard Shell + Design System**
+**Week 4 — Monaco + Code Execution + Socratic Hints**
 
 ## Current Goal
 
-Build the full design system (light theme, emerald accent, tri-font system, shadcn/ui), the `shared/` foundation layer, the dashboard, and the 3-step creation wizard shell.
+Build the Monaco code execution workspace, integrate SSE for streaming Socratic hints and roasts.
 
 ## Completed
 
@@ -35,67 +35,35 @@ Build the full design system (light theme, emerald accent, tri-font system, shad
 - [x] `features/authoring/hooks/use-generation-status.ts` — SWR poll every 3s
 - [x] `app/courses/[id]/page.tsx` — course detail (status, lessons, action bar)
 
+### Phase 3: Tutor UI Shell
+- [x] `features/tutor/stores/tutor-store.ts` — Zustand store for tutor state
+- [x] `features/tutor/components/tutor-layout.tsx` — 4-zone layout shell
+- [x] Block components: MarkdownBlock, MermaidBlock, ConceptCheckBlock
+- [x] `features/tutor/components/lesson-feed.tsx` & `continue-button.tsx`
+- [x] Workspace shell and right pane derivation
+- [x] Nav rail and slide-out sidebars (Progress, Notes)
+- [x] `features/progress/actions` for bookmarking and block completion
+- [x] `app/courses/[id]/lesson/[lesson_id]/page.tsx` — Lesson RSC + Client shell
+
 ## In Progress
 
-- [ ] `app/globals.css` — light theme token system, tri-font setup, animation keyframes, custom scrollbars
-- [ ] Merriweather font via `next/font/google` in `layout.tsx`
-- [ ] shadcn/ui install + theme configuration
-
-## Next Up
-
-### Immediate (Week 1, remaining)
-
-**Design System foundation:**
-- [ ] `app/globals.css` — full token system (all CSS variables from ui-context.md), keyframe animations (`fadeInUp`, `slideLeft`), custom scrollbars, `.fade-in-up`, `.animate-slide-left` classes
-- [ ] `app/layout.tsx` — add Merriweather font alongside Geist fonts
-- [ ] `npx shadcn@latest init` — configure for light theme, slate base, emerald accent
-- [ ] Add components: Button, Card, Badge, Sheet, Dialog, Input, Textarea, Select, Progress, Skeleton, Separator, Tabs, Sonner
-
-**Shared layer:**
-- [ ] `shared/lib/cn.ts` — `cn()` utility (clsx + tailwind-merge)
-- [ ] `shared/lib/errors.ts` — `APIError` class + error parsing
-- [ ] `shared/types/blocks.ts` — Block discriminated union (all 5 types; strip `hint_seed_prompt` and `evaluation_rubric`)
-- [ ] `shared/types/course.ts` — Course, Lesson, Enrollment, CourseStatus types
-- [ ] `shared/types/api.ts` — `APIError` response shape, `RunCodeResponse`, `UnderstandingResult`
-- [ ] `shared/api/client.ts` — authenticated fetch wrapper (injects Clerk JWT, throws `APIError` on non-2xx)
-- [ ] `shared/api/endpoints.ts` — typed URL builder functions
-
-**Auth feature:**
-- [ ] `features/auth/hooks/use-user-role.ts` — SWR fetch to `/api/me`
-- [ ] `features/auth/components/role-guard.tsx` — wraps children conditionally by role
-- [ ] `features/auth/index.ts` — public API
-
-**Dashboard + Courses:**
-- [ ] `features/courses/components/course-card.tsx` — creator card (status + actions) and student card (progress %)
-- [ ] `features/courses/components/course-status-badge.tsx` — draft/generating/ready/published/failed
-- [ ] `features/courses/hooks/use-course.ts` — SWR fetcher
-- [ ] `features/courses/index.ts`
-
-**Authoring wizard:**
-- [ ] `features/authoring/stores/wizard-store.ts` — Zustand, persisted to localStorage
-- [ ] `features/authoring/components/creation-wizard/wizard-shell.tsx` — step container + step indicator
-- [ ] `features/authoring/components/creation-wizard/step-upload.tsx` — PDF drag-drop + validation
-- [ ] `features/authoring/components/creation-wizard/step-configure.tsx` — title, desc, lang, custom prompt
-- [ ] `features/authoring/index.ts`
-
-**Pages:**
-- [ ] `app/dashboard/page.tsx` — RSC: split by role, render CourseCard grid
-- [ ] `app/courses/new/page.tsx` — wizard page
-
-### Week 3 — Tutor Shell
-- [ ] `features/tutor/stores/tutor-store.ts` — TutorStore full interface (revealed blocks, active block, audio, hints, roasts, chatHistory, sidebar state)
-- [ ] All tutor component stubs (see roadmap.md Week 3)
-- [ ] `features/tutor/lib/derive-right-pane.ts` — pure function
-- [ ] `features/progress/` module
-- [ ] `app/courses/[id]/lesson/[lesson_id]/page.tsx`
-
-### Week 4 — Code + Superpowers
 - [ ] `@monaco-editor/react` installed
 - [ ] Monaco workspace with Struggle Heatmap badge
 - [ ] Roast My Code button + streaming display
+
+## Next Up
+
+### Immediate (Week 4, remaining)
+- [ ] `npm install @monaco-editor/react`
+- [ ] `features/tutor/hooks/use-sse-stream.ts`
+- [ ] `features/tutor/components/blocks/code-block.tsx`
+- [ ] `features/tutor/components/workspace/monaco-workspace.tsx`
+- [ ] `features/tutor/actions/run-code.ts`
+- [ ] `features/tutor/actions/get-socratic-hint.ts`
 - [ ] `features/tutor/actions/get-code-roast.ts`
-- [ ] Backend: `POST /api/blocks/{id}/roast` endpoint
-- [ ] Backend: `GET /api/blocks/{id}/struggle-stats` endpoint
+- [ ] TutorStore additions and gating updates
+
+
 
 ### Week 5 — Ask Anything + Understanding Check + Hobby Context
 - [ ] Ask footer + chat history in feed (not separate panel)
