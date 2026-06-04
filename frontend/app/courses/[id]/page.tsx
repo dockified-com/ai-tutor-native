@@ -4,6 +4,7 @@ import Link from "next/link";
 import { apiFetch } from "@/shared/api/client";
 import { CourseStatusBadge } from "@/features/courses/components/course-status-badge";
 import { GenerationStatus } from "@/features/authoring";
+import { PublishButton } from "@/features/authoring/components/publish-button";
 import { RoleGuard } from "@/features/auth";
 import { AppShell } from "@/shared/components/app-shell";
 import { UserMenu } from "@/features/auth";
@@ -114,17 +115,7 @@ export default async function CourseDetailPage(props: { params: Promise<{ id: st
                 >
                   Preview
                 </Link>
-                {course.status === "ready" && (
-                  <form action={async () => {
-                    "use server";
-                    // Stub for publish action
-                    console.log("Publishing course", course?.id);
-                  }}>
-                    <button type="submit" className="px-4 py-2 bg-emerald-600 text-white rounded-md font-medium hover:bg-emerald-700 transition-colors">
-                      Publish
-                    </button>
-                  </form>
-                )}
+                {course.status === "ready" && <PublishButton />}
               </div>
             </RoleGuard>
           </div>
