@@ -12,6 +12,11 @@ from app.shared.db import Base
 # Import all model modules so their tables register on Base.metadata.
 # Add new model imports here as features are introduced.
 from app.features.auth import models  # noqa: F401
+from app.features.courses import models as courses_models  # noqa: F401
+from app.features.authoring import models as authoring_models  # noqa: F401
+from app.features.enrollment import models as enrollment_models  # noqa: F401
+from app.features.progress import models as progress_models  # noqa: F401
+from app.features.tutor import models as tutor_models  # noqa: F401
 
 config = context.config
 config.set_main_option("sqlalchemy.url", get_settings().database_url)
