@@ -44,18 +44,18 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `Course` ORM model (`courses/models.py`) | 🔴 | `CourseStatus`, `GenerationPhase` enums |
-| `Lesson` + `Block` ORM models (`authoring/models.py`) | 🔴 | `LessonStatus`, `BlockType` enums; `JSONB` content |
-| `Enrollment` ORM model (`enrollment/models.py`) | 🔴 | Bookmark fields |
-| `BlockProgress` ORM model (`progress/models.py`) | 🔴 | `BlockProgressStatus` enum |
-| `CodeSubmission` ORM model (`tutor/models.py`) | 🔴 | `CodeVerdict` enum |
-| `ConceptCheckAttempt` ORM model (`tutor/models.py`) | 🔴 | |
-| `UnderstandingCheckAttempt` ORM model (`tutor/models.py`) | 🔴 | `UnderstandingLevel` enum |
-| `Question` ORM model (`tutor/models.py`) | 🔴 | `source_chunks JSONB` |
-| `CourseChunk` ORM model (`authoring/models.py`) | 🔴 | `VECTOR(1536)` embedding column |
-| Register all models in `alembic/env.py` | 🔴 | Import each new feature's models module |
-| Alembic migration: all remaining tables | 🔴 | Single migration covering 10 new tables |
-| `__init__.py` stubs for all new feature folders | 🔴 | Empty init files to make packages importable |
+| `Course` ORM model (`courses/models.py`) | ✅ | `CourseStatus`, `GenerationPhase` enums |
+| `Lesson` + `Block` ORM models (`authoring/models.py`) | ✅ | `LessonStatus`, `BlockType` enums; `JSONB` content |
+| `Enrollment` ORM model (`enrollment/models.py`) | ✅ | Bookmark fields |
+| `BlockProgress` ORM model (`progress/models.py`) | ✅ | `BlockProgressStatus` enum |
+| `CodeSubmission` ORM model (`tutor/models.py`) | ✅ | `CodeVerdict` enum |
+| `ConceptCheckAttempt` ORM model (`tutor/models.py`) | ✅ | |
+| `UnderstandingCheckAttempt` ORM model (`tutor/models.py`) | ✅ | `UnderstandingLevel` enum |
+| `Question` ORM model (`tutor/models.py`) | ✅ | `source_chunks JSONB` |
+| `CourseChunk` ORM model (`authoring/models.py`) | ✅ | `VECTOR(1536)` embedding column |
+| Register all models in `alembic/env.py` | ✅ | All 5 feature model modules imported |
+| Alembic migration: all remaining tables | ✅ | `add_full_schema` — 10 new tables applied 2026-06-05 |
+| `__init__.py` stubs for all new feature folders | ✅ | Empty init files in all 5 feature packages |
 
 ---
 
@@ -183,7 +183,7 @@
 | Week | Theme | Done | Total | % |
 |---|---|---|---|---|
 | Week 1 | Auth Layer | 16 | 16 | 100% |
-| Week 2A | DB Schema | 0 | 12 | 0% |
+| Week 2A | DB Schema | 12 | 12 | 100% |
 | Week 2B | Shared Infra | 0 | 9 | 0% |
 | Week 2C | Generation Pipeline | 0 | 13 | 0% |
 | Week 3 | Courses / Enrollment | 0 | 8 | 0% |
@@ -192,8 +192,8 @@
 | Week 6 | Progress | 0 | 4 | 0% |
 | Week 7 | Preview + Tests | 0 | 8 | 0% |
 | Week 8 | Deploy | 0 | 8 | 0% |
-| **Total** | | **16** | **93** | **17%** |
+| **Total** | | **28** | **93** | **30%** |
 
 ---
 
-*Last updated: 2026-06-04. Update after each completed task.*
+*Last updated: 2026-06-05. Week 2A complete — all 10 ORM models + Alembic migration applied.*
