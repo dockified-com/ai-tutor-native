@@ -13,6 +13,13 @@ class Settings(BaseSettings):
     clerk_jwks_url: str
     clerk_webhook_secret: str
 
+    anthropic_api_key: str = ""
+    openai_api_key: str = ""
+    judge0_api_key: str = ""
+    supabase_url: str = ""
+    supabase_service_role_key: str = ""
+    frontend_url: str = "http://localhost:3000"
+
 
 def get_settings() -> Settings:
     return Settings()

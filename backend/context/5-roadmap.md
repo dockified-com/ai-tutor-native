@@ -8,9 +8,9 @@
 
 ---
 
-## Current Position: Week 2A — Full Database Schema
+## Current Position: Week 2C — Generation Pipeline
 
-Week 1 (Auth Layer) is **complete**. The next atomic step is building all ORM models and the Alembic migration for the remaining 10 database tables.
+Week 2B (Shared Infrastructure) is **complete**. The next atomic step is building the async generation pipeline and related routes in `features/authoring/`.
 
 ---
 
@@ -30,7 +30,7 @@ All tasks done. Auth layer is production-ready.
 
 ---
 
-## Phase 2 — Week 2A: Full Database Schema 🎯 CURRENT
+## Phase 2 — Week 2A: Full Database Schema ✅ COMPLETE
 
 **Goal:** Create all ORM models for the remaining 10 tables and generate one Alembic migration.
 
@@ -193,7 +193,7 @@ from app.features.tutor import models      # noqa: F401
 
 ---
 
-## Phase 3 — Week 2B: Shared Infrastructure
+## Phase 3 — Week 2B: Shared Infrastructure ✅ COMPLETE
 
 After 2A is merged, implement in this order:
 
@@ -208,7 +208,7 @@ After 2A is merged, implement in this order:
 
 ---
 
-## Phase 4 — Week 2C: Generation Pipeline
+## Phase 4 — Week 2C: Generation Pipeline 🎯 CURRENT
 
 Implement `features/authoring/` in this order:
 

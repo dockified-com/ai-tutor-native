@@ -272,23 +272,25 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 ```python
 # shared/ai/anthropic_client.py
-import anthropic
+from anthropic import AsyncAnthropic
+from app.shared.config import get_settings
 
-_client: anthropic.AsyncAnthropic | None = None
+settings = get_settings()
 
-def get_anthropic_client() -> anthropic.AsyncAnthropic:
-    global _client
-    if _client is None:
-        _client = anthropic.AsyncAnthropic(api_key=settings.ANTHROPIC_API_KEY)
-    return _client
+# Instantiate the singleton AsyncAnthropic client
+anthropic_client = AsyncAnthropic(api_key=settings.anthropic_api_key)
 ```
 
 ```python
 # shared/ai/openai_client.py
 from openai import AsyncOpenAI
+from app.shared.config import get_settings
 
-def get_openai_client() -> AsyncOpenAI:
-    return AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+settings = get_settings()
+
+openai_client = AsyncOpenAI(
+    api_key=settings.openai_api_key,
+)
 ```
 
 ```python
@@ -314,32 +316,36 @@ async def execute_code(source: str, language_id: int, stdin: str = "") -> Judge0
 
 ```python
 # shared/rag/retriever.py
+from fastapi import Depends
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.features.authoring.models import CourseChunk
+from app.shared.deps import get_db
+from app.shared.ai.openai_client import openai_client
 
 async def embed(text: str) -> list[float]:
-    client = get_anthropic_client()
-    response = await client.embeddings.create(
-        model="voyage-3",
-        input=[text],
+    response = await openai_client.embeddings.create(
+        input=text,
+        model="text-embedding-3-small"
     )
-    return response.embeddings[0].embedding
+    return response.data[0].embedding
 
 async def retrieve(
     query: str,
-    course_id: str,
-    db: AsyncSession,
     top_k: int = 5,
+    db: AsyncSession = Depends(get_db)
 ) -> list[CourseChunk]:
-    embedding = await embed(query)
-    chunks = await db.execute(
-        text("""
-            SELECT * FROM course_chunks
-            WHERE course_id = :course_id
-            ORDER BY embedding <=> :embedding
-            LIMIT :top_k
-        """),
-        {"course_id": course_id, "embedding": embedding, "top_k": top_k},
+    query_embedding = await embed(query)
+
+    stmt = (
+        select(CourseChunk)
+        .order_by(CourseChunk.embedding.cosine_distance(query_embedding))
+        .limit(top_k)
     )
-    return [CourseChunk.model_validate(row) for row in chunks]
+
+    result = await db.execute(stmt)
+    return list(result.scalars().all())
 ```
 
 ### `shared/config.py`
@@ -365,22 +371,25 @@ settings = Settings()
 ### `shared/errors.py`
 
 ```python
-class APIError(Exception):
-    def __init__(self, status_code: int, detail: str):
-        self.status_code = status_code
-        self.detail = detail
+from fastapi import HTTPException
+from starlette import status
+
+class APIError(HTTPException):
+    def __init__(self, message: str, status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR):
+        self.message = message
+        super().__init__(status_code=status_code, detail=message)
 
 class NotFoundError(APIError):
-    def __init__(self, resource: str):
-        super().__init__(404, f"{resource} not found")
+    def __init__(self, message: str = "Resource not found"):
+        super().__init__(message=message, status_code=status.HTTP_404_NOT_FOUND)
 
 class ForbiddenError(APIError):
-    def __init__(self):
-        super().__init__(403, "Access denied")
+    def __init__(self, message: str = "Access forbidden"):
+        super().__init__(message=message, status_code=status.HTTP_403_FORBIDDEN)
 
 class GenerationError(APIError):
-    def __init__(self, phase: str, detail: str):
-        super().__init__(500, f"Generation failed at {phase}: {detail}")
+    def __init__(self, message: str = "Error during generation"):
+        super().__init__(message=message, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Global handler in main.py
 @app.exception_handler(APIError)
