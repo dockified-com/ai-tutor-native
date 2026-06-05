@@ -27,7 +27,7 @@ async def execute_code(code: str, language: str) -> Judge0Result:
     settings = get_settings()
     
     # Use RapidAPI's Judge0 CE URL if not explicitly set in settings
-    api_url = getattr(settings, "judge0_api_url", "https://judge0-ce.p.rapidapi.com")
+    api_url = settings.judge0_api_url
     api_key = settings.judge0_api_key
     
     language_id = LANGUAGE_IDS.get(language.lower())
@@ -59,5 +59,5 @@ async def execute_code(code: str, language: str) -> Judge0Result:
         return Judge0Result(
             stdout=data.get("stdout"),
             stderr=data.get("stderr") or data.get("compile_output"),
-            status=data.get("status", {}).get("description", "Unknown")
+            status=(data.get("status") or {}).get("description", "Unknown")
         )

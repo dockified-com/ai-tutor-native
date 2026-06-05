@@ -316,12 +316,12 @@ async def execute_code(source: str, language_id: int, stdin: str = "") -> Judge0
 
 ```python
 # shared/rag/retriever.py
-from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.features.authoring.models import CourseChunk
-from app.shared.deps import get_db
+
+
 from app.shared.ai.openai_client import openai_client
 
 async def embed(text: str) -> list[float]:
@@ -333,8 +333,8 @@ async def embed(text: str) -> list[float]:
 
 async def retrieve(
     query: str, 
-    top_k: int = 5, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession,
+    top_k: int = 5
 ) -> list[CourseChunk]:
     query_embedding = await embed(query)
     
@@ -394,7 +394,7 @@ class GenerationError(APIError):
 # Global handler in main.py
 @app.exception_handler(APIError)
 async def api_error_handler(request, exc):
-    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
 ```
 
 ---

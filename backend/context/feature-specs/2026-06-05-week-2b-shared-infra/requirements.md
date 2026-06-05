@@ -60,5 +60,5 @@ When delegating tasks to subagents for parallel execution, provide them with the
 **Goal:** Implement vector embedding and retrieval functions in `app/shared/rag/retriever.py`.
 **Instructions:**
 - Create an `embed(text: str)` function using OpenAI's `text-embedding-3-small` model.
-- Create a `retrieve(query: str, top_k: int = 5)` function that uses pgvector to query against the `CourseChunk` table.
+- Create a `retrieve(query: str, db: AsyncSession, top_k: int = 5)` function that uses pgvector to query against the `CourseChunk` table. Callers must pass the database session explicitly rather than relying on FastAPI dependency injection.
 - Ensure the retrieval function is properly typed and returns the matching chunk records.

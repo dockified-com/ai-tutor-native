@@ -1,9 +1,7 @@
-from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.features.authoring.models import CourseChunk
-from app.shared.deps import get_db
 
 
 from app.shared.ai.openai_client import openai_client
@@ -22,8 +20,8 @@ async def embed(text: str) -> list[float]:
 
 async def retrieve(
     query: str, 
-    top_k: int = 5, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession,
+    top_k: int = 5
 ) -> list[CourseChunk]:
     """
     Retrieve the top_k most relevant CourseChunks for the given query.
