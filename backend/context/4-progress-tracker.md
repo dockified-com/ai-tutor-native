@@ -63,15 +63,15 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `shared/errors.py` | 🔴 | `APIError`, `NotFoundError`, `ForbiddenError`, `GenerationError` |
+| `shared/errors.py` | ✅ | `APIError`, `NotFoundError`, `ForbiddenError`, `GenerationError` |
 | `shared/ai/anthropic_client.py` | 🔴 | Singleton `AsyncAnthropic` client |
 | `shared/ai/openai_client.py` | 🔴 | `AsyncOpenAI` client |
 | `shared/ai/judge0_client.py` | 🔴 | `execute_code()` via httpx |
 | `shared/rag/retriever.py` | 🔴 | `embed()` + `retrieve()` top-k pgvector |
-| `shared/utils/retry.py` | 🔴 | Async exponential backoff utility |
-| Add AI/external key fields to `shared/config.py` | 🔴 | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `JUDGE0_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `FRONTEND_URL` |
-| Register error handler in `app/main.py` | 🔴 | `@app.exception_handler(APIError)` |
-| Add CORS middleware to `app/main.py` | 🔴 | Locked to `settings.FRONTEND_URL` |
+| `shared/utils/retry.py` | ✅ | Async exponential backoff utility |
+| Add AI/external key fields to `shared/config.py` | ✅ | `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `JUDGE0_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `FRONTEND_URL` |
+| Register error handler in `app/main.py` | ✅ | `@app.exception_handler(APIError)` |
+| Add CORS middleware to `app/main.py` | ✅ | Locked to `settings.FRONTEND_URL` |
 
 ---
 
