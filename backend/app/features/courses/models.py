@@ -1,40 +1,61 @@
-from enum import Enum as PyEnum
-import uuid
-from sqlalchemy import Column, String, Text, Integer, ForeignKey, DateTime
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
+from datetime import datetime
+from enum import Enum
+from uuid import UUID, uuid4
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Enum as SQLEnum
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.shared.db import Base
 
-class CourseStatus(str, PyEnum):
+
+class CourseStatus(str, Enum):
     draft = "draft"
     generating = "generating"
     ready = "ready"
     published = "published"
     failed = "failed"
 
-class GenerationPhase(str, PyEnum):
+
+class GenerationPhase(str, Enum):
+    extracting = "extracting"
+    chunking = "chunking"
+    embedding = "embedding"
     outline = "outline"
-    content = "content"
-    review = "review"
-    finalizing = "finalizing"
+    blocks = "blocks"
+    tts = "tts"
+
 
 class Course(Base):
     __tablename__ = "courses"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    creator_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    code = Column(String(6), unique=True, nullable=True)
-    title = Column(Text, nullable=False)
-    description = Column(Text, nullable=True)
-    default_language = Column(Text, default="python")
-    source_pdf_url = Column(Text, nullable=False)
-    custom_prompt = Column(Text, nullable=True)
-    status = Column(String, default=CourseStatus.draft.value)
-    generation_phase = Column(String, nullable=True)
-    generation_error = Column(Text, nullable=True)
-    total_lessons = Column(Integer, default=0)
-    total_blocks = Column(Integer, default=0)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    creator_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    code: Mapped[str | None] = mapped_column(String(6), unique=True, nullable=True)
+    title: Mapped[str] = mapped_column(Text, nullable=False)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    default_language: Mapped[str] = mapped_column(
+        String(32), server_default="python", nullable=False
+    )
+    source_pdf_url: Mapped[str] = mapped_column(Text, nullable=False)
+    custom_prompt: Mapped[str | None] = mapped_column(Text, nullable=True)
+    status: Mapped[CourseStatus] = mapped_column(
+        SQLEnum(CourseStatus, native_enum=False),
+        server_default="draft",
+        nullable=False,
+    )
+    generation_phase: Mapped[GenerationPhase | None] = mapped_column(
+        SQLEnum(GenerationPhase, native_enum=False),
+        nullable=True,
+    )
+    generation_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    total_lessons: Mapped[int] = mapped_column(Integer, server_default="0", nullable=False)
+    total_blocks: Mapped[int] = mapped_column(Integer, server_default="0", nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
