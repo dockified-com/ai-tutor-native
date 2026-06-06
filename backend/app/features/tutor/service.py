@@ -10,6 +10,8 @@ from app.features.tutor.models import CodeSubmission, CodeVerdict
 from app.features.tutor.schemas import BlockOut, RunCodeResponse
 from app.shared.ai.judge0_client import Judge0Result, execute_code
 from app.shared.ai.anthropic_client import anthropic_client
+from typing import AsyncGenerator
+from app.features.tutor.prompts import SOCRATIC_SYSTEM_PROMPT, build_socratic_user_message
 from app.shared.errors import NotFoundError, ForbiddenError
 
 
@@ -154,3 +156,62 @@ async def _ai_eval_verdict(content: dict, code: str, stdout: str | None) -> Code
         return CodeVerdict.passed if data.get("verdict") == "passed" else CodeVerdict.failed
     except (json.JSONDecodeError, KeyError, IndexError):
         return CodeVerdict.failed
+
+
+async def get_socratic_hint(
+    db: AsyncSession,
+    user: User,
+    block_id: uuid.UUID,
+    enrollment_id: uuid.UUID,
+) -> AsyncGenerator[dict, None]:
+    row = await db.execute(
+        text("SELECT user_id FROM enrollments WHERE id = :eid"),
+        {"eid": str(enrollment_id)},
+    )
+    enrollment_row = row.fetchone()
+    if not enrollment_row:
+        raise NotFoundError("Enrollment")
+    if enrollment_row.user_id != user.id:
+        raise ForbiddenError()
+
+    last_row = await db.execute(
+        text(
+            "SELECT code, stdout, stderr, attempt_number FROM code_submissions "
+            "WHERE enrollment_id = :eid AND block_id = :bid ORDER BY attempt_number DESC LIMIT 1"
+        ),
+        {"eid": str(enrollment_id), "bid": str(block_id)},
+    )
+    last = last_row.fetchone()
+    if not last:
+        raise NotFoundError("CodeSubmission")
+
+    block_row = await db.execute(
+        text("SELECT content FROM blocks WHERE id = :bid"),
+        {"bid": str(block_id)},
+    )
+    block = block_row.fetchone()
+    content: dict = block.content if isinstance(block.content, dict) else json.loads(block.content)
+
+    user_message = build_socratic_user_message(
+        problem_prompt=content.get("prompt", ""),
+        student_code=last.code,
+        stdout=last.stdout,
+        stderr=last.stderr,
+        attempt_count=last.attempt_number,
+    )
+
+    async def _stream() -> AsyncGenerator[dict, None]:
+        try:
+            async with anthropic_client.messages.stream(
+                model="claude-sonnet-4-6",
+                max_tokens=512,
+                system=SOCRATIC_SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": user_message}],
+            ) as stream:
+                async for text_chunk in stream.text_stream:
+                    yield {"event": "token", "data": text_chunk}
+            yield {"event": "done", "data": ""}
+        except Exception:
+            yield {"event": "error", "data": "AI temporarily unavailable"}
+
+    return _stream()
