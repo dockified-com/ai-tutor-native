@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
-from pydantic import BaseModel
+from pydantic import BaseModel, AnyHttpUrl
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api", tags=["authoring"])
 
 
 class CreateCourseBody(BaseModel):
-    pdf_url: str
+    pdf_url: AnyHttpUrl
     title: str
     description: str | None = None
     custom_prompt: str | None = None
@@ -31,7 +31,7 @@ async def create_course_endpoint(
     return await create_course(
         db,
         creator_id=user.id,
-        pdf_url=body.pdf_url,
+        pdf_url=str(body.pdf_url),
         title=body.title,
         description=body.description,
         custom_prompt=body.custom_prompt,
@@ -44,6 +44,12 @@ async def publish_course_endpoint(
     user: User = Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ) -> Course:
+    result = await db.execute(select(Course).where(Course.id == course_id))
+    course = result.scalar_one_or_none()
+    if not course:
+        raise NotFoundError("Course not found")
+    if course.creator_id != user.id:
+        raise NotFoundError("Course not found")
     return await publish_course(db, course_id)
 
 
@@ -53,6 +59,15 @@ async def regenerate_lesson_endpoint(
     user: User = Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    from app.features.authoring.models import Lesson
+    result = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
+    lesson = result.scalar_one_or_none()
+    if not lesson:
+        raise NotFoundError("Lesson not found")
+    course_result = await db.execute(select(Course).where(Course.id == lesson.course_id))
+    course = course_result.scalar_one_or_none()
+    if not course or course.creator_id != user.id:
+        raise NotFoundError("Lesson not found")
     return await regenerate_lesson(db, lesson_id)
 
 
@@ -65,5 +80,7 @@ async def get_course_endpoint(
     result = await db.execute(select(Course).where(Course.id == course_id))
     course = result.scalar_one_or_none()
     if not course:
+        raise NotFoundError("Course not found")
+    if course.creator_id != user.id:
         raise NotFoundError("Course not found")
     return course

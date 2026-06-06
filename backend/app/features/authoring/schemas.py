@@ -1,6 +1,6 @@
 from typing import Annotated, Literal, Union
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class MarkdownBlockContent(BaseModel):
@@ -24,12 +24,24 @@ class ConceptCheckContent(BaseModel):
     correct_index: int
     explanation: str
 
+    @model_validator(mode="after")
+    def validate_correct_index(self) -> "ConceptCheckContent":
+        if not (0 <= self.correct_index < len(self.options)):
+            raise ValueError(f"correct_index must be within options bounds (0 <= correct_index < {len(self.options)})")
+        return self
+
 
 class UnderstandingCheckContent(BaseModel):
     question: str
     options: list[str]
     correct_index: int
     explanation: str
+
+    @model_validator(mode="after")
+    def validate_correct_index(self) -> "UnderstandingCheckContent":
+        if not (0 <= self.correct_index < len(self.options)):
+            raise ValueError(f"correct_index must be within options bounds (0 <= correct_index < {len(self.options)})")
+        return self
 
 
 class MarkdownBlock(BaseModel):
@@ -74,6 +86,8 @@ class LessonBlocks(BaseModel):
 
     @model_validator(mode="after")
     def validate_last_block(self) -> "LessonBlocks":
-        if self.blocks and self.blocks[-1].type != "understanding_check":
+        if not self.blocks:
+            raise ValueError("blocks must be non-empty and last block must be of type 'understanding_check'")
+        if self.blocks[-1].type != "understanding_check":
             raise ValueError('Last block must be of type "understanding_check"')
         return self

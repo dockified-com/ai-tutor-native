@@ -17,7 +17,7 @@ async def list_lesson_blocks(
     user: User = Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ) -> list[BlockOut]:
-    return await get_lesson_blocks(db, lesson_id)
+    return await get_lesson_blocks(db, user.id, lesson_id)
 
 
 @router.post("/blocks/{block_id}/run", response_model=RunCodeResponse, status_code=200)

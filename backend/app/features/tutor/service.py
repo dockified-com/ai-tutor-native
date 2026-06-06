@@ -4,16 +4,18 @@ from typing import AsyncGenerator
 from uuid import UUID
 
 import httpx
-from sqlalchemy import text
+from sqlalchemy import text, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.features.auth.models import User
+from app.features.authoring.models import Lesson, Block
+from app.features.enrollment.models import Enrollment
 from app.features.tutor.models import CodeSubmission, CodeVerdict
 from app.features.tutor.prompts import SOCRATIC_SYSTEM_PROMPT, build_socratic_user_message
 from app.features.tutor.schemas import BlockOut, RunCodeResponse
 from app.shared.ai.anthropic_client import anthropic_client
 from app.shared.ai.judge0_client import Judge0Result, execute_code
-from app.shared.errors import ForbiddenError, NotFoundError
+from app.shared.errors import ForbiddenError, NotFoundError, UnauthorizedError
 
 
 def strip_sensitive_fields(block_type: str, content: dict) -> dict:
@@ -27,27 +29,35 @@ def strip_sensitive_fields(block_type: str, content: dict) -> dict:
     return result
 
 
-async def get_lesson_blocks(db: AsyncSession, lesson_id: UUID) -> list[BlockOut]:
-    result = await db.execute(
-        text("SELECT id FROM lessons WHERE id = :lesson_id"),
-        {"lesson_id": str(lesson_id)},
-    )
-    if not result.fetchone():
+async def get_lesson_blocks(db: AsyncSession, user_id: UUID, lesson_id: UUID) -> list[BlockOut]:
+    lesson_result = await db.execute(select(Lesson).where(Lesson.id == lesson_id))
+    lesson = lesson_result.scalar_one_or_none()
+    if not lesson:
         raise NotFoundError("Lesson not found")
 
-    rows = await db.execute(
-        text("SELECT id, position, type, content, tts_audio_url FROM blocks WHERE lesson_id = :lesson_id ORDER BY position"),
-        {"lesson_id": str(lesson_id)},
+    enrollment_result = await db.execute(
+        select(Enrollment).where(
+            Enrollment.user_id == user_id,
+            Enrollment.course_id == lesson.course_id,
+        )
     )
+    if not enrollment_result.scalar_one_or_none():
+        raise UnauthorizedError("Not enrolled in this course")
+
+    blocks_result = await db.execute(
+        select(Block).where(Block.lesson_id == lesson_id).order_by(Block.position)
+    )
+    blocks = blocks_result.scalars().all()
+    
     return [
         BlockOut(
-            id=row.id,
-            position=row.position,
-            type=row.type,
-            content=strip_sensitive_fields(row.type, row.content),
-            tts_audio_url=row.tts_audio_url,
+            id=block.id,
+            position=block.position,
+            type=block.type,
+            content=strip_sensitive_fields(block.type, block.content),
+            tts_audio_url=block.tts_audio_url,
         )
-        for row in rows
+        for block in blocks
     ]
 
 

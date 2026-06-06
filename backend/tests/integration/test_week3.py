@@ -118,8 +118,17 @@ async def test_enroll_duplicate_idempotent(client, monkeypatch):
     from app.features.enrollment import routes as enrollment_routes
     monkeypatch.setattr(enrollment_routes, "enroll_by_code", mock_enroll_by_code)
 
-    resp = await client.post("/api/enrollments", json={"code": "ABC123"})
-    assert resp.status_code == 201
+    resp1 = await client.post("/api/enrollments", json={"code": "ABC123"})
+    assert resp1.status_code == 201
+    data1 = resp1.json()
+    enrollment_id_1 = data1["id"]
+
+    resp2 = await client.post("/api/enrollments", json={"code": "ABC123"})
+    assert resp2.status_code == 201
+    data2 = resp2.json()
+    enrollment_id_2 = data2["id"]
+
+    assert enrollment_id_1 == enrollment_id_2
 
 
 @pytest.mark.asyncio
@@ -167,7 +176,7 @@ async def test_list_blocks_strips_sensitive_fields(client, monkeypatch):
         tts_audio_url=None,
     )
 
-    async def mock_get_lesson_blocks(db, lid):
+    async def mock_get_lesson_blocks(db, user_id, lid):
         return [fake_block]
 
     from app.features.tutor import routes as tutor_routes
@@ -187,7 +196,7 @@ async def test_list_blocks_lesson_not_found(client, monkeypatch):
     app.dependency_overrides[deps.current_user] = lambda: user
     lesson_id = uuid4()
 
-    async def mock_get_lesson_blocks(db, lid):
+    async def mock_get_lesson_blocks(db, user_id, lid):
         raise NotFoundError("Lesson not found")
 
     from app.features.tutor import routes as tutor_routes

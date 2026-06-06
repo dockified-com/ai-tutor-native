@@ -54,15 +54,18 @@ async def publish_course(db: AsyncSession, course_id: UUID) -> Course:
     for _ in range(5):
         code = _generate_code()
         try:
-            await db.execute(
+            stmt = (
                 update(Course)
-                .where(Course.id == course_id)
+                .where(Course.id == course_id, Course.status == CourseStatus.ready)
                 .values(code=code, status=CourseStatus.published)
             )
-            await db.commit()
-            course.code = code
-            course.status = CourseStatus.published
-            return course
+            result = await db.execute(stmt)
+            if result.rowcount > 0:
+                await db.commit()
+                course.code = code
+                course.status = CourseStatus.published
+                return course
+            await db.rollback()
         except IntegrityError:
             await db.rollback()
             continue
