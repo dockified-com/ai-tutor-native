@@ -3,6 +3,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.features.auth.routes import router as auth_router
+from app.features.courses import router as courses_router
+from app.features.enrollment import router as enrollment_router
+from app.features.tutor import router as tutor_router
 from app.shared.config import get_settings
 from app.shared.errors import APIError
 from fastapi import Request
@@ -23,6 +26,9 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth_router)
+    app.include_router(courses_router)
+    app.include_router(enrollment_router)
+    app.include_router(tutor_router)
 
     settings = get_settings()
 
