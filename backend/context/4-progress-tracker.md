@@ -115,14 +115,14 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `tutor/schemas.py` | 🔴 | `RunCodeRequest`, `RunCodeResponse`, `ConceptCheckRequest`, `AskRequest` |
-| `tutor/service.py` — `run_code()` | 🔴 | Judge0 submit → verdict logic (exact/regex/ai_eval) |
-| `tutor/routes.py` — `POST /api/blocks/{id}/run` | 🔴 | Enrollment ownership check |
-| `tutor/prompts.py` — Socratic system prompt | 🔴 | Must include ABSOLUTE RULES; never reveal answer |
-| `tutor/service.py` — `get_socratic_hint()` | 🔴 | Load last submission + attempt count; build prompt |
-| `tutor/routes.py` — `POST /api/blocks/{id}/socratic-hint` (SSE) | 🔴 | |
-| Unit test: verdict logic (exact/regex/ai_eval) | 🔴 | `tests/unit/test_verdict_logic.py` |
-| Integration test: anti-leak assertion | 🔴 | `tests/integration/test_socratic_hint.py` |
+| `tutor/schemas.py` | ✅ | `RunCodeRequest`, `RunCodeResponse`, `ConceptCheckRequest`, `AskRequest` |
+| `tutor/service.py` — `run_code()` | ✅ | Judge0 submit → verdict logic (exact/regex/ai_eval) |
+| `tutor/routes.py` — `POST /api/blocks/{id}/run` | ✅ | Enrollment ownership check |
+| `tutor/prompts.py` — Socratic system prompt | ✅ | Must include ABSOLUTE RULES; never reveal answer |
+| `tutor/service.py` — `get_socratic_hint()` | ✅ | Load last submission + attempt count; build prompt |
+| `tutor/routes.py` — `POST /api/blocks/{id}/socratic-hint` (SSE) | ✅ | |
+| Unit test: verdict logic (exact/regex/ai_eval) | ✅ | `tests/unit/test_verdict_logic.py` |
+| Integration test: anti-leak assertion | ✅ | `tests/integration/test_socratic_hint.py` |
 
 ---
 
