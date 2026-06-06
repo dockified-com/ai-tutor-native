@@ -15,7 +15,9 @@ dependencies = [
   "pyjwt[crypto]>=2.10",
   "alembic>=1.14",
   "python-multipart>=0.0.20",
-  "svix>=1.40",
+  "anthropic>=0.50",
+  "openai>=1.60",
+  "pypdf>=5.0",
 ]
 
 [project.optional-dependencies]
