@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 
 from app.features.tutor.schemas import BlockOut
+from app.shared.ai.judge0_client import Judge0Result
 from app.shared.errors import NotFoundError
 
 
@@ -39,9 +40,6 @@ async def get_lesson_blocks(db: AsyncSession, lesson_id: UUID) -> list[BlockOut]
         )
         for row in rows
     ]
-
-
-from app.shared.ai.judge0_client import Judge0Result
 
 
 def evaluate_verdict(result: Judge0Result, expected_output: str | None) -> str:
