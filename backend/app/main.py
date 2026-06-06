@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.features.auth.routes import router as auth_router
+from app.features.authoring.routes import router as authoring_router
 from app.shared.config import get_settings
 from app.shared.errors import APIError
 from fastapi import Request
@@ -23,6 +24,7 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth_router)
+    app.include_router(authoring_router)
 
     settings = get_settings()
 
