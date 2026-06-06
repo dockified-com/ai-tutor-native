@@ -1,18 +1,19 @@
 import json
 import uuid
+from typing import AsyncGenerator
 from uuid import UUID
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
 
 import httpx
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.features.auth.models import User
 from app.features.tutor.models import CodeSubmission, CodeVerdict
-from app.features.tutor.schemas import BlockOut, RunCodeResponse
-from app.shared.ai.judge0_client import Judge0Result, execute_code
-from app.shared.ai.anthropic_client import anthropic_client
-from typing import AsyncGenerator
 from app.features.tutor.prompts import SOCRATIC_SYSTEM_PROMPT, build_socratic_user_message
-from app.shared.errors import NotFoundError, ForbiddenError
+from app.features.tutor.schemas import BlockOut, RunCodeResponse
+from app.shared.ai.anthropic_client import anthropic_client
+from app.shared.ai.judge0_client import Judge0Result, execute_code
+from app.shared.errors import ForbiddenError, NotFoundError
 
 
 def strip_sensitive_fields(block_type: str, content: dict) -> dict:
@@ -190,6 +191,8 @@ async def get_socratic_hint(
         {"bid": str(block_id)},
     )
     block = block_row.fetchone()
+    if not block:
+        raise NotFoundError("Block")
     content: dict = block.content if isinstance(block.content, dict) else json.loads(block.content)
 
     user_message = build_socratic_user_message(
