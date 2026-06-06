@@ -37,5 +37,5 @@ async def socratic_hint_endpoint(
     user: User = Depends(current_user),
     db: AsyncSession = Depends(get_db),
 ) -> EventSourceResponse:
-    stream = await get_socratic_hint(db, user, block_id, body.enrollment_id)
+    stream = get_socratic_hint(db, user, block_id, body.enrollment_id)
     return EventSourceResponse(stream)
