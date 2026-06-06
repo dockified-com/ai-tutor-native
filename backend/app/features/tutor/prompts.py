@@ -30,3 +30,35 @@ def build_socratic_user_message(
         f"Output:\nstdout: {stdout or '(none)'}\nstderr: {stderr or '(none)'}\n\n"
         f"Guidance tier: {tier}. Provide a Socratic hint only."
     )
+
+
+UNDERSTANDING_CHECK_SYSTEM_PROMPT = """You are evaluating a student's understanding of a concept.
+
+First, output a JSON object on a single line (no markdown fences):
+{"level": "poor"|"fair"|"good"|"excellent", "feedback": "<2-3 sentences>", "missing_points": ["..."], "passed": true|false}
+
+Then, on a new line, write the same feedback in a friendly, encouraging tone for the student.
+
+RULES:
+- "passed" must be true only if level is "good" or "excellent"
+- "missing_points" lists concepts the student missed; empty array if passed
+- Never reveal the answer directly"""
+
+
+def build_understanding_check_user_message(rubric: str, student_response: str, attempt_count: int) -> str:
+    return (
+        f"Evaluation rubric:\n{rubric}\n\n"
+        f"Student response (attempt {attempt_count}):\n{student_response}\n\n"
+        "Evaluate the response."
+    )
+
+
+ASK_ANYTHING_SYSTEM_PROMPT = """You are a helpful tutor answering a student's question about course material.
+Answer using only the provided course context. Be concise and pedagogically helpful.
+If the context doesn't contain enough information, say so honestly."""
+
+
+def build_ask_user_message(question: str, chunks: list[str], block_context: str | None) -> str:
+    context = "\n\n".join(f"[Chunk {i + 1}]\n{c}" for i, c in enumerate(chunks))
+    block_section = f"\n\nCurrent block context:\n{block_context}" if block_context else ""
+    return f"Course context:\n{context}{block_section}\n\nStudent question: {question}"

@@ -130,13 +130,14 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `tutor/prompts.py` — understanding check system prompt | 🔴 | Structured JSON output; Socratic on fail |
-| `tutor/service.py` — `evaluate_understanding()` | 🔴 | Structured eval + `LEVEL_ORDER` comparison |
-| `tutor/routes.py` — `POST /api/blocks/{id}/understanding-check` (SSE) | 🔴 | Emit `result` event with `{passed, level}` |
-| `tutor/service.py` — `ask_anything()` | 🔴 | RAG top-5 + active block context + stream |
-| `tutor/routes.py` — `POST /api/enrollments/{id}/ask` (SSE) | 🔴 | Persist `questions` row after stream |
-| `tutor/routes.py` — `POST /api/blocks/{id}/concept-check` | 🔴 | Pre-generated explanation; no LLM call |
-| Register `tutor_router` in `app/main.py` | 🔴 | |
+| `tutor/prompts.py` — understanding check system prompt | ✅ | Structured JSON output; pass = good/excellent |
+| `tutor/service.py` — `evaluate_understanding()` | ✅ | Structured eval + `LEVEL_ORDER` comparison; persists `UnderstandingCheckAttempt` |
+| `tutor/routes.py` — `POST /api/blocks/{id}/understanding-check` (SSE) | ✅ | Emits `result` event with `{passed, level}` |
+| `tutor/service.py` — `ask_anything()` | ✅ | RAG top-5 + active block context + stream; persists `Question` row |
+| `tutor/routes.py` — `POST /api/enrollments/{id}/ask` (SSE) | ✅ | |
+| `tutor/routes.py` — `POST /api/blocks/{id}/concept-check` | ✅ | Pre-generated explanation; no LLM call; persists `ConceptCheckAttempt` |
+| Unit tests: level threshold + concept check + strip rubric | ✅ | `tests/unit/test_week5.py` — 7 tests |
+| Integration tests: understanding check SSE + ask persist + concept check no-leak | ✅ | `tests/integration/test_week5.py` — 3 tests |
 
 ---
 
@@ -189,13 +190,13 @@
 | Week 2B | Shared Infra | 9 | 9 | 100% |
 | Week 2C | Generation Pipeline | 0 | 13 | 0% |
 | Week 3 | Courses / Enrollment | 10 | 10 | 100% |
-| Week 4 | Code Execution + Hints | 0 | 8 | 0% |
-| Week 5 | Ask / Understanding | 0 | 7 | 0% |
+| Week 4 | Code Execution + Hints | 8 | 8 | 100% |
+| Week 5 | Ask / Understanding | 8 | 8 | 100% |
 | Week 6 | Progress | 0 | 4 | 0% |
 | Week 7 | Preview + Tests | 0 | 8 | 0% |
 | Week 8 | Deploy | 0 | 8 | 0% |
-| **Total** | | **49** | **95** | **52%** |
+| **Total** | | **65** | **97** | **67%** |
 
 ---
 
-*Last updated: 2026-06-06. Week 3 complete — Courses, Enrollment, and Lesson Blocks fetch with sensitive-field stripping.*
+*Last updated: 2026-06-06. Week 4 + Week 5 complete — Code Execution, Socratic Hints, Understanding Check, Ask Anything, Concept Check.*

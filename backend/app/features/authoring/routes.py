@@ -22,7 +22,7 @@ class CreateCourseBody(BaseModel):
     custom_prompt: str | None = None
 
 
-@router.post("/courses", status_code=status.HTTP_201_CREATED)
+@router.post("/courses", status_code=status.HTTP_201_CREATED, response_model=None)
 async def create_course_endpoint(
     body: CreateCourseBody,
     user: User = Depends(current_user),
@@ -38,7 +38,7 @@ async def create_course_endpoint(
     )
 
 
-@router.post("/courses/{course_id}/publish")
+@router.post("/courses/{course_id}/publish", response_model=None)
 async def publish_course_endpoint(
     course_id: UUID,
     user: User = Depends(current_user),
@@ -71,7 +71,7 @@ async def regenerate_lesson_endpoint(
     return await regenerate_lesson(db, lesson_id)
 
 
-@router.get("/courses/{course_id}")
+@router.get("/courses/{course_id}", response_model=None)
 async def get_course_endpoint(
     course_id: UUID,
     user: User = Depends(current_user),
