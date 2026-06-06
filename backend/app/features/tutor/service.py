@@ -107,6 +107,8 @@ async def run_code(
             verdict_str = await _ai_eval_verdict(content, code, stdout)
         else:
             verdict_str = CodeVerdict(raw_verdict)
+    except ValueError:
+        raise
     except (httpx.HTTPStatusError, httpx.TimeoutException):
         verdict_str = CodeVerdict.error
 
@@ -150,5 +152,5 @@ async def _ai_eval_verdict(content: dict, code: str, stdout: str | None) -> Code
     try:
         data = json.loads(resp.content[0].text)
         return CodeVerdict.passed if data.get("verdict") == "passed" else CodeVerdict.failed
-    except Exception:
+    except (json.JSONDecodeError, KeyError, IndexError):
         return CodeVerdict.failed
