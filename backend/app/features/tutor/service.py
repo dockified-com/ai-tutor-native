@@ -260,7 +260,7 @@ async def evaluate_understanding(
     response: str,
 ) -> AsyncGenerator[dict, None]:
     row = await db.execute(
-        text("SELECT user_id FROM enrollments WHERE id = :eid"),
+        text("SELECT user_id, course_id FROM enrollments WHERE id = :eid"),
         {"eid": str(enrollment_id)},
     )
     enrollment_row = row.fetchone()
@@ -270,8 +270,11 @@ async def evaluate_understanding(
         raise ForbiddenError()
 
     block_row = await db.execute(
-        text("SELECT content FROM blocks WHERE id = :bid AND type = 'understanding_check'"),
-        {"bid": str(block_id)},
+        text(
+            "SELECT content FROM blocks WHERE id = :bid AND type = 'understanding_check' "
+            "AND lesson_id IN (SELECT id FROM lessons WHERE course_id = :cid)"
+        ),
+        {"bid": str(block_id), "cid": str(enrollment_row.course_id)},
     )
     block = block_row.fetchone()
     if not block:
@@ -311,16 +314,17 @@ async def evaluate_understanding(
                 parsed = {}
 
             level_str = parsed.get("level", "poor")
+            canonical_level = level_str if level_str in LEVEL_ORDER else "poor"
             feedback_str = parsed.get("feedback", accumulated)
             missing = parsed.get("missing_points", [])
-            passed = LEVEL_ORDER.get(level_str, 0) >= PASS_THRESHOLD
+            passed = LEVEL_ORDER.get(canonical_level, 0) >= PASS_THRESHOLD
 
             attempt = UnderstandingCheckAttempt(
                 id=uuid.uuid4(),
                 enrollment_id=enrollment_id,
                 block_id=block_id,
                 response=response,
-                level=UnderstandingLevel(level_str) if level_str in LEVEL_ORDER else UnderstandingLevel.poor,
+                level=UnderstandingLevel(canonical_level),
                 feedback=feedback_str,
                 passed=passed,
                 missing_points=missing if missing else None,
@@ -329,7 +333,7 @@ async def evaluate_understanding(
             db.add(attempt)
             await db.flush()
 
-            yield {"event": "result", "data": json.dumps({"passed": passed, "level": level_str})}
+            yield {"event": "result", "data": json.dumps({"passed": passed, "level": canonical_level})}
             yield {"event": "done", "data": ""}
         except Exception:
             yield {"event": "error", "data": "AI temporarily unavailable"}
@@ -369,8 +373,11 @@ async def ask_anything(
     block_context: str | None = None
     if block_id:
         block_row = await db.execute(
-            text("SELECT content FROM blocks WHERE id = :bid"),
-            {"bid": str(block_id)},
+            text(
+                "SELECT content FROM blocks WHERE id = :bid "
+                "AND lesson_id IN (SELECT id FROM lessons WHERE course_id = :cid)"
+            ),
+            {"bid": str(block_id), "cid": str(course_id)},
         )
         b = block_row.fetchone()
         if b:
@@ -421,7 +428,7 @@ async def check_concept(
     selected_answer: int,
 ) -> ConceptCheckResponse:
     row = await db.execute(
-        text("SELECT user_id FROM enrollments WHERE id = :eid"),
+        text("SELECT user_id, course_id FROM enrollments WHERE id = :eid"),
         {"eid": str(enrollment_id)},
     )
     enrollment_row = row.fetchone()
@@ -431,8 +438,11 @@ async def check_concept(
         raise ForbiddenError()
 
     block_row = await db.execute(
-        text("SELECT content FROM blocks WHERE id = :bid AND type = 'concept_check'"),
-        {"bid": str(block_id)},
+        text(
+            "SELECT content FROM blocks WHERE id = :bid AND type = 'concept_check' "
+            "AND lesson_id IN (SELECT id FROM lessons WHERE course_id = :cid)"
+        ),
+        {"bid": str(block_id), "cid": str(enrollment_row.course_id)},
     )
     block = block_row.fetchone()
     if not block:

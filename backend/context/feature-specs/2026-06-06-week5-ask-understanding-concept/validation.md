@@ -49,7 +49,6 @@ uv run pytest tests/ -v
 
 Before merging, update `backend/context/4-progress-tracker.md`:
 - Mark all Week 5 tasks as `✅`
-- Update summary dashboard (Week 4 to 100% also — it's complete per git but shows 0%)
 - Update "Last updated" date
 
 ---

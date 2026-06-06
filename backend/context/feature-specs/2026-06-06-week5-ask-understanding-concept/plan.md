@@ -85,7 +85,7 @@ All work is additive to `features/tutor/` — no new feature directories.
 
 ## Execution Order
 
-```
+```text
 Group 1 (schemas)
   ↓
 Group 2 (prompts)

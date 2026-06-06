@@ -1,5 +1,6 @@
+from typing import Literal
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, constr, conint
 
 
 class BlockOut(BaseModel):
@@ -31,22 +32,22 @@ class SocraticHintRequest(BaseModel):
 
 class UnderstandingCheckRequest(BaseModel):
     enrollment_id: UUID
-    response: str
+    response: constr(strip_whitespace=True, min_length=1)
 
 
 class UnderstandingCheckResult(BaseModel):
     passed: bool
-    level: str
+    level: Literal["poor", "fair", "good", "excellent"]
 
 
 class AskRequest(BaseModel):
-    question: str
+    question: constr(strip_whitespace=True, min_length=1)
     block_id: UUID | None = None
 
 
 class ConceptCheckRequest(BaseModel):
     enrollment_id: UUID
-    selected_answer: int
+    selected_answer: conint(ge=0)
 
 
 class ConceptCheckResponse(BaseModel):

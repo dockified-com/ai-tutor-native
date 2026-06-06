@@ -17,14 +17,19 @@ class TestLevelOrderThreshold:
 
 
 class TestConceptCheckLogic:
-    def test_correct_answer(self):
+    def test_correct_answer_logic(self):
+        # Direct logic test for correct_answer == correct_index
         correct_index = 2
-        assert (3 == correct_index) is False
-        assert (2 == correct_index) is True
+        selected_answer = 2
+        is_correct = selected_answer == correct_index
+        assert is_correct is True
 
-    def test_wrong_answer(self):
+    def test_wrong_answer_logic(self):
+        # Direct logic test for selected_answer != correct_index
         correct_index = 1
-        assert (0 == correct_index) is False
+        selected_answer = 0
+        is_correct = selected_answer == correct_index
+        assert is_correct is False
 
 
 class TestStripSensitiveFieldsWeek5:
