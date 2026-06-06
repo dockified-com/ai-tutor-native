@@ -39,3 +39,16 @@ async def get_lesson_blocks(db: AsyncSession, lesson_id: UUID) -> list[BlockOut]
         )
         for row in rows
     ]
+
+
+from app.shared.ai.judge0_client import Judge0Result
+
+
+def evaluate_verdict(result: Judge0Result, expected_output: str | None) -> str:
+    if result.status != "Accepted":
+        if "Compilation" in result.status:
+            return "compile_error"
+        return "runtime_error"
+    if expected_output is not None:
+        return "passed" if (result.stdout or "").strip() == expected_output.strip() else "failed"
+    return "needs_ai_eval"
