@@ -79,18 +79,18 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `authoring/schemas.py` | 🔴 | `LessonOutline`, `CourseOutline`, all `BlockContent` variants, `LessonBlocks` with validator |
-| `authoring/prompts.py` | 🔴 | Outline prompt, per-lesson blocks prompt |
-| `authoring/pipeline.py` | 🔴 | `run_generation_pipeline()` async task |
-| PDF extraction step | 🔴 | `pdfplumber.extract_text()` + empty-text rejection |
-| Chunking step | 🔴 | ~1000 chars, 100 overlap |
-| Embedding step | 🔴 | `asyncio.gather` with semaphore=10 |
-| Outline generation step | 🔴 | Claude Sonnet structured output via `tool_choice` |
-| Per-lesson block generation step | 🔴 | Per lesson; validate last block = `understanding_check` |
-| TTS audio generation step | 🔴 | `asyncio.gather` with semaphore=5; fail-soft per block |
-| `authoring/service.py` | 🔴 | `create_course()`, `publish_course()`, `regenerate_lesson()` |
-| `authoring/routes.py` | 🔴 | `POST /api/courses/generate`, `GET /api/courses/{id}/status`, `POST /api/courses/{id}/publish`, `POST /api/lessons/{id}/regenerate` |
-| Register `authoring_router` in `app/main.py` | 🔴 | |
+| `authoring/schemas.py` | ✅ | All `BlockContent` variants, `LessonBlocks` with validator |
+| `authoring/prompts.py` | ✅ | Outline prompt, per-lesson blocks prompt |
+| `authoring/pipeline.py` | ✅ | `run_generation_pipeline()` async task |
+| PDF extraction step | ✅ | `pdfplumber.extract_text()` + empty-text rejection |
+| Chunking step | ✅ | ~1000 chars, 100 overlap |
+| Embedding step | ✅ | `asyncio.gather` with semaphore=10 |
+| Outline generation step | ✅ | Claude Sonnet structured output via `tool_choice` |
+| Per-lesson block generation step | ✅ | Per lesson; validate last block = `understanding_check` |
+| TTS audio generation step | ✅ | `asyncio.gather` with semaphore=5; fail-soft per block |
+| `authoring/service.py` | ✅ | `create_course()`, `publish_course()`, `regenerate_lesson()` |
+| `authoring/routes.py` | ✅ | `POST /api/courses`, `GET /api/courses/{id}`, `POST /api/courses/{id}/publish`, `POST /api/lessons/{id}/regenerate` |
+| Register `authoring_router` in `app/main.py` | ✅ | |
 
 ---
 
@@ -188,15 +188,15 @@
 | Week 1 | Auth Layer | 16 | 16 | 100% |
 | Week 2A | DB Schema | 12 | 12 | 100% |
 | Week 2B | Shared Infra | 9 | 9 | 100% |
-| Week 2C | Generation Pipeline | 0 | 13 | 0% |
+| Week 2C | Generation Pipeline | 13 | 13 | 100% |
 | Week 3 | Courses / Enrollment | 10 | 10 | 100% |
 | Week 4 | Code Execution + Hints | 8 | 8 | 100% |
 | Week 5 | Ask / Understanding | 8 | 8 | 100% |
 | Week 6 | Progress | 0 | 4 | 0% |
 | Week 7 | Preview + Tests | 0 | 8 | 0% |
 | Week 8 | Deploy | 0 | 8 | 0% |
-| **Total** | | **65** | **97** | **67%** |
+| **Total** | | **78** | **97** | **80%** |
 
 ---
 
-*Last updated: 2026-06-06. Week 4 + Week 5 complete — Code Execution, Socratic Hints, Understanding Check, Ask Anything, Concept Check.*
+*Last updated: 2026-06-06. Weeks 1–5 + 2C complete — all authoring pipeline tasks marked from codebase audit.*
