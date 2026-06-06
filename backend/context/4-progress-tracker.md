@@ -98,14 +98,16 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `courses/service.py` | 🔴 | `list_courses()` (creator vs student view), `get_course()` |
-| `courses/schemas.py` | 🔴 | `CourseListItem`, `CourseDetail` |
-| `courses/routes.py` | 🔴 | `GET /api/courses`, `GET /api/courses/{id}` |
-| `enrollment/service.py` | 🔴 | `enroll_by_code()` idempotent, `get_enrollment()` |
-| `enrollment/schemas.py` | 🔴 | `EnrollRequest`, `EnrollResponse` |
-| `enrollment/routes.py` | 🔴 | `POST /api/enrollments`, `GET /api/enrollments/{id}` |
-| `GET /api/lessons/{id}/blocks` endpoint | 🔴 | Strips `hint_seed_prompt` + `evaluation_rubric` from response |
-| Register `courses_router`, `enrollment_router` in `app/main.py` | 🔴 | |
+| `courses/service.py` | ✅ | `list_courses()` creator-scoped, `get_course()` with ownership/visibility |
+| `courses/schemas.py` | ✅ | `CourseOut` with `from_attributes=True` |
+| `courses/routes.py` | ✅ | `GET /api/courses`, `GET /api/courses/{id}` |
+| `enrollment/service.py` | ✅ | `enroll_by_code()` idempotent, `get_enrollment()` with ownership |
+| `enrollment/schemas.py` | ✅ | `EnrollByCodeRequest` (6-char), `EnrollmentOut` |
+| `enrollment/routes.py` | ✅ | `POST /api/enrollments` (201), `GET /api/enrollments/{id}` |
+| `GET /api/lessons/{id}/blocks` endpoint | ✅ | Strips `solution`/`tests`/`correct_index`/`explanation`; raw SQL in `tutor/` |
+| Register `courses_router`, `enrollment_router`, `tutor_router` in `app/main.py` | ✅ | All 3 registered |
+| Unit tests: strip_sensitive_fields + EnrollByCodeRequest | ✅ | `tests/unit/test_week3.py` — 9 tests |
+| Integration tests: courses, enrollment, blocks | ✅ | `tests/integration/test_week3.py` — 8 tests, all mock-based |
 
 ---
 
@@ -113,14 +115,14 @@
 
 | Task | Status | Notes |
 |---|---|---|
-| `tutor/schemas.py` | 🔴 | `RunCodeRequest`, `RunCodeResponse`, `ConceptCheckRequest`, `AskRequest` |
-| `tutor/service.py` — `run_code()` | 🔴 | Judge0 submit → verdict logic (exact/regex/ai_eval) |
-| `tutor/routes.py` — `POST /api/blocks/{id}/run` | 🔴 | Enrollment ownership check |
-| `tutor/prompts.py` — Socratic system prompt | 🔴 | Must include ABSOLUTE RULES; never reveal answer |
-| `tutor/service.py` — `get_socratic_hint()` | 🔴 | Load last submission + attempt count; build prompt |
-| `tutor/routes.py` — `POST /api/blocks/{id}/socratic-hint` (SSE) | 🔴 | |
-| Unit test: verdict logic (exact/regex/ai_eval) | 🔴 | `tests/unit/test_verdict_logic.py` |
-| Integration test: anti-leak assertion | 🔴 | `tests/integration/test_socratic_hint.py` |
+| `tutor/schemas.py` | ✅ | `RunCodeRequest`, `RunCodeResponse`, `ConceptCheckRequest`, `AskRequest` |
+| `tutor/service.py` — `run_code()` | ✅ | Judge0 submit → verdict logic (exact/regex/ai_eval) |
+| `tutor/routes.py` — `POST /api/blocks/{id}/run` | ✅ | Enrollment ownership check |
+| `tutor/prompts.py` — Socratic system prompt | ✅ | Must include ABSOLUTE RULES; never reveal answer |
+| `tutor/service.py` — `get_socratic_hint()` | ✅ | Load last submission + attempt count; build prompt |
+| `tutor/routes.py` — `POST /api/blocks/{id}/socratic-hint` (SSE) | ✅ | |
+| Unit test: verdict logic (exact/regex/ai_eval) | ✅ | `tests/unit/test_verdict_logic.py` |
+| Integration test: anti-leak assertion | ✅ | `tests/integration/test_socratic_hint.py` |
 
 ---
 
@@ -186,14 +188,14 @@
 | Week 2A | DB Schema | 12 | 12 | 100% |
 | Week 2B | Shared Infra | 9 | 9 | 100% |
 | Week 2C | Generation Pipeline | 0 | 13 | 0% |
-| Week 3 | Courses / Enrollment | 0 | 8 | 0% |
+| Week 3 | Courses / Enrollment | 10 | 10 | 100% |
 | Week 4 | Code Execution + Hints | 0 | 8 | 0% |
 | Week 5 | Ask / Understanding | 0 | 7 | 0% |
 | Week 6 | Progress | 0 | 4 | 0% |
 | Week 7 | Preview + Tests | 0 | 8 | 0% |
 | Week 8 | Deploy | 0 | 8 | 0% |
-| **Total** | | **37** | **93** | **40%** |
+| **Total** | | **49** | **95** | **52%** |
 
 ---
 
-*Last updated: 2026-06-05. Week 2B complete — Shared Infrastructure ready.*
+*Last updated: 2026-06-06. Week 3 complete — Courses, Enrollment, and Lesson Blocks fetch with sensitive-field stripping.*
