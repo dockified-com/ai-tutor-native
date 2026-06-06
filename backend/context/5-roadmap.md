@@ -8,9 +8,9 @@
 
 ---
 
-## Current Position: Week 2C — Generation Pipeline
+## Current Position: Week 4 — Code Execution & Socratic Hints
 
-Week 2B (Shared Infrastructure) is **complete**. The next atomic step is building the async generation pipeline and related routes in `features/authoring/`.
+Week 3 (Courses & Enrollment) is **complete**. The next atomic step is building code execution and socratic hints in `features/tutor/`.
 
 ---
 
@@ -221,7 +221,7 @@ Implement `features/authoring/` in this order:
 
 ---
 
-## Phase 5 — Week 3: Courses & Enrollment
+## Phase 5 — Week 3: Courses & Enrollment ✅ COMPLETE
 
 1. `courses/` — `service.py`, `schemas.py`, `routes.py` → `GET /api/courses`, `GET /api/courses/{id}`
 2. `enrollment/` — `service.py`, `schemas.py`, `routes.py` → `POST /api/enrollments`, `GET /api/enrollments/{id}`
