@@ -1,13 +1,14 @@
 "use client";
+import type { ReactNode } from "react";
 import { Layout } from "lucide-react";
-import { UserMenu } from "@/features/auth";
 import { Button } from "@/components/ui/button";
 
 interface Props {
   onJoinOpen: () => void;
+  userMenu: ReactNode;
 }
 
-export function SpacesHeader({ onJoinOpen }: Props) {
+export function SpacesHeader({ onJoinOpen, userMenu }: Props) {
   return (
     <header className="h-14 border-b border-emerald-100 bg-white px-6 flex items-center justify-between shrink-0">
       <div className="flex items-center gap-2">
@@ -25,7 +26,7 @@ export function SpacesHeader({ onJoinOpen }: Props) {
         >
           Join space with code
         </Button>
-        <UserMenu />
+        {userMenu}
       </div>
     </header>
   );

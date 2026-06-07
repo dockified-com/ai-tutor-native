@@ -1,4 +1,5 @@
 "use client";
+import type { ReactNode } from "react";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,7 +13,7 @@ import { ShareCodeModal } from "./share-code-modal";
 import { useSpaces } from "../hooks/use-spaces";
 import type { Space } from "../types";
 
-export function SpacesPage() {
+export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
   const { owned, joined } = useSpaces();
   const [createOpen, setCreateOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
@@ -31,7 +32,7 @@ export function SpacesPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <SpacesHeader onJoinOpen={() => setJoinOpen(true)} />
+      <SpacesHeader onJoinOpen={() => setJoinOpen(true)} userMenu={userMenu} />
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-10">
         <Tabs defaultValue="my-spaces">
