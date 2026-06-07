@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { SpacesHeader } from "./spaces-header";
 import { SpaceCardOwned } from "./space-card-owned";
 import { SpaceCardJoined } from "./space-card-joined";
@@ -61,62 +60,100 @@ export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
   const visibleJoined = applyJoinedFilter(joined.spaces, joinedFilter);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "linear-gradient(135deg, #edf5ea 0%, #d1eace 40%, #c8e6c5 100%)" }}
+    >
+      {/* Decorative blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-40 blur-3xl"
+          style={{ background: "radial-gradient(circle, #a3d1a5, transparent)" }}
+        />
+        <div
+          className="absolute top-1/3 -right-24 w-80 h-80 rounded-full opacity-30 blur-3xl"
+          style={{ background: "radial-gradient(circle, #6ea976, transparent)" }}
+        />
+        <div
+          className="absolute bottom-0 left-1/3 w-72 h-72 rounded-full opacity-25 blur-3xl"
+          style={{ background: "radial-gradient(circle, #a3d1a5, transparent)" }}
+        />
+      </div>
+
       <SpacesHeader onJoinOpen={() => setJoinOpen(true)} userMenu={userMenu} />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-10">
+      <main className="relative flex-1 max-w-5xl mx-auto w-full px-6 py-10">
         <Tabs defaultValue="my-spaces">
           <div className="flex items-center justify-between mb-6">
-            <TabsList className="bg-transparent p-0 gap-6">
-              <TabsTrigger
-                value="my-spaces"
-                className="bg-transparent px-0 pb-2 data-[state=active]:border-b-2 data-[state=active]:border-emerald-500 data-[state=active]:text-emerald-700 data-[state=active]:shadow-none rounded-none text-slate-500"
-              >
-                My Spaces
-              </TabsTrigger>
-              <TabsTrigger
-                value="shared"
-                className="bg-transparent px-0 pb-2 data-[state=active]:border-b-2 data-[state=active]:border-emerald-500 data-[state=active]:text-emerald-700 data-[state=active]:shadow-none rounded-none text-slate-500"
-              >
-                Shared With Me
-              </TabsTrigger>
-            </TabsList>
+            {/* Glass tab bar */}
+            <div
+              className="flex items-center rounded-full px-1.5 py-1.5 gap-1"
+              style={{
+                background: "rgba(255,255,255,0.45)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(163,209,165,0.5)",
+                boxShadow: "0 2px 12px rgba(110,169,118,0.12)",
+              }}
+            >
+              <TabsList className="bg-transparent p-0 gap-1">
+                <TabsTrigger
+                  value="my-spaces"
+                  className="rounded-full px-5 py-1.5 text-sm font-medium transition-all duration-200
+                    text-[#37593c] data-[state=active]:text-white data-[state=active]:shadow-sm
+                    data-[state=active]:bg-[#6ea976] data-[state=inactive]:hover:bg-white/50
+                    data-[state=active]:shadow-[0_2px_8px_rgba(110,169,118,0.4)]"
+                >
+                  My Spaces
+                </TabsTrigger>
+                <TabsTrigger
+                  value="shared"
+                  className="rounded-full px-5 py-1.5 text-sm font-medium transition-all duration-200
+                    text-[#37593c] data-[state=active]:text-white data-[state=active]:shadow-sm
+                    data-[state=active]:bg-[#6ea976] data-[state=inactive]:hover:bg-white/50
+                    data-[state=active]:shadow-[0_2px_8px_rgba(110,169,118,0.4)]"
+                >
+                  Shared With Me
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             <TabsContent value="my-spaces" className="mt-0">
-              <Button
-                size="sm"
+              <button
                 onClick={() => setCreateOpen(true)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium cursor-pointer
+                  text-white transition-all duration-200
+                  hover:shadow-[0_4px_16px_rgba(55,89,60,0.3)] active:scale-95"
+                style={{
+                  background: "linear-gradient(135deg, #6ea976, #37593c)",
+                  boxShadow: "0 2px 8px rgba(110,169,118,0.35)",
+                }}
               >
-                <Plus size={16} />
+                <Plus size={15} />
                 Create Space
-              </Button>
+              </button>
             </TabsContent>
           </div>
 
           <TabsContent value="my-spaces">
             {owned.spaces.length > 0 && (
               <div className="mb-5">
-                <FilterChips
-                  options={OWNED_FILTERS}
-                  active={ownedFilter}
-                  onChange={setOwnedFilter}
-                />
+                <FilterChips options={OWNED_FILTERS} active={ownedFilter} onChange={setOwnedFilter} />
               </div>
             )}
             {owned.loading ? (
               <SpacesGridSkeleton />
             ) : owned.spaces.length === 0 ? (
               <EmptyState
-                message="No spaces yet."
+                message="No spaces yet. Create one to get started."
                 action={
-                  <Button
-                    size="sm"
+                  <button
                     onClick={() => setCreateOpen(true)}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium text-white cursor-pointer
+                      transition-all duration-200 hover:shadow-[0_4px_16px_rgba(55,89,60,0.3)] active:scale-95"
+                    style={{ background: "linear-gradient(135deg, #6ea976, #37593c)", boxShadow: "0 2px 8px rgba(110,169,118,0.35)" }}
                   >
-                    <Plus size={16} /> Create your first space
-                  </Button>
+                    <Plus size={15} /> Create your first space
+                  </button>
                 }
               />
             ) : visibleOwned.length === 0 ? (
@@ -133,11 +170,7 @@ export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
           <TabsContent value="shared">
             {joined.spaces.length > 0 && (
               <div className="mb-5">
-                <FilterChips
-                  options={JOINED_FILTERS}
-                  active={joinedFilter}
-                  onChange={setJoinedFilter}
-                />
+                <FilterChips options={JOINED_FILTERS} active={joinedFilter} onChange={setJoinedFilter} />
               </div>
             )}
             {joined.loading ? (
@@ -146,14 +179,20 @@ export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
               <EmptyState
                 message="You haven't joined any spaces yet."
                 action={
-                  <Button
-                    size="sm"
-                    variant="outline"
+                  <button
                     onClick={() => setJoinOpen(true)}
-                    className="border-emerald-300 text-emerald-700 hover:bg-emerald-50 gap-1.5"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer
+                      transition-all duration-200 active:scale-95"
+                    style={{
+                      background: "rgba(255,255,255,0.6)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(110,169,118,0.5)",
+                      color: "#37593c",
+                      boxShadow: "0 2px 8px rgba(110,169,118,0.15)",
+                    }}
                   >
                     Join with a code
-                  </Button>
+                  </button>
                 }
               />
             ) : visibleJoined.length === 0 ? (
@@ -169,16 +208,8 @@ export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
         </Tabs>
       </main>
 
-      <CreateSpaceModal
-        open={createOpen}
-        onClose={() => setCreateOpen(false)}
-        onCreated={handleCreated}
-      />
-      <JoinSpaceModal
-        open={joinOpen}
-        onClose={() => setJoinOpen(false)}
-        onJoined={handleJoined}
-      />
+      <CreateSpaceModal open={createOpen} onClose={() => setCreateOpen(false)} onCreated={handleCreated} />
+      <JoinSpaceModal open={joinOpen} onClose={() => setJoinOpen(false)} onJoined={handleJoined} />
       <ShareCodeModal code={shareCode} onClose={() => setShareCode(null)} />
     </div>
   );
@@ -186,8 +217,15 @@ export function SpacesPage({ userMenu }: { userMenu: ReactNode }) {
 
 function EmptyState({ message, action }: { message: string; action: React.ReactNode | null }) {
   return (
-    <div className="flex flex-col items-center justify-center py-24 gap-4">
-      <p className="text-slate-500 text-sm">{message}</p>
+    <div
+      className="flex flex-col items-center justify-center py-24 gap-5 rounded-2xl"
+      style={{
+        background: "rgba(255,255,255,0.35)",
+        backdropFilter: "blur(12px)",
+        border: "1px solid rgba(163,209,165,0.4)",
+      }}
+    >
+      <p className="text-[#37593c]/70 text-sm font-medium">{message}</p>
       {action}
     </div>
   );
@@ -199,7 +237,8 @@ function SpacesGridSkeleton() {
       {[1, 2, 3].map((i) => (
         <div
           key={i}
-          className="h-32 rounded-xl bg-slate-100 animate-pulse"
+          className="h-36 rounded-2xl animate-pulse"
+          style={{ background: "rgba(255,255,255,0.4)", border: "1px solid rgba(163,209,165,0.3)" }}
         />
       ))}
     </div>
