@@ -1,0 +1,774 @@
+openapi: 3.1.0
+info:
+  title: AI Tutor Backend API
+  version: 1.0.0
+  description: |
+    AI Native Programming Tutor — backend API.
+
+    **Auth:** All endpoints (except the Clerk webhook and health check) require a Clerk JWT.
+    Pass it as `Authorization: Bearer <token>`.
+
+    **Streaming:** SSE endpoints return `text/event-stream`. Each frame is:
+    ```
+    event: token
+    data: "chunk text"
+
+    event: done
+    data: ""
+    ```
+
+servers:
+  - url: http://localhost:8000
+    description: Local dev
+  - url: https://api.tutor.dockified.com
+    description: Production
+
+tags:
+  - name: auth
+  - name: authoring
+  - name: courses
+  - name: enrollments
+  - name: tutor
+
+paths:
+
+  # ─────────────────────────── Health ───────────────────────────────────────
+
+  /healthz:
+    get:
+      summary: Health check
+      operationId: healthz
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  # ─────────────────────────── Auth ─────────────────────────────────────────
+
+  /api/me:
+    get:
+      tags: [auth]
+      summary: Get current user
+      operationId: getMe
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/auth/clerk-webhook:
+    post:
+      tags: [auth]
+      summary: Clerk webhook receiver
+      description: Syncs `user.created` and `user.updated` events from Clerk via SVIX signature.
+      operationId: clerkWebhook
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, data]
+              properties:
+                type:
+                  type: string
+                  enum: [user.created, user.updated]
+                data:
+                  type: object
+      responses:
+        "204":
+          description: Processed
+        "400":
+          description: Invalid webhook signature
+
+  # ─────────────────────────── Authoring ────────────────────────────────────
+
+  /api/courses:
+    post:
+      tags: [authoring]
+      summary: Create course from PDF
+      description: Creates a course record and starts the AI generation pipeline synchronously.
+      operationId: createCourse
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCourseBody"
+      responses:
+        "201":
+          description: Course created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /api/courses/{course_id}/publish:
+    post:
+      tags: [authoring]
+      summary: Publish course
+      description: Assigns a 6-character course code and sets status to `published`.
+      operationId: publishCourse
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/CourseId"
+      responses:
+        "200":
+          description: Published course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/lessons/{lesson_id}/regenerate:
+    post:
+      tags: [authoring]
+      summary: Regenerate lesson blocks
+      description: Deletes existing blocks for the lesson and re-runs AI block generation.
+      operationId: regenerateLesson
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/LessonId"
+      responses:
+        "200":
+          description: Regeneration started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lesson_id:
+                    type: string
+                    format: uuid
+                  status:
+                    type: string
+                    example: generating
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────── Courses ──────────────────────────────────────
+
+  /api/courses/{course_id}:
+    get:
+      tags: [courses, authoring]
+      summary: Get course detail
+      description: |
+        - **Creator:** returns own course (any status).
+        - **Student:** returns enrolled published course.
+        Returns `404` for unauthorized access to avoid leaking course existence.
+      operationId: getCourse
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/CourseId"
+      responses:
+        "200":
+          description: Course detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/courses:
+    get:
+      tags: [courses]
+      summary: List courses
+      description: |
+        - **Creator:** lists own courses.
+        - **Student:** lists enrolled courses.
+      operationId: listCourses
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ─────────────────────────── Enrollments ──────────────────────────────────
+
+  /api/enrollments:
+    post:
+      tags: [enrollments]
+      summary: Enroll by course code
+      operationId: createEnrollment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnrollByCodeRequest"
+      responses:
+        "201":
+          description: Enrolled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnrollmentOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: No published course with this code
+
+  /api/enrollments/{enrollment_id}:
+    get:
+      tags: [enrollments]
+      summary: Get enrollment
+      operationId: getEnrollment
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/EnrollmentId"
+      responses:
+        "200":
+          description: Enrollment detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnrollmentOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────── Tutor ────────────────────────────────────────
+
+  /api/lessons/{lesson_id}/blocks:
+    get:
+      tags: [tutor]
+      summary: List lesson blocks
+      operationId: listLessonBlocks
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/LessonId"
+      responses:
+        "200":
+          description: Ordered list of blocks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlockOut"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/blocks/{block_id}/run:
+    post:
+      tags: [tutor]
+      summary: Run code
+      description: Submits code to Judge0 and polls until complete. Records a `CodeSubmission`.
+      operationId: runCode
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/BlockId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RunCodeRequest"
+      responses:
+        "200":
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunCodeResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/blocks/{block_id}/socratic-hint:
+    post:
+      tags: [tutor]
+      summary: Get Socratic hint (SSE)
+      description: |
+        Streams a Socratic hint for the last failed code submission.
+        **Never reveals the answer** — guides the student to it.
+
+        SSE events: `token`, `done`, `error`
+      operationId: getSocraticHint
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/BlockId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SocraticHintRequest"
+      responses:
+        "200":
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SSEStream"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/blocks/{block_id}/understanding-check:
+    post:
+      tags: [tutor]
+      summary: Submit understanding check (SSE)
+      description: |
+        Claude evaluates the student's free-text response against the block rubric.
+
+        SSE events: `token` (feedback text), `result` (JSON), `done`, `error`
+
+        The `result` event data is JSON: `{"passed": bool, "level": "poor|fair|good|excellent"}`
+      operationId: understandingCheck
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/BlockId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnderstandingCheckRequest"
+      responses:
+        "200":
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SSEStream"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/enrollments/{enrollment_id}/ask:
+    post:
+      tags: [tutor]
+      summary: Ask anything (SSE)
+      description: |
+        RAG-powered Q&A. Embeds the question, retrieves relevant course chunks via pgvector,
+        then streams a Claude answer.
+
+        SSE events: `token`, `done`, `error`
+      operationId: askAnything
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/EnrollmentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AskRequest"
+      responses:
+        "200":
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SSEStream"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/blocks/{block_id}/concept-check:
+    post:
+      tags: [tutor]
+      summary: Submit concept check answer
+      description: |
+        Checks the selected option index against `block.content.correct_index`.
+        No live AI call — uses pre-generated explanation. Cost: $0.
+      operationId: conceptCheck
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/BlockId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConceptCheckRequest"
+      responses:
+        "200":
+          description: Result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConceptCheckResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+# ──────────────────────────── Components ──────────────────────────────────────
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Clerk JWT obtained from the frontend Clerk session.
+
+  parameters:
+    CourseId:
+      name: course_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    LessonId:
+      name: lesson_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    BlockId:
+      name: block_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    EnrollmentId:
+      name: enrollment_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  responses:
+    Unauthorized:
+      description: Missing or invalid Clerk JWT
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorDetail"
+    NotFound:
+      description: Resource not found (or not accessible to this user)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorDetail"
+    ValidationError:
+      description: Request body validation failed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorDetail"
+
+  schemas:
+
+    ErrorDetail:
+      type: object
+      required: [detail]
+      properties:
+        detail:
+          type: string
+          example: Resource not found
+
+    # ── Auth ──────────────────────────────────────────────────────────────
+
+    UserOut:
+      type: object
+      required: [clerk_user_id, email, role]
+      properties:
+        clerk_user_id:
+          type: string
+          example: user_2jKxyz
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+          nullable: true
+        role:
+          type: string
+          enum: [student, creator]
+
+    # ── Authoring ─────────────────────────────────────────────────────────
+
+    CreateCourseBody:
+      type: object
+      required: [pdf_url, title]
+      properties:
+        pdf_url:
+          type: string
+          format: uri
+          example: https://storage.supabase.co/object/public/pdfs/my-course.pdf
+        title:
+          type: string
+          example: Python Decorators Deep Dive
+        description:
+          type: string
+          nullable: true
+        custom_prompt:
+          type: string
+          nullable: true
+          description: Optional creator instructions to guide AI generation style.
+
+    CourseOut:
+      type: object
+      required: [id, title, status, total_lessons, total_blocks, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+          nullable: true
+          minLength: 6
+          maxLength: 6
+          example: BCKND1
+          description: Null until the course is published.
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        default_language:
+          type: string
+          example: python
+        status:
+          type: string
+          enum: [draft, generating, ready, published, failed]
+        generation_phase:
+          type: string
+          nullable: true
+          enum: [extracting, chunking, embedding, outline, blocks, tts]
+          description: Current pipeline step while status is `generating`.
+        total_lessons:
+          type: integer
+        total_blocks:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    # ── Enrollment ────────────────────────────────────────────────────────
+
+    EnrollByCodeRequest:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          minLength: 6
+          maxLength: 6
+          example: BCKND1
+
+    EnrollmentOut:
+      type: object
+      required: [id, course_id, started_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        course_id:
+          type: string
+          format: uuid
+        current_lesson_id:
+          type: string
+          format: uuid
+          nullable: true
+        current_block_id:
+          type: string
+          format: uuid
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    # ── Tutor ─────────────────────────────────────────────────────────────
+
+    BlockOut:
+      type: object
+      required: [id, position, type, content]
+      properties:
+        id:
+          type: string
+          format: uuid
+        position:
+          type: integer
+        type:
+          type: string
+          enum: [markdown, code, mermaid, concept_check, understanding_check]
+        content:
+          type: object
+          description: |
+            Shape depends on `type`:
+
+            **markdown:** `{ "text": string }`
+
+            **code:** `{ "language": string, "starter_code": string, "solution": string, "tests": string }`
+
+            **mermaid:** `{ "diagram": string }`
+
+            **concept_check / understanding_check:** `{ "question": string, "options": string[], "correct_index": integer, "explanation": string }`
+        tts_audio_url:
+          type: string
+          nullable: true
+          format: uri
+
+    RunCodeRequest:
+      type: object
+      required: [enrollment_id, code, language]
+      properties:
+        enrollment_id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        language:
+          type: string
+          example: python
+
+    RunCodeResponse:
+      type: object
+      required: [submission_id, verdict, attempt_number]
+      properties:
+        submission_id:
+          type: string
+          format: uuid
+        verdict:
+          type: string
+          enum: [passed, failed, runtime_error, compile_error, error]
+        stdout:
+          type: string
+          nullable: true
+        stderr:
+          type: string
+          nullable: true
+        attempt_number:
+          type: integer
+
+    SocraticHintRequest:
+      type: object
+      required: [enrollment_id]
+      properties:
+        enrollment_id:
+          type: string
+          format: uuid
+
+    UnderstandingCheckRequest:
+      type: object
+      required: [enrollment_id, response]
+      properties:
+        enrollment_id:
+          type: string
+          format: uuid
+        response:
+          type: string
+          minLength: 1
+
+    AskRequest:
+      type: object
+      required: [question]
+      properties:
+        question:
+          type: string
+          minLength: 1
+        block_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The block the student is currently viewing (adds context to the RAG query).
+
+    ConceptCheckRequest:
+      type: object
+      required: [enrollment_id, selected_answer]
+      properties:
+        enrollment_id:
+          type: string
+          format: uuid
+        selected_answer:
+          type: integer
+          minimum: 0
+          description: Zero-based index of the selected option.
+
+    ConceptCheckResponse:
+      type: object
+      required: [is_correct, explanation]
+      properties:
+        is_correct:
+          type: boolean
+        explanation:
+          type: string
+
+    SSEStream:
+      type: string
+      description: |
+        Server-Sent Events stream. Each frame format:
+        ```
+        event: token
+        data: "text chunk"
+
+        event: result
+        data: {"passed": true, "level": "good"}
+
+        event: error
+        data: "error message"
+
+        event: done
+        data: ""
+        ```
+        The `done` event always fires last. Close the `EventSource` on `done` or `error`.

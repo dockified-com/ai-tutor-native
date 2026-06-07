@@ -18,6 +18,7 @@
 | [04 — Backend Plan](architecture/04_backend_plan.md) | FastAPI modules, generation pipeline, AI endpoints, Docker. |
 | [05 — Database Schema](architecture/05_database_schema.md) | Full DDL, JSONB block shapes, indexes, relationships. |
 | [06 — API Contracts](api/06_api_contracts.md) | Every endpoint: request, response, SSE events, types. |
+| [08 — Backend Features](architecture/08_backend_features.md) | Feature-by-feature: endpoints, architecture diagrams, data models, service flows. |
 | [07 — Local Setup](setup/07_local_setup.md) | Running the full stack locally in under 10 minutes. |
 | [Design Spec](superpowers/specs/2026-05-30-ai-native-tutor-design.md) | Original source-of-truth design document. |
 
@@ -78,7 +79,8 @@ docs/
 ├── architecture/
 │   ├── 03_frontend_plan.md            ← Next.js architecture
 │   ├── 04_backend_plan.md             ← FastAPI architecture + generation pipeline
-│   └── 05_database_schema.md          ← Full DDL + relationships
+│   ├── 05_database_schema.md          ← Full DDL + relationships
+│   └── 08_backend_features.md         ← Feature endpoints, diagrams, data models
 ├── api/
 │   └── 06_api_contracts.md            ← All endpoint specs
 ├── setup/
