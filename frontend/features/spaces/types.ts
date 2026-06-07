@@ -22,3 +22,19 @@ export type SpaceOverview = {
   is_owner: boolean;
   categories: Category[];
 };
+
+export type TutorBlock = {
+  id: string;
+  position: number;
+  type: string;
+  content: Record<string, unknown>;
+};
+
+export type NodeLesson = {
+  id: string;
+  title: string;
+  status: string;
+  course_id: string;
+  is_owner: boolean;
+  blocks: TutorBlock[];
+};
