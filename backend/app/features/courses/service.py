@@ -1,7 +1,8 @@
 import uuid
 from uuid import UUID
 
-from sqlalchemy import func, select
+from fastapi import HTTPException
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.features.authoring.models import Block, Lesson
@@ -37,24 +38,25 @@ async def get_course(db: AsyncSession, user_id: UUID, course_id: UUID) -> Course
 
 async def get_space_overview(db: AsyncSession, user_id: uuid.UUID, space_id: uuid.UUID) -> dict:
     course = await get_course(db, user_id, space_id)
-    lessons_result = await db.execute(
-        select(Lesson).where(Lesson.course_id == space_id).order_by(Lesson.position)
-    )
-    lessons = lessons_result.scalars().all()
 
-    categories = []
-    for lesson in lessons:
-        count_result = await db.execute(
-            select(func.count()).select_from(Block).where(Block.lesson_id == lesson.id)
-        )
-        block_count = count_result.scalar_one()
-        categories.append({
-            "id": lesson.id,
-            "position": lesson.position,
-            "title": lesson.title,
-            "description": lesson.summary,
-            "block_count": block_count,
-        })
+    rows = (await db.execute(
+        select(Lesson, func.count(Block.id).label("block_count"))
+        .outerjoin(Block, Block.lesson_id == Lesson.id)
+        .where(Lesson.course_id == space_id)
+        .group_by(Lesson.id)
+        .order_by(Lesson.position)
+    )).all()
+
+    categories = [
+        {
+            "id": row[0].id,
+            "position": row[0].position,
+            "title": row[0].title,
+            "description": row[0].summary,
+            "block_count": row[1],
+        }
+        for row in rows
+    ]
 
     return {
         "id": course.id,
@@ -66,7 +68,6 @@ async def get_space_overview(db: AsyncSession, user_id: uuid.UUID, space_id: uui
 
 
 async def add_category(db: AsyncSession, user_id: uuid.UUID, space_id: uuid.UUID, name: str, description: str | None):
-    from fastapi import HTTPException
     course = await get_course(db, user_id, space_id)
     if course.creator_id != user_id:
         raise HTTPException(status_code=403, detail="Only owner can add categories")
@@ -84,8 +85,6 @@ async def add_category(db: AsyncSession, user_id: uuid.UUID, space_id: uuid.UUID
 
 
 async def reorder_categories(db: AsyncSession, user_id: uuid.UUID, space_id: uuid.UUID, ordered_ids: list) -> None:
-    from fastapi import HTTPException
-    from sqlalchemy import update
     course = await get_course(db, user_id, space_id)
     if course.creator_id != user_id:
         raise HTTPException(status_code=403, detail="Only owner can reorder")
