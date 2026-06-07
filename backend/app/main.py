@@ -7,6 +7,7 @@ from app.features.courses import router as courses_router
 from app.features.enrollment import router as enrollment_router
 from app.features.tutor import router as tutor_router
 from app.features.authoring.routes import router as authoring_router
+from app.features.builder.routes import router as builder_router
 from app.shared.config import get_settings
 from app.shared.errors import APIError
 from fastapi import Request
@@ -31,6 +32,7 @@ def create_app() -> FastAPI:
     app.include_router(enrollment_router)
     app.include_router(tutor_router)
     app.include_router(authoring_router)
+    app.include_router(builder_router)
 
     settings = get_settings()
 
