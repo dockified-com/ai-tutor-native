@@ -28,7 +28,7 @@ export function CategoryRow({ category, spaceId, isOwner, dragHandleProps }: Pro
         className="flex items-center gap-3 px-5 py-4 cursor-pointer"
         onClick={() =>
           isOwner
-            ? router.push(`/courses/${spaceId}/lesson/${category.id}`)
+            ? router.push(`/spaces/${spaceId}/node/${category.id}`)
             : setOpen((v) => !v)
         }
       >
@@ -82,7 +82,7 @@ export function CategoryRow({ category, spaceId, isOwner, dragHandleProps }: Pro
             {category.block_count === 1 ? "lesson" : "lessons"}
           </p>
           <button
-            onClick={() => router.push(`/courses/${spaceId}/lesson/${category.id}`)}
+            onClick={() => router.push(`/spaces/${spaceId}/node/${category.id}`)}
             className="mt-2 text-sm font-medium cursor-pointer transition-colors duration-150"
             style={{ color: "#37593c" }}
           >
