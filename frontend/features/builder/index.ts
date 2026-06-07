@@ -1,2 +1,1 @@
-// BuilderPage will be exported once component is created in Task 4
-export {};
+export { BuilderPage } from "./components/builder-page";
