@@ -1,0 +1,319 @@
+[     859ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     860ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/chunks/webpack-317eb0ad8f208275.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     860ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/chunks/framework-155d793edb9d37ef.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     861ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/chunks/main-35a940d1756f31eb.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     861ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     861ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/sign-in/%5B%5B...index%5D%5D-4030aec4ec594406.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     861ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/xQXC2BqIRcKCkN9SP8dwP/_buildManifest.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     862ms] [INFO] Loading the script 'https://fresh-gelding-80.accounts.dev/_next/static/xQXC2BqIRcKCkN9SP8dwP/_ssgManifest.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[     862ms] [INFO] Executing inline script violates the following Content Security Policy directive 'script-src 'none''. Either the 'unsafe-inline' keyword, a hash ('sha256-yQWqdwovNDV2+w9mGe3tBUaKM3z6lshOj1l8+4UA8DE='), or a nonce ('nonce-...') is required to enable inline execution. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:6
+[     864ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:6
+[     913ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:18
+[     915ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'none'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:18
+[    1007ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/clerk-js@6.12.1/dist/clerk.browser.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&__clerk_db_jwt=dvb_3Eo4FMcrLIOtXlPE7oTdUk5DMHd:0
+[    1070ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:31
+[    1170ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[    1173ms] [INFO] Creating a worker from 'blob:https://fresh-gelding-80.accounts.dev/71bfd027-6588-40f1-a09f-538912ef84ec' violates the following Content Security Policy directive: "script-src 'none'". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:17
+[    1555ms] [INFO] Creating a worker from 'blob:https://fresh-gelding-80.accounts.dev/efdadcba-a428-4418-b379-7c5953788785' violates the following Content Security Policy directive: "script-src 'none'". Note that 'worker-src' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:17
+[    1560ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/framework_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1564ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/ui-common_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1573ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/vendors_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1577ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/signup_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1580ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/746_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1582ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/signin_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1647ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/subscriptionDetails_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1653ms] [INFO] Loading the script 'https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1.13.1/dist/718_ui_f38d1c_1.13.1.js' violates the following Content Security Policy directive: "script-src 'none'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://fresh-gelding-80.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:20
+[    1775ms] [WARNING] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS "body.cl-component"
+  - CSS ".cl-component .button:focus-visible"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[    1853ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard:0
+[  459189ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/identifier?opparams=%253F&dsh=S-1659092594%3A1780836112786043&access_type=offline&client_id=787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com&o2v=1&prompt=consent&redirect_uri=https%3A%2F%2Fclerk.shared.lcl.dev%2Fv1%2Foauth_callback&response_type=code&scope=openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&state=ggpgtv3ya7ormq6qokhc9c5u2j9kjnhe4i2lgssu&flowName=GeneralOAuthFlow&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAOhEjiwiodTcGgUcXf9k-JPKx9iv5XMpH06L_5h1dsJBjnA08dsnaWi-T2nLRnQWnA4eA62wupR6Z6yjPHh5Quhom67BMpVovnrro6IEwYmX6nyxVCZTqnDMJMd3-dQ4K3zM0yHXJ-48LFqBy-jkcL_acS-N5VsjfVtNXqq_Yxh--_S_IZ6WQj5mQUyB3t4-zxjPkMdv9NVpZ-RCc1NWBZwnMDtaxbyrYOHMuhI5Yk1pi-pQEfuzl4LTO7pCQGdPf-ZbKHQVwSSR6_9oXF5uXUDWMBXiQt-_vtsSXRHPrjgk7_I9gYmFW14CgoRWvuh-dQRly8HS0608PPvWzHiFLbVhcYcTD_qhBt9OcWlUr3fNuzHD94D9TucJ2Fynf05YhN336muHAukZhMf3mquaU3aSlsDgEj1OYFERNwx2xzY-CD-GH1YH0sCuBkXXnQLnaUpJYNE1_IdizTfkY_noQoK19oZ9tTax6g3v5hwyP--zCl8vUg%26flowName%3DGeneralOAuthFlow%26as%3DS-1659092594%253A1780836112786043%26client_id%3D787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fclerk.shared.lcl.dev&rart=ANgoxcfGURgORzBr0sdXrWTT5ggJMpHASTukUMH_kwk9Vq4HkAlIGcUUN7B5PObQAZ2zlwrOrVCUG4mO4RCCLuM2zxMKakLwgqmdA1-ReeCYGUM5WwZC7_U:0
+[  459201ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.KheQ8nOaKgo.es5.O/am=Ed8AAABgFP8IGQD8__03AAABBNEB37MATYCQAQAAAAAAAAAACwAA0Ag/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlEHqa1fnmFNTE4rsdflGxFbRBpsnA/dti=1/m=_b,_tp:546
+[  459201ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.KheQ8nOaKgo.es5.O/am=Ed8AAABgFP8IGQD8__03AAABBNEB37MATYCQAQAAAAAAAAAACwAA0Ag/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlEHqa1fnmFNTE4rsdflGxFbRBpsnA/dti=1/m=_b,_tp:546
+[  472103ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/challenge/pwd?TL=ADCchmajlLiakF2mjpX85Cofg_jeud6qZZ-HIiI3Miz1canFSCElBWk4IbXdIglj&access_type=offline&app_domain=https%3A%2F%2Fclerk.shared.lcl.dev&checkConnection=youtube%3A224&checkedDomains=youtube&cid=2&client_id=787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAOhEjiwiodTcGgUcXf9k-JPKx9iv5XMpH06L_5h1dsJBjnA08dsnaWi-T2nLRnQWnA4eA62wupR6Z6yjPHh5Quhom67BMpVovnrro6IEwYmX6nyxVCZTqnDMJMd3-dQ4K3zM0yHXJ-48LFqBy-jkcL_acS-N5VsjfVtNXqq_Yxh--_S_IZ6WQj5mQUyB3t4-zxjPkMdv9NVpZ-RCc1NWBZwnMDtaxbyrYOHMuhI5Yk1pi-pQEfuzl4LTO7pCQGdPf-ZbKHQVwSSR6_9oXF5uXUDWMBXiQt-_vtsSXRHPrjgk7_I9gYmFW14CgoRWvuh-dQRly8HS0608PPvWzHiFLbVhcYcTD_qhBt9OcWlUr3fNuzHD94D9TucJ2Fynf05YhN336muHAukZhMf3mquaU3aSlsDgEj1OYFERNwx2xzY-CD-GH1YH0sCuBkXXnQLnaUpJYNE1_IdizTfkY_noQoK19oZ9tTax6g3v5hwyP--zCl8vUg%26flowName%3DGeneralOAuthFlow%26as%3DS-1659092594%253A1780836112786043%26client_id%3D787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&dsh=S-1659092594%3A1780836112786043&flowName=GeneralOAuthFlow&o2v=1&opparams=%253F&prompt=consent&pstMsg=1&rart=ANgoxcfGURgORzBr0sdXrWTT5ggJMpHASTukUMH_kwk9Vq4HkAlIGcUUN7B5PObQAZ2zlwrOrVCUG4mO4RCCLuM2zxMKakLwgqmdA1-ReeCYGUM5WwZC7_U&redirect_uri=https%3A%2F%2Fclerk.shared.lcl.dev%2Fv1%2Foauth_callback&response_type=code&scope=openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&state=ggpgtv3ya7ormq6qokhc9c5u2j9kjnhe4i2lgssu:0
+[  475427ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/identifier?opparams=%253F&dsh=S-1659092594%3A1780836112786043&access_type=offline&client_id=787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com&o2v=1&prompt=consent&redirect_uri=https%3A%2F%2Fclerk.shared.lcl.dev%2Fv1%2Foauth_callback&response_type=code&scope=openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&state=ggpgtv3ya7ormq6qokhc9c5u2j9kjnhe4i2lgssu&flowName=GeneralOAuthFlow&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAOhEjiwiodTcGgUcXf9k-JPKx9iv5XMpH06L_5h1dsJBjnA08dsnaWi-T2nLRnQWnA4eA62wupR6Z6yjPHh5Quhom67BMpVovnrro6IEwYmX6nyxVCZTqnDMJMd3-dQ4K3zM0yHXJ-48LFqBy-jkcL_acS-N5VsjfVtNXqq_Yxh--_S_IZ6WQj5mQUyB3t4-zxjPkMdv9NVpZ-RCc1NWBZwnMDtaxbyrYOHMuhI5Yk1pi-pQEfuzl4LTO7pCQGdPf-ZbKHQVwSSR6_9oXF5uXUDWMBXiQt-_vtsSXRHPrjgk7_I9gYmFW14CgoRWvuh-dQRly8HS0608PPvWzHiFLbVhcYcTD_qhBt9OcWlUr3fNuzHD94D9TucJ2Fynf05YhN336muHAukZhMf3mquaU3aSlsDgEj1OYFERNwx2xzY-CD-GH1YH0sCuBkXXnQLnaUpJYNE1_IdizTfkY_noQoK19oZ9tTax6g3v5hwyP--zCl8vUg%26flowName%3DGeneralOAuthFlow%26as%3DS-1659092594%253A1780836112786043%26client_id%3D787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fclerk.shared.lcl.dev&rart=ANgoxcfGURgORzBr0sdXrWTT5ggJMpHASTukUMH_kwk9Vq4HkAlIGcUUN7B5PObQAZ2zlwrOrVCUG4mO4RCCLuM2zxMKakLwgqmdA1-ReeCYGUM5WwZC7_U:0
+[  476114ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:18
+[  476376ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[  476998ms] [WARNING] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS "body.cl-component"
+  - CSS ".cl-component .button:focus-visible"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[  477052ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://fresh-gelding-80.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard:0
+[  481107ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "username"): (More info: https://goo.gl/9p2vKq) %o @ https://fresh-gelding-80.accounts.dev/sign-up?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard:0
+[  484311ms] [LOG] The next request for the Private Access Token challenge may return a 401 and show a warning in console. @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  484371ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/pat/a07fbc642a349d0b/1780836138070/b63c88f039e3f7935afbb10a184182dd750efdb82738aa5ac47fb6c05a9ff202/FrgtEFxUHVc0l_6:0
+[  486918ms] [LOG] /.*.*=.*/ @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486918ms] [LOG] /.*.*=.*/ @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486918ms] [LOG] function () { [native code] } @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486918ms] [LOG] function () { [native code] } @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486918ms] [LOG] JSHandle@node @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486919ms] [LOG] JSHandle@node @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486919ms] [COUNT]  : 1 @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486919ms] [COUNT]  : 1 @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486920ms] [DIR]  Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486920ms] [DIR]  Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486920ms] [DIRXML] %c%d font-size:0;color:transparent Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486920ms] [DIRXML] %c%d font-size:0;color:transparent Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486921ms] [ERROR] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486921ms] [ERROR] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486921ms] [INFO] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486921ms] [INFO] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486921ms] [LOG] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486922ms] [LOG] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486922ms] [TABLE] %c%d font-size:0;color:transparent Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486922ms] [TABLE] %c%d font-size:0;color:transparent Error @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486923ms] [WARNING] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  486923ms] [WARNING] %c%d font-size:0;color:transparent NaN @ https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/ov2/av0/rch/pqjky/0x4AAAAAAAWXJGBD7bONzLBd/auto/fbE/new/normal?lang=en-us:0
+[  488773ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/identifier?opparams=%253F&dsh=S355814046%3A1780836142653236&access_type=offline&client_id=787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com&o2v=1&prompt=consent&redirect_uri=https%3A%2F%2Fclerk.shared.lcl.dev%2Fv1%2Foauth_callback&response_type=code&scope=openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&state=581cpcjy2x1s30zcsjh8i9lt3u4x7g9wvy7kyuwq&flowName=GeneralOAuthFlow&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAO-Mp9DdxiZI-O3ejlEjbGR4YCYQTjyNXrErm1_QsST1UJUSx2zBhO6D7WaAec1q04BhfO4RqgQ1G23yu37EtruMb19XKKg3WS5VqGSdFRP02-kEiLl_vH0ixuUpVtuF9unhWJ4CS-j0lgUTtdAQaNkfi-_UCPA4tQCM7VsuLOQI76Imy8KTkKmghl8__ZFqxuSY32LT5c6B0xDFJDXsiKfzJ-BE5OcRQKlDso6Gach_F4n0031fCpxongpnnJz94jctmTQmNPoH9g9lCG40YEAtB7OGt6Iqvh7HSd2hs394nEEOc4CyA7Tg1zbPJEBybyFRK_5jATOA1Mq419ct_pZlqHX4Uvq7492PvO8JhyGtq5xQm45rS7W_ylDRsftJ0R-n05s41bXvJltweL603k4SzGhLyHM7XJ9nNLx52dR8_oaivzJRBJLd4BibinE7YlIBkgHVrByZ2JntTWESbhu2dtlUA%26flowName%3DGeneralOAuthFlow%26as%3DS355814046%253A1780836142653236%26client_id%3D787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fclerk.shared.lcl.dev&rart=ANgoxcf-svEPn6w5L_n2w_SQANejmOgLIurAcHoghLggLelTcF1Yh9qrsZ0qIS_sHHlkM3j4nA11HKmNDM7T_AXy6G3-jpD4fuhnpD65Myll6i5oxrhglwI:0
+[  488786ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.KheQ8nOaKgo.es5.O/am=Ed8AAABgFP8IGQD8__03AAABBNEB37MATYCQAQAAAAAAAAAACwAA0Ag/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlEHqa1fnmFNTE4rsdflGxFbRBpsnA/dti=1/m=_b,_tp:546
+[  488786ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.KheQ8nOaKgo.es5.O/am=Ed8AAABgFP8IGQD8__03AAABBNEB37MATYCQAQAAAAAAAAAACwAA0Ag/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlEHqa1fnmFNTE4rsdflGxFbRBpsnA/dti=1/m=_b,_tp:546
+[  493423ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/challenge/pwd?TL=ADCchmZBUyuINI0Fp6GO5jy_S_sS7yveAIWF_nw3RPCXnmeIIFIEKrg9UvR8pf22&access_type=offline&app_domain=https%3A%2F%2Fclerk.shared.lcl.dev&checkConnection=youtube%3A108&checkedDomains=youtube&cid=2&client_id=787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAO-Mp9DdxiZI-O3ejlEjbGR4YCYQTjyNXrErm1_QsST1UJUSx2zBhO6D7WaAec1q04BhfO4RqgQ1G23yu37EtruMb19XKKg3WS5VqGSdFRP02-kEiLl_vH0ixuUpVtuF9unhWJ4CS-j0lgUTtdAQaNkfi-_UCPA4tQCM7VsuLOQI76Imy8KTkKmghl8__ZFqxuSY32LT5c6B0xDFJDXsiKfzJ-BE5OcRQKlDso6Gach_F4n0031fCpxongpnnJz94jctmTQmNPoH9g9lCG40YEAtB7OGt6Iqvh7HSd2hs394nEEOc4CyA7Tg1zbPJEBybyFRK_5jATOA1Mq419ct_pZlqHX4Uvq7492PvO8JhyGtq5xQm45rS7W_ylDRsftJ0R-n05s41bXvJltweL603k4SzGhLyHM7XJ9nNLx52dR8_oaivzJRBJLd4BibinE7YlIBkgHVrByZ2JntTWESbhu2dtlUA%26flowName%3DGeneralOAuthFlow%26as%3DS355814046%253A1780836142653236%26client_id%3D787459168867-0v2orf3qo56uocsi84iroseoahhuovdm.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&dsh=S355814046%3A1780836142653236&flowName=GeneralOAuthFlow&o2v=1&opparams=%253F&prompt=consent&pstMsg=1&rart=ANgoxcf-svEPn6w5L_n2w_SQANejmOgLIurAcHoghLggLelTcF1Yh9qrsZ0qIS_sHHlkM3j4nA11HKmNDM7T_AXy6G3-jpD4fuhnpD65Myll6i5oxrhglwI&redirect_uri=https%3A%2F%2Fclerk.shared.lcl.dev%2Fv1%2Foauth_callback&response_type=code&scope=openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&service=lso&state=581cpcjy2x1s30zcsjh8i9lt3u4x7g9wvy7kyuwq:0
+[  534305ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.OAuthUi.en.4wJHlb32Gn8.es5.O/am=8gMAAADAP4ABwP_vvwEE0YH3DFCAAAAAAAAAAABgAACI/d=1/excm=_b,_tp,attributesview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFe2lV9DX6Cmyo_4SCrumYj5GMsDA/dti=1/m=_b,_tp:531
+[  534305ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.OAuthUi.en.4wJHlb32Gn8.es5.O/am=8gMAAADAP4ABwP_vvwEE0YH3DFCAAAAAAAAAAABgAACI/d=1/excm=_b,_tp,attributesview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFe2lV9DX6Cmyo_4SCrumYj5GMsDA/dti=1/m=_b,_tp:531
+[  539979ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:18
+[  540264ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[  540805ms] [WARNING] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS "body.cl-component"
+  - CSS ".cl-component .button:focus-visible"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[  542605ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[  542735ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[  543047ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[  543608ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[  543625ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  543636ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/me:0
+[  548632ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  553614ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[  563637ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  578619ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[  598642ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  633623ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[  698647ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  748627ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[  788651ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[  953631ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 1243655ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 1383635ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 1898641ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 2153661ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 2174100ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2174143ms] [LOG] [Fast Refresh] done in 141ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2178424ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2178446ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2183072ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2183157ms] [LOG] [Fast Refresh] done in 185ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2190999ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2191048ms] [LOG] [Fast Refresh] done in 149ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2325972ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2326224ms] [LOG] [Fast Refresh] done in 324ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2339512ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2339553ms] [LOG] [Fast Refresh] done in 141ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2475997ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2476136ms] [LOG] [Fast Refresh] done in 201ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2599287ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2599313ms] [LOG] [Fast Refresh] done in 98ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2649917ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2650045ms] [LOG] [Fast Refresh] done in 24ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2650059ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2650151ms] [LOG] [Fast Refresh] done in 99ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2651053ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2651133ms] [LOG] [Fast Refresh] done in 180ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2651624ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2651755ms] [LOG] [Fast Refresh] done in 232ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2651974ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2652031ms] [LOG] [Fast Refresh] done in 158ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2652154ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2652226ms] [LOG] [Fast Refresh] done in 172ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2653277ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2653460ms] [LOG] [Fast Refresh] done in 283ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2653716ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2653738ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2654154ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2654517ms] [LOG] [Fast Refresh] done in 294ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2654815ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2654839ms] [LOG] [Fast Refresh] done in 124ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2655887ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2655889ms] [LOG] [Fast Refresh] done in 102ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2774983ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2775008ms] [LOG] [Fast Refresh] done in 62ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2986367ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2990310ms] [LOG] [Fast Refresh] done in 4044ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2990930ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2990988ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2991103ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 2991866ms] [LOG] [Fast Refresh] done in 863ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3041958ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3041972ms] [LOG] [Fast Refresh] done in 95ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3048910ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3048917ms] [LOG] [Fast Refresh] done in 84ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3483647ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3759183ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3759197ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3765837ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3765840ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3774683ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3774691ms] [LOG] [Fast Refresh] done in 109ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3798515ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3798540ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3805255ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3805264ms] [LOG] [Fast Refresh] done in 109ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3808181ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.OAuthUi.en.4wJHlb32Gn8.es5.O/am=8gMAAADAP4ABwP_vvwEE0YH3DFCAAAAAAAAAAABgAACI/d=1/excm=_b,_tp,attributesview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFe2lV9DX6Cmyo_4SCrumYj5GMsDA/dti=1/m=_b,_tp:531
+[ 3808181ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.OAuthUi.en.4wJHlb32Gn8.es5.O/am=8gMAAADAP4ABwP_vvwEE0YH3DFCAAAAAAAAAAABgAACI/d=1/excm=_b,_tp,attributesview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFe2lV9DX6Cmyo_4SCrumYj5GMsDA/dti=1/m=_b,_tp:531
+[ 3814068ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:18
+[ 3814408ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[ 3814987ms] [WARNING] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS "body.cl-component"
+  - CSS ".cl-component .button:focus-visible"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[ 3815030ms] [INFO] 🔒 Clerk:
+The <SignUp/> component cannot render when a user is already signed in, unless the application allows multiple sessions. Since a user is signed in and this application only allows a single session, Clerk is redirecting to the value set in `afterSignUp` URL instead.
+(This notice only appears in development) @ https://fresh-gelding-80.accounts.dev/_next/static/chunks/pages/_app-2fc9629367be2ce2.js:14
+[ 3817164ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3817303ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3817458ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3817594ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3817631ms] [LOG] [Fast Refresh] done in 136ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 3817902ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3817928ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 3817947ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/me:0
+[ 3822907ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3827934ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 3847913ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3847943ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 3877947ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 3887917ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3952923ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 3972954ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 4052929ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 4072036ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4072225ms] [LOG] [Fast Refresh] done in 262ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4100791ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4101001ms] [LOG] [Fast Refresh] done in 289ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4132960ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 4166092ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4166126ms] [LOG] [Fast Refresh] done in 135ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4172606ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4172841ms] [LOG] [Fast Refresh] done in 254ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4173616ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4174059ms] [LOG] [Fast Refresh] done in 543ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4174687ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4174707ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4175225ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4175397ms] [LOG] [Fast Refresh] done in 272ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4175712ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4175720ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4176074ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4176082ms] [LOG] [Fast Refresh] done in 109ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4176473ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4176727ms] [LOG] [Fast Refresh] done in 355ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4177234ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4177239ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4177506ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4177707ms] [LOG] [Fast Refresh] done in 300ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4178050ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4178082ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4178326ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4178729ms] [LOG] [Fast Refresh] done in 278ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4179519ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4179775ms] [LOG] [Fast Refresh] done in 357ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4179900ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4180176ms] [LOG] [Fast Refresh] done in 376ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4180419ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4180451ms] [LOG] [Fast Refresh] done in 131ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4180591ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4180612ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181076ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181114ms] [LOG] [Fast Refresh] done in 138ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181241ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181316ms] [LOG] [Fast Refresh] done in 176ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181688ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4181922ms] [LOG] [Fast Refresh] done in 334ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4182171ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4182174ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4182884ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4182886ms] [LOG] [Fast Refresh] done in 102ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4183861ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4183872ms] [LOG] [Fast Refresh] done in 42ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4184431ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4184442ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4185584ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4185756ms] [LOG] [Fast Refresh] done in 273ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4185897ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4185906ms] [LOG] [Fast Refresh] done in 110ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4190109ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4190110ms] [LOG] [Fast Refresh] done in 102ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4347934ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/owned:0
+[ 4347964ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
+[ 4477722ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4477728ms] [LOG] [Fast Refresh] done in 105ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4509363ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4509491ms] [LOG] [Fast Refresh] done in 203ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4527810ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4527938ms] [LOG] [Fast Refresh] done in 200ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4533391ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4533406ms] [LOG] [Fast Refresh] done in 41ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4533508ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4533551ms] [LOG] [Fast Refresh] done in 144ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4534243ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4534786ms] [LOG] [Fast Refresh] done in 643ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4535624ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4535774ms] [LOG] [Fast Refresh] done in 250ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4536863ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4537072ms] [LOG] [Fast Refresh] done in 309ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4538112ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4538160ms] [LOG] [Fast Refresh] done in 148ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4540123ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4540191ms] [LOG] [Fast Refresh] done in 167ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4541418ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4541549ms] [LOG] [Fast Refresh] done in 230ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4542678ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4542772ms] [LOG] [Fast Refresh] done in 194ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4700141ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 4700159ms] [LOG] [Fast Refresh] done in 118ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2477
+[ 5102968ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8000/api/spaces/joined:0
