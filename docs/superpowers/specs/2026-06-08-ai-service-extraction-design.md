@@ -53,6 +53,69 @@ Corollaries:
 - **AI server** → GCP Cloud Run / AWS ECS-Fargate (always-on container). Every endpoint is bounded (seconds), including streams.
 - **trigger.dev** → managed (self-hostable). Runs the only long-running work.
 
+### Architecture diagram
+
+```mermaid
+flowchart TB
+    subgraph Browser["🌐 Browser (Clerk session)"]
+        UI["Tutor / Builder UI"]
+        SSE["use-sse-stream<br/>(text)"]
+        TTS["use-tts-audio<br/>(Web Audio playback)"]
+    end
+
+    subgraph Next["▲ Next.js — Vercel (data · auth · orchestration)"]
+        Routes["Clerk-authed routes"]
+        DB[("Postgres / Supabase<br/>+ pgvector")]
+        Judge0["Judge0 client"]
+        AIClient["shared/api/ai-server<br/>(holds AI_SERVICE_SECRET)"]
+        Verify["result-events verifier<br/>(SESSION_SIGNING_SECRET)"]
+    end
+
+    subgraph AIServer["🤖 AI Server — Cloud Run (PURE inference · all provider keys · no DB)"]
+        Session["POST /v1/session<br/>mint token"]
+        Reason["POST /v1/reason<br/>SSE text + signed result"]
+        Speak["POST /v1/speak<br/>audio (SSE base64 PCM)"]
+        Run["POST /v1/run<br/>json agents"]
+        Embed["POST /v1/embed<br/>batch vectors"]
+        subgraph Providers["providers"]
+            Anthropic["Anthropic"]
+            OpenAI["OpenAI embed"]
+            Gemini["Gemini TTS"]
+        end
+    end
+
+    subgraph Jobs["⏱ trigger.dev (durable course-generation)"]
+        Gen["generate-course pipeline"]
+    end
+
+    UI --> Routes
+    Routes -->|"read/write"| DB
+    Routes --> Judge0
+    Routes --> AIClient
+
+    AIClient -->|"service secret"| Session
+    AIClient -->|"service secret"| Run
+    AIClient -->|"service secret"| Embed
+
+    Routes -.->|"returns ai_url + session_token"| SSE
+    SSE -->|"session token (browser-direct)"| Reason
+    TTS -->|"session token (browser-direct)"| Speak
+
+    Reason -->|"signed result event"| SSE
+    SSE -->|"relay signed blob"| Verify
+    Verify -->|"verified write"| DB
+
+    Reason --> Anthropic
+    Run --> Anthropic
+    Embed --> OpenAI
+    Speak --> Gemini
+
+    Gen -->|"service secret"| Embed
+    Gen -->|"service secret"| Run
+    Gen -->|"writes directly"| DB
+    Routes -->|"enqueue"| Gen
+```
+
 ---
 
 ## 3. Security Model — Two Credentials
@@ -166,6 +229,14 @@ trigger.dev (pipeline) and Next (`code-eval`, `agent-edit`, `concept-check`) wri
 | **understanding-check** | Next loads rubric (secret) → seals → mint → browser streams `/reason`. AI emits **signed result event** → browser relays → Next verifies + writes attempt. |
 | **ask-anything** | Next: AI `/embed` query → pgvector search own DB → seal top-K chunks → mint → browser streams `/reason`. AI emits **signed result event** (Q+A+chunk ids) → Next verifies + writes. |
 | **TTS** | Block text already on screen → browser → Next mints session (auth only, no secret) → browser streams `/speak` → Gemini audio chunks. On-demand only. |
+
+> **`/speak` contract (settled 2026-06-08).** TTS is the "text already complete" case — the browser already has the full text on screen and asks `/speak` to read it aloud. No live Claude→Gemini sentence-pipelining is built (deferred; would only matter for a future realtime conversational voice tutor). To stay drop-in compatible with the existing `use-tts-audio.ts` player, `/speak` MUST:
+> - Emit **SSE lines** `data: {"type":"audio","mimeType":...,"data":<base64>}` (NOT raw `audio/mpeg` bytes), terminated by `data: [DONE]`.
+> - Produce **24 kHz PCM** chunks (the player decodes Int16 PCM at 24000 Hz).
+> - Use model `gemini-3.1-flash-tts-preview` with `responseModalities:['audio']` and a `speechConfig` voice (default `voiceName: 'Achernar'`), matching the pre-extraction route.
+> - Accept selectable `voice` and `style` as **allowlisted enums** (never free text — free text in the director's-note prompt is a prompt-injection vector). Playback speed (0.5×–1.5×) stays fully client-side (`playbackRate`).
+>
+> The Task-17 implementation built in Phase 3 streams raw bytes with no voice config; it MUST be reconciled to this contract during Phase 4 TTS wiring before the old route is deleted.
 
 **Server-to-server (no browser):**
 
