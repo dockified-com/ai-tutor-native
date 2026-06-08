@@ -13,7 +13,7 @@ export function SpaceCardJoined({ space }: Props) {
 
   return (
     <div
-      onClick={() => router.push(`/courses/${space.id}`)}
+      onClick={() => router.push(`/spaces/${space.id}`)}
       className="rounded-2xl p-5 cursor-pointer transition-all duration-200 flex flex-col gap-3 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(110,169,118,0.22)]"
       style={{
         background: "rgba(255,255,255,0.55)",
