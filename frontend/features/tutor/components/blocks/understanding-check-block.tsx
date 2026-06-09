@@ -2,7 +2,7 @@ import React, { FormEvent, useRef, useEffect } from 'react';
 import { UnderstandingCheckBlock as UnderstandingCheckBlockType } from '@/shared/types/blocks';
 import { useTutorStore } from '../../stores/tutor-store';
 import { cn } from '@/lib/utils';
-import { useSSEStream } from '../../hooks/use-sse-stream';
+import { useSSEStream } from '@/hooks/use-sse-stream';
 import { CheckCircle2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
@@ -30,7 +30,7 @@ export function UnderstandingCheckBlock({ block, index }: UnderstandingCheckBloc
 
   const isActive = activeBlockId === block.id;
   const isPast = index < revealedIndex && !isActive;
-  
+
   const response = understandingResponse[block.id] || '';
   const feedback = understandingFeedback[block.id] || '';
   const passed = understandingPassed[block.id] || false;
@@ -47,29 +47,7 @@ export function UnderstandingCheckBlock({ block, index }: UnderstandingCheckBloc
         previousDataLenRef.current = sse.data.length;
       }
     }
-  }, [sse.data, sse.status, block.id, setUnderstandingFeedback]);
-
-  // Handle the final result message
-  useEffect(() => {
-    if (sse.status === 'success') {
-      try {
-        const resultString = sse.data.split('\n\n').filter(Boolean).pop();
-        if (resultString) {
-          const cleanString = resultString.replace(/^data: /, '').trim();
-          const parsed = JSON.parse(cleanString);
-          if (parsed.passed !== undefined) {
-             if (parsed.passed) {
-               setUnderstandingPassed(block.id, true);
-             } else {
-               incrementUnderstandingAttempt(block.id);
-             }
-          }
-        }
-      } catch (e) {
-         // Ignore parse errors on stream end
-      }
-    }
-  }, [sse.status, sse.data, block.id, setUnderstandingPassed, incrementUnderstandingAttempt]);
+  }, [sse.data, sse.status, block.id, setUnderstandingFeedback, feedback]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -78,11 +56,52 @@ export function UnderstandingCheckBlock({ block, index }: UnderstandingCheckBloc
     setUnderstandingFeedback(block.id, '');
     previousDataLenRef.current = 0;
 
-    await sse.execute(`/api/blocks/${block.id}/understanding-check`, {
+    // Step 1: Mint session
+    const mintRes = await fetch(`/api/blocks/${block.id}/understanding-check`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ response, enrollment_id: enrollmentId }),
+      body: JSON.stringify({ enrollmentId }),
     });
+    if (!mintRes.ok) return;
+    const { ai_url, session_token } = await mintRes.json();
+
+    // Step 2: Stream from AI server
+    await sse.execute(ai_url, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${session_token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ client_context: { response } }),
+    });
+
+    // Step 3: On success, POST result to persist
+    if (sse.status === 'success' && sse.result) {
+      const resultRes = await fetch('/api/tutor/result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kind: 'understanding-check',
+          blob: sse.result,
+          enrollmentId,
+          blockId: block.id,
+          response,
+          attemptNumber: attempts + 1,
+          session_token,
+        }),
+      });
+      if (resultRes.ok) {
+        const result = await resultRes.json();
+        if (result.passed) {
+          setUnderstandingPassed(block.id, true);
+        } else {
+          incrementUnderstandingAttempt(block.id);
+        }
+        if (result.feedback) {
+          setUnderstandingFeedback(block.id, result.feedback);
+        }
+      }
+    }
   };
 
   return (
@@ -105,7 +124,7 @@ export function UnderstandingCheckBlock({ block, index }: UnderstandingCheckBloc
           disabled={sse.status === 'loading' || passed}
           className="w-full min-h-[100px] p-3 rounded-xl border border-slate-200 bg-white shadow-sm focus:border-emerald-400 focus:ring-4 focus:ring-emerald-50 outline-none resize-y text-[14px] text-slate-800 disabled:bg-slate-50 transition-all"
         />
-        
+
         {!passed && (
           <div className="flex justify-end">
              <button

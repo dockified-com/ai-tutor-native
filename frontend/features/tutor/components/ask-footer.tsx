@@ -1,7 +1,7 @@
 import React, { FormEvent, useRef, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useTutorStore } from '../stores/tutor-store';
-import { useSSEStream } from '../hooks/use-sse-stream';
+import { useSSEStream } from '@/hooks/use-sse-stream';
 import { useParams } from 'next/navigation';
 
 export function AskFooter() {
@@ -33,18 +33,44 @@ export function AskFooter() {
     appendChatHistory({ role: 'ai', text: '' });
     previousDataLenRef.current = 0;
 
-    await sse.execute(`/api/enrollments/${enrollmentId}/ask`, {
+    // Step 1: Mint session
+    const mintRes = await fetch(`/api/enrollments/${enrollmentId}/ask`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question, block_id: activeBlockId }),
     });
+    if (!mintRes.ok) return;
+    const { ai_url, session_token } = await mintRes.json();
+
+    // Step 2: Stream from AI server
+    await sse.execute(ai_url, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${session_token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ client_context: { question } }),
+    });
+
+    // Step 3: Fire-and-forget persist result
+    if (sse.status === 'success' && sse.result) {
+      fetch('/api/tutor/result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kind: 'ask',
+          blob: sse.result,
+          enrollmentId,
+          blockId: activeBlockId,
+          session_token,
+        }),
+      }).catch(() => {});
+    }
   };
 
   return (
     <div className="p-4 bg-white border-t border-slate-200 shrink-0">
-      <form 
+      <form
         onSubmit={handleSubmit}
         className="flex items-center bg-slate-50 rounded-xl border border-slate-200 focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-50 transition-all px-3 py-2"
       >

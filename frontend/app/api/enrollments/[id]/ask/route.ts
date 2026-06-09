@@ -1,34 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireUser, requireEnrollmentOwnership, HttpError } from '@/shared/auth/current-user';
+import { getBlockContentScoped } from '@/shared/db/queries';
+import { searchChunks } from '@/shared/db/rag';
+import { embedTexts, mintSession, aiServerPublicUrl } from '@/shared/api/ai-server';
 
-export async function POST(req: NextRequest) {
-  // Simulate an SSE response
-  const encoder = new TextEncoder();
-  
-  const stream = new ReadableStream({
-    async start(controller) {
-      const mockResponse = "This is a simulated AI response. Let's think about this step by step. State in React is meant to hold data that changes over time, and it triggers re-renders when updated. Does that help clarify things?";
-      const words = mockResponse.split(' ');
-      
-      // Initial small delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+const askMintCache = new Map<string, { chunkIds: string[]; enrollmentId: string; blockId?: string }>();
 
-      for (const word of words) {
-        // Send as Server-Sent Event format
-        const json = JSON.stringify({ text: word + ' ' });
-        controller.enqueue(encoder.encode(`data: ${json}\n\n`));
-        await new Promise(resolve => setTimeout(resolve, 80)); // 80ms delay per word
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id: enrollmentId } = await params;
+    const user = await requireUser();
+    const { courseId } = await requireEnrollmentOwnership(enrollmentId, user.id);
+
+    const body = await req.json();
+    const { question, block_id } = body;
+
+    const { vectors: [queryVec] } = await embedTexts([question]);
+    const chunks = await searchChunks(courseId, queryVec, 5);
+
+    let blockContext: string | null = null;
+    if (block_id) {
+      const content = await getBlockContentScoped(block_id, courseId);
+      if (content) {
+        const contentObj = content as Record<string, unknown>;
+        blockContext = ((contentObj.prompt as string) || (contentObj.text as string) || null);
       }
-      
-      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-      controller.close();
     }
-  });
 
-  return new NextResponse(stream, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-    },
-  });
+    const serverContext = {
+      chunks: chunks.map(c => c.content),
+      block_context: blockContext,
+    };
+
+    const { session_token, expires_in } = await mintSession('ask', serverContext);
+
+    askMintCache.set(session_token, {
+      chunkIds: chunks.map(c => c.id),
+      enrollmentId,
+      blockId: block_id ?? undefined,
+    });
+
+    return NextResponse.json({
+      ai_url: aiServerPublicUrl + '/v1/reason',
+      session_token,
+      expires_in,
+    });
+  } catch (e) {
+    if (e instanceof HttpError) {
+      return NextResponse.json({ error: e.message }, { status: e.status });
+    }
+    throw e;
+  }
 }
+
+export { askMintCache };
