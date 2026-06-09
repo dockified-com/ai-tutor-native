@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String   @id @default(uuid()) @db.Uuid
+  clerkUserId String   @unique @map("clerk_user_id")
+  email       String   @unique
+  displayName String?  @map("display_name")
+  role        String   @default("student")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Course {
+  id        String  @id @default(uuid()) @db.Uuid
+  creatorId String  @map("creator_id") @db.Uuid
+  code      String?
+  title     String?
+  status    String  @default("draft")
+
+  @@map("courses")
+}
+
+model Lesson {
+  id         String   @id @default(uuid()) @db.Uuid
+  courseId   String   @map("course_id") @db.Uuid
+  position   Int
+  title      String
+  summary    String?
+  objectives String[]
+  status     String   @default("generating")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([courseId, position])
+  @@map("lessons")
+}
+
+model Block {
+  id          String   @id @default(uuid()) @db.Uuid
+  lessonId    String   @map("lesson_id") @db.Uuid
+  position    Int
+  type        String
+  content     Json
+  ttsAudioUrl String?  @map("tts_audio_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([lessonId, position])
+  @@map("blocks")
+}
+
+model CourseChunk {
+  id         String                       @id @default(uuid()) @db.Uuid
+  courseId   String                       @map("course_id") @db.Uuid
+  content    String
+  embedding  Unsupported("vector(1536)")?
+  chunkIndex Int                          @map("chunk_index")
+  pageNumber Int?                         @map("page_number")
+  createdAt  DateTime                     @default(now()) @map("created_at")
+
+  @@map("course_chunks")
+}
+
+model Enrollment {
+  id              String    @id @default(uuid()) @db.Uuid
+  userId          String    @map("user_id") @db.Uuid
+  courseId        String    @map("course_id") @db.Uuid
+  currentLessonId String?   @map("current_lesson_id") @db.Uuid
+  currentBlockId  String?   @map("current_block_id") @db.Uuid
+  startedAt       DateTime  @default(now()) @map("started_at")
+  completedAt     DateTime? @map("completed_at")
+
+  @@unique([userId, courseId])
+  @@map("enrollments")
+}
+
+model CodeSubmission {
+  id            String   @id @default(uuid()) @db.Uuid
+  enrollmentId  String   @map("enrollment_id") @db.Uuid
+  blockId       String   @map("block_id") @db.Uuid
+  code          String
+  language      String
+  judge0Token   String?  @map("judge0_token")
+  stdout        String?
+  stderr        String?
+  exitCode      Int?     @map("exit_code")
+  verdict       String?
+  socraticHint  String?  @map("socratic_hint")
+  attemptNumber Int      @default(1) @map("attempt_number")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("code_submissions")
+}
+
+model ConceptCheckAttempt {
+  id             String   @id @default(uuid()) @db.Uuid
+  enrollmentId   String   @map("enrollment_id") @db.Uuid
+  blockId        String   @map("block_id") @db.Uuid
+  selectedAnswer String   @map("selected_answer")
+  isCorrect      Boolean  @map("is_correct")
+  explanation    String
+  attemptNumber  Int      @default(1) @map("attempt_number")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("concept_check_attempts")
+}
+
+model UnderstandingCheckAttempt {
+  id            String   @id @default(uuid()) @db.Uuid
+  enrollmentId  String   @map("enrollment_id") @db.Uuid
+  blockId       String   @map("block_id") @db.Uuid
+  response      String
+  level         String
+  feedback      String
+  passed        Boolean
+  missingPoints String[] @map("missing_points")
+  attemptNumber Int      @default(1) @map("attempt_number")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("understanding_check_attempts")
+}
+
+model Question {
+  id           String   @id @default(uuid()) @db.Uuid
+  enrollmentId String   @map("enrollment_id") @db.Uuid
+  blockId      String?  @map("block_id") @db.Uuid
+  questionText String   @map("question_text")
+  answerText   String?  @map("answer_text")
+  sourceChunks Json?    @map("source_chunks")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("questions")
+}

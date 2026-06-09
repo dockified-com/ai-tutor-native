@@ -13,6 +13,9 @@
     "@clerk/nextjs": "^7.4.2",
     "@google/genai": "^2.8.0",
     "@monaco-editor/react": "^4.7.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "@types/pg": "^8.20.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jose": "^6.2.3",
@@ -20,6 +23,7 @@
     "mermaid": "^11.15.0",
     "mime": "^4.1.0",
     "next": "16.2.6",
+    "pg": "^8.21.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
@@ -38,6 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "eslint-plugin-boundaries": "^6.0.2",
+    "prisma": "^7.8.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
