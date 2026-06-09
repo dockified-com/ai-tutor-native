@@ -78,5 +78,5 @@ export async function getLessonBlocks(lessonId: string) {
 
 // Updates only the content field of a block (keeps id, position, type)
 export async function updateBlockContent(blockId: string, content: Record<string, unknown>) {
-  return prisma.block.update({ where: { id: blockId }, data: { content } });
+  return prisma.block.update({ where: { id: blockId }, data: { content: content as never } });
 }
