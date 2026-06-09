@@ -8,23 +8,18 @@
 
 ## 0. Where things stand (UPDATE THIS as you go)
 
-- **Status:** Planning complete. **No subagents dispatched yet.** T1 is ready to start.
-- **Committed already (Tasks 18–19 of the original extraction plan):**
-  - `frontend/shared/api/ai-server.ts` (commit 80ba01d) — server-only AI-server client: `mintSession(agent, serverContext)`, `runAgent(agent, userMessage)`, `embedTexts(texts)`, `aiServerPublicUrl`. Uses `AI_SERVER_URL` + `AI_SERVICE_SECRET`.
-  - `frontend/shared/lib/result-events.ts` (commit d6a7ff8) — `verifyResultEvent<T>(token)` via `jose`, using `SESSION_SIGNING_SECRET`.
-- **AI server (Phases 1–3) is DONE and committed** (`ai_server/`): `/v1/session`, `/v1/reason` (SSE), `/v1/speak`, `/v1/run`, `/v1/embed`, `/v1/healthz`. SSE emits **named events**: `event: token` (data=chunk), `event: result` (data=signed JWT blob), `event: done`, `event: error`.
-- **DB NOT running** on localhost:5433 — so `prisma db pull` introspection is unavailable; `schema.prisma` must be hand-written (full column list is in T1 below).
+- **Status:** **COMPLETE. All T1–T9 committed on branch `lyyeakkhai`.** Last commit: `f547f2d`.
 
 ### Task checklist
-- [ ] T1 — Prisma client + schema + env
-- [ ] T2 — pgvector cosine RAG search (`$queryRaw`)
-- [ ] T3 — Clerk auth + user resolution + enrollment ownership
-- [ ] T4 — DB data-access query helpers
-- [ ] T5 — Judge0 client + verdict logic
-- [ ] T6 — Rewire `run_code` route
-- [ ] T7 — Rewire `agent-edit` route
-- [ ] T8 — SSE hook: named events + `result`
-- [ ] T9 — Rewire tutor streams (mint → stream → verify → persist)
+- [x] T1 — Prisma client + schema + env
+- [x] T2 — pgvector cosine RAG search (`$queryRaw`)
+- [x] T3 — Clerk auth + user resolution + enrollment ownership
+- [x] T4 — DB data-access query helpers
+- [x] T5 — Judge0 client + verdict logic
+- [x] T6 — Rewire `run_code` route
+- [x] T7 — Rewire `agent-edit` route
+- [x] T8 — SSE hook: named events + `result`
+- [x] T9 — Rewire tutor streams (mint → stream → verify → persist)
 
 ---
 
