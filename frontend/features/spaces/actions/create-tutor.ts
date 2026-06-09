@@ -1,6 +1,8 @@
 "use server";
-import { auth } from "@clerk/nextjs/server";
-import { apiFetch } from "@/shared/api/client";
+import { tasks } from "@trigger.dev/sdk/v3";
+import { requireUser } from "@/shared/auth/current-user";
+import { prisma } from "@/shared/db/client";
+import type { generateCourse } from "@/trigger/generate-course";
 
 export type CreateTutorInput = {
   title: string;
@@ -10,18 +12,16 @@ export type CreateTutorInput = {
 };
 
 export async function createTutor(input: CreateTutorInput): Promise<{ courseId: string }> {
-  const { getToken } = await auth();
-  const token = await getToken();
-  if (!token) throw new Error("Unauthorized");
-  const course = await apiFetch<{ id: string }>("/api/courses", {
-    method: "POST",
-    token,
-    body: JSON.stringify({
-      title: input.title,
-      description: input.description,
-      pdf_url: input.pdfUrl,
-      custom_prompt: input.customPrompt,
-    }),
+  const user = await requireUser();
+  const course = await prisma.course.create({
+    data: {
+      creatorId: user.id,
+      sourcePdfUrl: input.pdfUrl,
+      customPrompt: input.customPrompt,
+      status: "generating",
+      generationPhase: "extracting",
+    },
   });
+  await tasks.trigger<typeof generateCourse>("generate-course", { courseId: course.id });
   return { courseId: course.id };
 }

@@ -19,11 +19,21 @@ model User {
 }
 
 model Course {
-  id        String  @id @default(uuid()) @db.Uuid
-  creatorId String  @map("creator_id") @db.Uuid
-  code      String?
-  title     String?
-  status    String  @default("draft")
+  id              String   @id @default(uuid()) @db.Uuid
+  creatorId       String   @map("creator_id") @db.Uuid
+  code            String?
+  title           String?
+  description     String?
+  sourcePdfUrl    String   @map("source_pdf_url")
+  customPrompt    String?  @map("custom_prompt")
+  defaultLanguage String   @default("python") @map("default_language")
+  status          String   @default("draft")
+  generationPhase String?  @map("generation_phase")
+  generationError String?  @map("generation_error")
+  totalLessons    Int      @default(0) @map("total_lessons")
+  totalBlocks     Int      @default(0) @map("total_blocks")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("courses")
 }
