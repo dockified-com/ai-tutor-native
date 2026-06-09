@@ -5,3 +5,13 @@ claudecode.sh
 
 # Local video frame extraction (gitignored, not part of the project)
 .video-frames/
+
+# Virtual Environments
+.venv/
+
+# Agents and Tools
+.claude/
+.agents/
+.playwright-mcp/
+.mcp.json
+skills-lock.json

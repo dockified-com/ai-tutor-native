@@ -27,14 +27,13 @@ export function JoinSpaceModal({ open, onClose, onJoined }: Props) {
     if (code.trim().length !== 6) return;
     setLoading(true);
     setError(null);
-    try {
-      const { space } = await joinSpace(code.trim().toUpperCase());
+    const result = await joinSpace(code.trim().toUpperCase());
+    setLoading(false);
+    if ("error" in result) {
+      setError(result.error);
+    } else {
       setCode("");
-      onJoined(space);
-    } catch {
-      setError("Invalid code or space not found.");
-    } finally {
-      setLoading(false);
+      onJoined(result.space);
     }
   }
 

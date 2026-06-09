@@ -6,7 +6,8 @@ import { auth } from '@clerk/nextjs/server';
 export async function markBlockComplete(blockId: string, enrollmentId: string) {
   const { getToken } = await auth();
   const token = await getToken();
-  
+  if (!token) return;
+
   await apiFetch(`/api/progress/blocks/${blockId}/complete`, {
     method: 'POST',
     token,

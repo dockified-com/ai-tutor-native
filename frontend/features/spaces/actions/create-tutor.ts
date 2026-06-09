@@ -7,7 +7,7 @@ import type { generateCourse } from "@/trigger/generate-course";
 export type CreateTutorInput = {
   title: string;
   description: string | null;
-  pdfUrl: string;
+  pdfUrl: string | null;
   customPrompt: string | null;
 };
 
@@ -16,7 +16,7 @@ export async function createTutor(input: CreateTutorInput): Promise<{ courseId: 
   const course = await prisma.course.create({
     data: {
       creatorId: user.id,
-      sourcePdfUrl: input.pdfUrl,
+      sourcePdfUrl: input.pdfUrl ?? "",
       customPrompt: input.customPrompt,
       status: "generating",
       generationPhase: "extracting",

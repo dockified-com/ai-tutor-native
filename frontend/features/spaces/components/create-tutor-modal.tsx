@@ -24,7 +24,7 @@ export function CreateTutorModal({ open, onClose }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !pdfUrl.trim()) return;
+    if (!name.trim()) return;
     setLoading(true);
     setError(null);
     try {
@@ -34,13 +34,13 @@ export function CreateTutorModal({ open, onClose }: Props) {
       const { courseId } = await createTutor({
         title: name.trim(),
         description: description.trim() || null,
-        pdfUrl: pdfUrl.trim(),
+        pdfUrl: pdfUrl.trim() || null,
         customPrompt: prompt,
       });
       onClose();
       router.push(`/builder/${courseId}`);
     } catch {
-      setError("Failed to start generation. Check the PDF URL and try again.");
+      setError("Failed to start generation. Try again.");
     } finally {
       setLoading(false);
     }
@@ -82,13 +82,13 @@ export function CreateTutorModal({ open, onClose }: Props) {
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-[#37593c] mb-1 block">PDF Source URL</label>
+            <label className="text-sm font-medium text-[#37593c] mb-1 block">
+              PDF Source URL <span className="font-normal text-[#37593c]/50">(optional)</span>
+            </label>
             <Input
               value={pdfUrl}
               onChange={(e) => setPdfUrl(e.target.value)}
               placeholder="https://example.com/material.pdf"
-              type="url"
-              required
               className="border-[#a3d1a5] focus-visible:ring-[#6ea976]"
             />
           </div>
@@ -127,7 +127,7 @@ export function CreateTutorModal({ open, onClose }: Props) {
             </button>
             <button
               type="submit"
-              disabled={loading || !name.trim() || !pdfUrl.trim()}
+              disabled={loading || !name.trim()}
               className="px-4 py-2 rounded-full text-sm font-medium text-white cursor-pointer disabled:opacity-50"
               style={{ background: "linear-gradient(135deg, #6ea976, #37593c)", boxShadow: "0 2px 8px rgba(110,169,118,0.35)" }}
             >
