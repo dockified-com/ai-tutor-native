@@ -21,7 +21,7 @@ export async function POST(
       2
     );
 
-    const text = await runAgent("agent-edit", `Current blocks:\n${blocksJson}\n\nInstruction: ${message}`);
+    const { text } = await runAgent("agent-edit", `Current blocks:\n${blocksJson}\n\nInstruction: ${message}`);
     const { reply, blocks: updatedBlocks }: { reply: string; blocks: TutorBlock[] } = JSON.parse(text);
 
     // Persist updated content; keep ids/positions unchanged
