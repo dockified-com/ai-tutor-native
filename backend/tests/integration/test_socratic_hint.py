@@ -1,6 +1,6 @@
 import uuid
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import MagicMock
 
 from httpx import AsyncClient, ASGITransport
 

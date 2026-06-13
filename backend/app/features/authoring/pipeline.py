@@ -7,7 +7,6 @@ from uuid import UUID
 import httpx
 from pypdf import PdfReader
 from sqlalchemy import delete, select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.features.authoring.models import Block, CourseChunk, Lesson, LessonStatus
 from app.features.authoring.prompts import (

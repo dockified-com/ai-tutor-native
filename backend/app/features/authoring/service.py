@@ -1,5 +1,5 @@
 import asyncio
-import random
+import secrets
 import string
 
 from sqlalchemy import select, update
@@ -13,7 +13,7 @@ from app.shared.errors import NotFoundError, GenerationError
 
 
 def _generate_code() -> str:
-    return "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    return "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))
 
 
 async def create_course(

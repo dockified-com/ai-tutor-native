@@ -6,7 +6,6 @@ from types import SimpleNamespace
 from app.main import app
 from app.shared import deps
 from app.features.courses.models import CourseStatus
-from app.features.enrollment import service as enrollment_svc
 from app.shared.errors import NotFoundError, ForbiddenError
 
 
