@@ -1,4 +1,3 @@
-import pytest
 from app.features.tutor.service import LEVEL_ORDER, PASS_THRESHOLD, strip_sensitive_fields
 
 
